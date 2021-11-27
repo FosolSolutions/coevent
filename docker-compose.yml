@@ -1,0 +1,82 @@
+version: "3.5"
+
+services:
+  ####################### Keycloak #######################
+  # keycloak:
+  #   restart: on-failure:1
+  #   container_name: ce-keycloak
+  #   build:
+  #     context: ./auth/keycloak
+  #   env_file:
+  #     - auth/keycloak/.env
+  #   volumes:
+  #     - ./auth/keycloak/config/realm-export.json:/tmp/realm-export.json
+  #   ports:
+  #     - ${KEYCLOAK_PORT:-8080}:8080
+  #   networks:
+  #     - ce
+
+  ####################### Database #######################
+  database:
+    container_name: ce-database
+    restart: on-failure:1
+    build:
+      context: db/mssql
+    env_file:
+      - db/mssql/.env
+    ports:
+      - ${DATABASE_PORT:-5433}:1433
+    volumes:
+      - ce-database-data:/var/opt/mssql
+    networks:
+      - ce
+
+  ####################### API #######################
+  api:
+    container_name: ce-api
+    restart: on-failure:1
+    build:
+      context: api
+      args:
+        BUILD_CONFIGURATION: Debug
+    env_file: api/.env
+    ports:
+      - ${API_HTTPS_PORT:-5001}:443
+      - ${API_HTTP_PORT:-5000}:8080
+    depends_on:
+      - database
+    networks:
+      - ce
+
+  ####################### APP #######################
+  app:
+    container_name: ce-app
+    stdin_open: true
+    tty: true
+    restart: on-failure:1
+    build:
+      context: app
+    volumes:
+      - ./app/src:/usr/app/src
+      - ./app/public:/usr/app/public
+      - ce-app-node-cache:/usr/app/node_modules
+    ports:
+      - ${APP_HTTP_PORT:-3000}:3000
+    depends_on:
+      - api
+    env_file: ./app/.env
+    networks:
+      - ce
+
+####################### Networks Definition #######################
+networks:
+  ce:
+    name: ce-net
+    driver: bridge
+
+####################### Volumes Definition #######################
+volumes:
+  ce-database-data:
+    name: ce-database-data
+  ce-app-node-cache:
+    name: ce-app-node-cache
