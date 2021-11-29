@@ -1,21 +1,6 @@
 version: "3.5"
 
 services:
-  ####################### Keycloak #######################
-  # keycloak:
-  #   restart: on-failure:1
-  #   container_name: ce-keycloak
-  #   build:
-  #     context: ./auth/keycloak
-  #   env_file:
-  #     - auth/keycloak/.env
-  #   volumes:
-  #     - ./auth/keycloak/config/realm-export.json:/tmp/realm-export.json
-  #   ports:
-  #     - ${KEYCLOAK_PORT:-8080}:8080
-  #   networks:
-  #     - ce
-
   ####################### Database #######################
   database:
     container_name: ce-database
@@ -28,6 +13,21 @@ services:
       - ${DATABASE_PORT:-5433}:1433
     volumes:
       - ce-database-data:/var/opt/mssql
+    networks:
+      - ce
+
+  ####################### Keycloak #######################
+  keycloak:
+    restart: on-failure:1
+    container_name: ce-keycloak
+    build:
+      context: ./auth/keycloak
+    env_file:
+      - auth/keycloak/.env
+    volumes:
+      - ./auth/keycloak/config/realm-export.json:/tmp/realm-export.json
+    ports:
+      - ${KEYCLOAK_PORT:-8080}:8080
     networks:
       - ce
 

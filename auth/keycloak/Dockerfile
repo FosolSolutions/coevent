@@ -1,7 +1,5 @@
-# >docker build -t keycloak .
-# >docker run --env-file=../../.env -d keycloak
 # https://hub.docker.com/r/jboss/keycloak/
-FROM jboss/keycloak:11.0.0
+FROM jboss/keycloak:15.0.2
 
 EXPOSE 8080
 

@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "server\server.csproj", "{0CDFF50F-0754-4A45-9355-7B21CF53A9F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "server\Coevent.Api.csproj", "{0CDFF50F-0754-4A45-9355-7B21CF53A9F6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{82B25F54-17F1-4A2A-8AD5-3597E0A5BCC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dal", "libs\dal\dal.csproj", "{54343FFE-0F9A-4DC5-BAB0-7F84EFAA9964}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dal", "libs\dal\Coevent.Dal.csproj", "{54343FFE-0F9A-4DC5-BAB0-7F84EFAA9964}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "entities", "libs\entities\entities.csproj", "{FB75200F-817C-4CCF-AF1F-C46D03618447}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "entities", "libs\entities\Coevent.Entities.csproj", "{FB75200F-817C-4CCF-AF1F-C46D03618447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{4B07C45E-B16B-4730-B531-A0946CA43DDF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\Coevent.Test.csproj", "{4B07C45E-B16B-4730-B531-A0946CA43DDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

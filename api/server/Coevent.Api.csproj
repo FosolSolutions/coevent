@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>coevent.api</AssemblyName>
-    <OutputName>coevent.api</OutputName>
+    <AssemblyName>Coevent.Api</AssemblyName>
+    <OutputName>Coevent.Api</OutputName>
   </PropertyGroup>
 
   <ItemGroup>
