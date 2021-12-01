@@ -15,8 +15,8 @@ public class OpeningCriteriaConfiguration : AuditColumnsConfiguration<OpeningCri
         builder.Property(m => m.CriteriaId).ValueGeneratedNever();
         builder.Property(m => m.TraitId).ValueGeneratedNever();
 
-        builder.HasOne(m => m.Opening).WithMany(m => m.OpeningCriterias).HasForeignKey(m => m.OpeningId).OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(m => m.Criteria).WithMany(m => m.OpeningCriterias).HasForeignKey(m => m.CriteriaId).OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(m => m.Trait).WithMany(m => m.OpeningCriterias).HasForeignKey(m => m.TraitId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Opening).WithMany(m => m.OpeningCriterias).HasForeignKey(m => m.OpeningId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(m => m.Criteria).WithMany(m => m.OpeningCriterias).HasForeignKey(m => m.CriteriaId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(m => m.Trait).WithMany(m => m.OpeningCriterias).HasForeignKey(m => m.TraitId).OnDelete(DeleteBehavior.Restrict);
     }
 }

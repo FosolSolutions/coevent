@@ -19,3 +19,4 @@ else
 fi
 
 varDbName=coevent
+varAuthDbName=keycloak

@@ -58,7 +58,7 @@ These can then be linked to a user account, a calendar, and a specific time peri
 | ---------- | --------- | ---- | ---- | ------------ | ------------------------------------------------------------ |
 | Id         | BIGINT    |      |      | PK, IDENTITY | Primary key to uniquely identify user within Coevent         |
 | UserId     | BIGINT    |      |      | FK           | Foreign key to the user account                              |
-| CalendarId | BIGINT    |      |      | FK           | Foreign key to the calendar they are invited to use          |
+| CalendarId | INT       |      |      | FK           | Foreign key to the calendar they are invited to use          |
 | TTL        | BIGINT    |      |      |              | Length of hours the invitation is good for                   |
 | StartOn    | DATETIME2 |      | \*   |              | When the participant can start participating in the calendar |
 | EndOn      | DATETIME2 |      | \*   |              | When the participant can start participating in the calendar |
@@ -70,7 +70,7 @@ Each account represents an organization that manages calendars, schedules, and p
 | Column      | Type     | Size | Null | Constraint   | Description                                             |
 | ----------- | -------- | ---- | ---- | ------------ | ------------------------------------------------------- |
 | Id          | BIGINT   |      |      | PK, IDENTITY | Primary key to uniquely identify account within Coevent |
-| Name        | NVARCHAR | 100  |      | UNIQUE       | The name of the account or organization                 |
+| Name        | NVARCHAR | 100  |      |              | The name of the account or organization                 |
 | Description | NVARCHAR | 2000 | \*   |              | Description of the account                              |
 | AccountType | SMALLINT |      |      |              | The type of account [Free, Subscriber]                  |
 | IsDisabled  | BIT      |      |      |              | Whether the calendar is disabled                        |
@@ -83,11 +83,11 @@ A calendar provides a way to group and share schedules with users, and participa
 | Column       | Type     | Size | Null | Constraint   | Description                                              |
 | ------------ | -------- | ---- | ---- | ------------ | -------------------------------------------------------- |
 | Id           | INT      |      |      | PK, IDENTITY | Primary key to uniquely identify calendar within Coevent |
-| Name         | NVARCHAR | 100  |      |              | The name of the calendar                                 |
+| AccountId    | BIGINT   |      |      | UX, FK       | Foreign key to the account who owns the calendar         |
+| Name         | NVARCHAR | 100  |      | UX           | The name of the calendar                                 |
 | Description  | NVARCHAR | 2000 | \*   |              | Description of the calendar                              |
 | CalendarType | SMALLINT |      |      |              | The type of calendar                                     |
 | IsDisabled   | BIT      |      |      |              | Whether the calendar is disabled                         |
-| AccountId    | BIGINT   |      |      | FK           | Foreign key to the account who owns the calendar         |
 | Status       | SMALLINT |      |      |              | The status of the calendar [Draft, Published, Cancelled] |
 
 ## Event
@@ -117,9 +117,9 @@ An event can be repeated on a schedule, or only occur once.
 | Column       | Type     | Size | Null | Constraint   | Description                                                         |
 | ------------ | -------- | ---- | ---- | ------------ | ------------------------------------------------------------------- |
 | Id           | BIGINT   |      |      | PK, IDENTITY | Primary key to uniquely identify schedule within Coevent            |
-| Name         | NVARCHAR | 100  |      |              | The name of the schedule                                            |
+| AccountId    | BIGINT   |      |      | UX, FK       | Foreign key to the account who owns the schedule                    |
+| Name         | NVARCHAR | 100  |      | UX           | The name of the schedule                                            |
 | Description  | NVARCHAR | 2000 | \*   |              | Description of the schedule                                         |
-| AccountId    | BIGINT   |      |      | FK           | Foreign key to the account who owns the schedule                    |
 | IsDisabled   | BIT      |      |      |              | Whether the schedule is disabled                                    |
 | StartOnTime  | TIME2    |      |      |              | The start time                                                      |
 | EndOnTime    | TIME2    |      |      |              | The end time                                                        |
@@ -226,8 +226,8 @@ An trait provides a way to identify what claims a participant requires for any g
 | Column      | Type     | Size | Null | Constraint   | Description                                                 |
 | ----------- | -------- | ---- | ---- | ------------ | ----------------------------------------------------------- |
 | Id          | BIGINT   |      |      | PK, IDENTITY | Primary key to uniquely identify application within Coevent |
-| AccountId   | BIGINT   |      |      | FK           | Foreign key to the account who owns the trait               |
-| Name        | NVARCHAR | 50   |      |              | The name of the trait                                       |
+| AccountId   | BIGINT   |      |      | UX, FK       | Foreign key to the account who owns the trait               |
+| Name        | NVARCHAR | 50   |      | UX           | The name of the trait                                       |
 | Description | NVARCHAR | 2000 | \*   |              | Description of the trait                                    |
 | IsDisabled  | BIT      |      |      |              | Whether the trait is disabled                               |
 
@@ -239,9 +239,9 @@ A criteria can be applied to multiple different events and openings.
 | Column      | Type     | Size | Null | Constraint   | Description                                              |
 | ----------- | -------- | ---- | ---- | ------------ | -------------------------------------------------------- |
 | Id          | BIGINT   |      |      | PK, IDENTITY | Primary key to uniquely identify criteria within Coevent |
-| Name        | NVARCHAR | 100  |      |              | The name of the criteria                                 |
+| AccountId   | BIGINT   |      |      | UX, FK       | Foreign key to the account who owns the criteria         |
+| Name        | NVARCHAR | 100  |      | UX,          | The name of the criteria                                 |
 | Description | NVARCHAR | 2000 | \*   |              | Description of the criteria                              |
-| AccountId   | BIGINT   |      |      | PK, FK       | Foreign key to the account who owns the criteria         |
 
 ### Criteria Traits
 
@@ -310,7 +310,7 @@ A role is a group that a user belongs to. It provides claims.
 | Column      | Type     | Size | Null | Constraint   | Description                                                 |
 | ----------- | -------- | ---- | ---- | ------------ | ----------------------------------------------------------- |
 | Id          | BIGINT   |      |      | PK, IDENTITY | Primary key to uniquely identify application within Coevent |
-| AccountId   | BIGINT   |      |      | PK, FK       | Foreign key to the account who owns the criteria            |
-| Name        | NVARCHAR | 100  |      |              | The name of the opening                                     |
+| AccountId   | BIGINT   |      |      | FK, UX       | Foreign key to the account who owns the criteria            |
+| Name        | NVARCHAR | 100  |      | UX           | The name of the opening                                     |
 | Description | NVARCHAR | 2000 | \*   |              | Description of the opening                                  |
 | IsDisabled  | BIT      |      |      |              | Whether the opening is disabled                             |

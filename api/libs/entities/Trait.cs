@@ -3,17 +3,17 @@ namespace Coevent.Entities;
 public class Trait : AuditColumns
 {
     #region Properties
-    public long Id { get; protected set; }
+    public long Id { get; set; }
 
-    public long AccountId { get; protected set; }
+    public long AccountId { get; set; }
 
-    public Account Account { get; protected set; }
+    public Account? Account { get; set; }
 
-    public string Name { get; protected set; }
+    public string Name { get; set; }
 
-    public string Description { get; protected set; }
+    public string Description { get; set; }
 
-    public bool IsDisabled { get; protected set; }
+    public bool IsDisabled { get; set; }
 
     public ICollection<CriteriaTrait> CriteriaTraits { get; } = new List<CriteriaTrait>();
 
@@ -21,12 +21,26 @@ public class Trait : AuditColumns
     #endregion
 
     #region Constructors
+    protected Trait()
+    {
+        this.Name = String.Empty;
+        this.Description = String.Empty;
+        this.Account = null!;
+    }
+
     public Trait(string name, Account account, string createdBy) : base(createdBy)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;
         this.Account = account ?? throw new ArgumentNullException(nameof(account));
         this.AccountId = account.Id;
+    }
+
+    public Trait(string name, long accountId, string createdBy) : base(createdBy)
+    {
+        this.Name = name ?? throw new ArgumentNullException(nameof(name));
+        this.Description = String.Empty;
+        this.AccountId = accountId;
     }
     #endregion
 }

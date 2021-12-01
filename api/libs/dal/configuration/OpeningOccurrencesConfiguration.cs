@@ -16,6 +16,6 @@ public class OpeningOccurrenceConfiguration : AuditColumnsConfiguration<OpeningO
         builder.Property(m => m.Status).IsRequired();
 
         builder.HasOne(m => m.Opening).WithMany(m => m.OpeningOccurrences).HasForeignKey(m => m.OpeningId).OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(m => m.EventOccurrence).WithMany(m => m.OpeningOccurrences).HasForeignKey(m => m.EventOccurrenceId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.EventOccurrence).WithMany(m => m.OpeningOccurrences).HasForeignKey(m => m.EventOccurrenceId).OnDelete(DeleteBehavior.ClientNoAction);
     }
 }

@@ -6,9 +6,12 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Coevent.Dal</RootNamespace>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="DotNetEnv" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0" />
@@ -19,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\entities\Coevent.Entities.csproj" />
+    <ProjectReference Include="..\core\Coevent.Core.csproj" />
   </ItemGroup>
 
 </Project>

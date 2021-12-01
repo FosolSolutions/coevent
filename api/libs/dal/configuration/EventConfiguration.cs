@@ -23,7 +23,7 @@ public class EventConfiguration : AuditColumnsConfiguration<Event>
         builder.Property(m => m.ScheduleId).IsRequired(false);
         builder.Property(m => m.DisplayOrder).IsRequired();
 
-        builder.HasOne(m => m.Account).WithMany(m => m.Events).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(m => m.Schedule).WithMany(m => m.Events).HasForeignKey(m => m.ScheduleId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Account).WithMany(m => m.Events).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(m => m.Schedule).WithMany(m => m.Events).HasForeignKey(m => m.ScheduleId).OnDelete(DeleteBehavior.Restrict);
     }
 }

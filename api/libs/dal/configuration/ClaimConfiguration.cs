@@ -16,7 +16,7 @@ public class ClaimConfiguration : AuditColumnsConfiguration<Claim>
         builder.Property(m => m.Name).IsRequired().HasMaxLength(50);
         builder.Property(m => m.Description).IsRequired(false).HasMaxLength(2000);
 
-        builder.HasOne(m => m.Account).WithMany(m => m.Claims).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Account).WithMany(m => m.Claims).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(m => new { m.AccountId, m.Name }).IsUnique(true);
     }

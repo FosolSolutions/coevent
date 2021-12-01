@@ -1,25 +1,52 @@
-var builder = WebApplication.CreateBuilder(args);
+namespace Coevent.Api;
 
-// Add services to the container.
+using Serilog;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore;
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+/// <summary>
+/// Program class, provides the main program starting point for the Geo-spatial application.
+/// </summary>
+[ExcludeFromCodeCoverage]
+public class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    /// <summary>
+    /// The primary entry point for the application.
+    /// </summary>
+    /// <param name="args"></param>
+    public static void Main(string[] args)
+    {
+        // ConfigureLogging();
+        var builder = CreateWebHostBuilder(args);
+        builder.Build().Run();
+    }
+
+    /// <summary>
+    /// Create a default configuration and setup for a web application.
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+    {
+        DotNetEnv.Env.Load();
+        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        var config = new ConfigurationBuilder()
+            .AddEnvironmentVariables()
+            .AddCommandLine(args)
+            .Build();
+
+        return WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                config.AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
+                config.AddJsonFile("connectionstrings.json", optional: false, reloadOnChange: true);
+                config.AddJsonFile($"connectionstrings.{env}.json", optional: true, reloadOnChange: true);
+                config.AddEnvironmentVariables();
+                config.AddCommandLine(args);
+            })
+            .UseSerilog()
+            .UseUrls(config.GetValue<string>("ASPNETCORE_URLS"))
+            .UseStartup<Startup>();
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

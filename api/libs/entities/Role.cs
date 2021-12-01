@@ -3,17 +3,17 @@ namespace Coevent.Entities;
 public class Role : AuditColumns
 {
     #region Properties
-    public int Id { get; protected set; }
+    public int Id { get; set; }
 
-    public long AccountId { get; protected set; }
+    public long AccountId { get; set; }
 
-    public Account Account { get; protected set; }
+    public Account? Account { get; set; }
 
-    public string Name { get; protected set; }
+    public string Name { get; set; }
 
-    public string Description { get; protected set; }
+    public string Description { get; set; }
 
-    public bool IsDisabled { get; protected set; }
+    public bool IsDisabled { get; set; }
 
     public ICollection<UserRole> UsersManyToMany { get; } = new List<UserRole>();
 
@@ -25,10 +25,24 @@ public class Role : AuditColumns
     #endregion
 
     #region Constructors
+    protected Role()
+    {
+        this.Name = String.Empty;
+        this.Description = String.Empty;
+        this.Account = null!;
+    }
+
     public Role(Account account, string name, string createdBy) : base(createdBy)
     {
         this.Account = account ?? throw new ArgumentNullException(nameof(account));
         this.AccountId = account.Id;
+        this.Name = name ?? throw new ArgumentNullException(nameof(name));
+        this.Description = String.Empty;
+    }
+
+    public Role(long accountId, string name, string createdBy) : base(createdBy)
+    {
+        this.AccountId = accountId;
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;
     }

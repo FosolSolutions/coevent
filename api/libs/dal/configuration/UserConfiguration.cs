@@ -21,6 +21,7 @@ public class UserConfiguration : AuditColumnsConfiguration<User>
         builder.Property(m => m.LastName).IsRequired().HasMaxLength(50);
         builder.Property(m => m.FailedLogins).IsRequired();
         builder.Property(m => m.UserType).IsRequired();
+        builder.Property(m => m.VerifiedOn).IsRequired(false).HasColumnType("DATETIME2");
         builder.Property(m => m.IsVerified).IsRequired();
         builder.Property(m => m.IsDisabled).IsRequired();
 
@@ -28,11 +29,14 @@ public class UserConfiguration : AuditColumnsConfiguration<User>
                 m => m.HasOne(m => m.Role).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.RoleId).OnDelete(DeleteBehavior.Cascade),
                 m => m.HasOne(m => m.User).WithMany(m => m.RolesManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Cascade)
             );
-
-
         builder.HasMany(m => m.Accounts).WithMany(m => m.Users).UsingEntity<UserAccount>(
                 m => m.HasOne(m => m.Account).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Cascade),
                 m => m.HasOne(m => m.User).WithMany(m => m.AccountsManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Cascade)
             );
+
+        builder.HasIndex(m => m.Username).IsUnique(true);
+        builder.HasIndex(m => m.Email).IsUnique(true);
+        builder.HasIndex(m => m.Key).IsUnique(true);
+        builder.HasIndex(m => m.DisplayName).IsUnique(true);
     }
 }

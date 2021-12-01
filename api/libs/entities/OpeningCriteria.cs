@@ -3,20 +3,27 @@ namespace Coevent.Entities;
 public class OpeningCriteria : AuditColumns
 {
     #region Properties
-    public long OpeningId { get; protected set; }
+    public long OpeningId { get; set; }
 
-    public Opening Opening { get; protected set; }
+    public Opening? Opening { get; set; }
 
-    public long CriteriaId { get; protected set; }
+    public long CriteriaId { get; set; }
 
-    public Criteria Criteria { get; protected set; }
+    public Criteria? Criteria { get; set; }
 
-    public long TraitId { get; protected set; }
+    public long TraitId { get; set; }
 
-    public Trait Trait { get; protected set; }
+    public Trait? Trait { get; set; }
     #endregion
 
     #region Constructors
+    protected OpeningCriteria()
+    {
+        this.Opening = null!;
+        this.Criteria = null!;
+        this.Trait = null!;
+    }
+
     public OpeningCriteria(Opening opening, Criteria criteria, Trait trait, string createdBy) : base(createdBy)
     {
         this.Opening = opening ?? throw new ArgumentNullException(nameof(opening));
@@ -25,6 +32,13 @@ public class OpeningCriteria : AuditColumns
         this.CriteriaId = criteria.Id;
         this.Trait = trait ?? throw new ArgumentNullException(nameof(trait));
         this.TraitId = trait.Id;
+    }
+
+    public OpeningCriteria(long openingId, long criteriaId, long traitId, string createdBy) : base(createdBy)
+    {
+        this.OpeningId = openingId;
+        this.CriteriaId = criteriaId;
+        this.TraitId = traitId;
     }
     #endregion
 }

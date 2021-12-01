@@ -19,6 +19,6 @@ public class ParticipantConfiguration : AuditColumnsConfiguration<Participant>
         builder.Property(m => m.EndOn).IsRequired(false).HasColumnType("DATETIME2");
 
         builder.HasOne(m => m.User).WithMany(m => m.Participants).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(m => m.Calendar).WithMany(m => m.Participants).HasForeignKey(m => m.CalendarId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Calendar).WithMany(m => m.Participants).HasForeignKey(m => m.CalendarId).OnDelete(DeleteBehavior.Restrict);
     }
 }

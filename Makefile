@@ -41,6 +41,7 @@ setup: ## Setup and configure local environment
 	$(info Setup and configure local environment)
 	@sh ./scripts/variables.sh
 	@sh ./scripts/gen-env.sh
+	@sh ./scripts/gen-conf.sh
 
 .PHONY: setup
 

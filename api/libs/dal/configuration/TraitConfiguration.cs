@@ -18,5 +18,7 @@ public class TraitConfiguration : AuditColumnsConfiguration<Trait>
         builder.Property(m => m.IsDisabled).IsRequired();
 
         builder.HasOne(m => m.Account).WithMany(m => m.Traits).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(m => new { m.AccountId, m.Name }).IsUnique(true);
     }
 }

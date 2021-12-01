@@ -17,11 +17,13 @@ public class RoleConfiguration : AuditColumnsConfiguration<Role>
         builder.Property(m => m.AccountId).IsRequired();
         builder.Property(m => m.IsDisabled).IsRequired();
 
-        builder.HasOne(m => m.Account).WithMany(m => m.Roles).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Account).WithMany(m => m.Roles).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(m => m.Claims).WithMany(m => m.Roles).UsingEntity<RoleClaim>(
                 m => m.HasOne(m => m.Claim).WithMany(m => m.RolesManyToMany).HasForeignKey(m => m.ClaimId).OnDelete(DeleteBehavior.Cascade),
                 m => m.HasOne(m => m.Role).WithMany(m => m.ClaimsManyToMany).HasForeignKey(m => m.RoleId).OnDelete(DeleteBehavior.Cascade)
             );
+
+        builder.HasIndex(m => new { m.AccountId, m.Name }).IsUnique(true);
     }
 }

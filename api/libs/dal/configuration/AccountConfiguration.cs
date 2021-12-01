@@ -18,6 +18,6 @@ public class AccountConfiguration : AuditColumnsConfiguration<Account>
         builder.Property(m => m.IsDisabled).IsRequired();
         builder.Property(m => m.OwnerId).IsRequired();
 
-        builder.HasOne(m => m.Owner).WithMany(m => m.Accounts).HasForeignKey(m => m.OwnerId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Owner).WithMany(m => m.OwnerAccounts).HasForeignKey(m => m.OwnerId).OnDelete(DeleteBehavior.Restrict);
     }
 }

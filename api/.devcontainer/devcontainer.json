@@ -21,7 +21,18 @@
 		"ms-dotnettools.csharp",
 		"kishoreithadi.dotnet-core-essentials",
 		"yagoluiz.sonar-dotnet-vscode",
-		"fudge.auto-using"
+		"fudge.auto-using",
+		"aliasadidev.nugetpackagema",
+		"jmrog.vscode-nuget-package-manager",
+		"patcx.vscode-nuget-gallery",
+		"esbenp.prettier-vscode",
+		"rvest.vs-code-prettier-eslint",
+		"pflannery.vscode-versionlens",
+		"mamoruds.workspace-cacheclean",
+		"adrianwilczynski.asp-net-core-switcher",
+		"ms-dotnettools.vscode-dotnet-runtime",
+		"formulahendry.dotnet-test-explorer",
+		"adrianwilczynski.add-reference"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

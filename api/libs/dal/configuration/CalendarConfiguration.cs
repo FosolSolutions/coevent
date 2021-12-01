@@ -19,6 +19,13 @@ public class CalendarConfiguration : AuditColumnsConfiguration<Calendar>
         builder.Property(m => m.AccountId).IsRequired();
         builder.Property(m => m.Status).IsRequired();
 
-        builder.HasOne(m => m.Account).WithMany(m => m.Calendars).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Account).WithMany(m => m.Calendars).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.ClientNoAction);
+
+        builder.HasMany(m => m.Events).WithMany(m => m.Calendars).UsingEntity<CalendarEvent>(
+                m => m.HasOne(m => m.Event).WithMany(m => m.CalendarsManyToMany).HasForeignKey(m => m.EventId).OnDelete(DeleteBehavior.Cascade),
+                m => m.HasOne(m => m.Calendar).WithMany(m => m.EventsManyToMany).HasForeignKey(m => m.CalendarId).OnDelete(DeleteBehavior.Cascade)
+            );
+
+        builder.HasIndex(m => new { m.AccountId, m.Name }).IsUnique(true);
     }
 }

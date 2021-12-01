@@ -22,7 +22,7 @@ public class OpeningConfiguration : AuditColumnsConfiguration<Opening>
         builder.Property(m => m.Quantity).IsRequired();
         builder.Property(m => m.SurveyId).IsRequired(false);
 
-        builder.HasOne(m => m.Event).WithMany(m => m.Openings).HasForeignKey(m => m.EventId).OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(m => m.Survey).WithMany(m => m.Openings).HasForeignKey(m => m.SurveyId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Event).WithMany(m => m.Openings).HasForeignKey(m => m.EventId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(m => m.Survey).WithMany(m => m.Openings).HasForeignKey(m => m.SurveyId).OnDelete(DeleteBehavior.ClientNoAction);
     }
 }

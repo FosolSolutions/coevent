@@ -1,24 +1,28 @@
 namespace Coevent.Entities;
 
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 public abstract class AuditColumns
 {
     #region Properties
-    public DateTime CreatedOn { get; protected set; }
+    public DateTime CreatedOn { get; set; }
 
-    public string CreatedBy { get; protected set; }
+    public string CreatedBy { get; set; }
 
-    public DateTime UpdatedOn { get; protected set; }
+    public DateTime UpdatedOn { get; set; }
 
-    public string UpdatedBy { get; protected set; }
+    public string UpdatedBy { get; set; }
 
-    public byte[]? RowVersion { get; protected set; }
+    public byte[]? RowVersion { get; set; }
     #endregion
 
     #region Constructors
+    protected AuditColumns()
+    {
+        this.CreatedBy = String.Empty;
+        this.UpdatedBy = String.Empty;
+    }
+
     public AuditColumns(string createdBy)
     {
         this.CreatedOn = new DateTime();

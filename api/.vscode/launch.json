@@ -5,21 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (web)",
+      "name": ".NET Core Launch (api)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/server/bin/Debug/net6.0/coevent.api.dll",
+      "program": "${workspaceFolder}/server/bin/Debug/net6.0/Coevent.Api.dll",
       "args": [],
       "cwd": "${workspaceFolder}/server",
       "stopAtEntry": false,
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-      },
+      // "serverReadyAction": {
+      //   "action": "openExternally",
+      //   "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      // },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
+      "envFile": "${workspaceFolder}/.env",
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/server/Views"
       }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 using Coevent.Entities;
+using Coevent.Core.Extensions;
 
 public class CoeventContext : DbContext
 {
@@ -39,7 +40,7 @@ public class CoeventContext : DbContext
     #endregion
 
     #region Constructors
-    public CoeventContext(DbContextOptions<CoeventContext> options) : base(options)
+    private CoeventContext(DbContextOptions<CoeventContext> options) : base(options)
     {
         _httpContextAccessor = new HttpContextAccessor();
         _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
@@ -66,6 +67,31 @@ public class CoeventContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CoeventContext).Assembly);
+    }
+
+    public override int SaveChanges()
+    {
+        var username = _httpContextAccessor.HttpContext.User.GetUsername() ?? "Unknown";
+        var now = DateTime.UtcNow;
+
+        foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State != EntityState.Detached && e.State != EntityState.Unchanged))
+        {
+            if (entry.Entity is AuditColumns entity)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entity.CreatedBy = username;
+                        entity.CreatedOn = now;
+                        goto case EntityState.Modified;
+                    case EntityState.Modified:
+                        entity.UpdatedBy = username;
+                        entity.UpdatedOn = now;
+                        break;
+                }
+            }
+        }
+        return base.SaveChanges();
     }
     #endregion
 }

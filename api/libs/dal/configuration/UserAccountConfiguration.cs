@@ -15,5 +15,6 @@ public class UserAccountConfiguration : AuditColumnsConfiguration<UserAccount>
         builder.Property(m => m.AccountId).ValueGeneratedNever();
 
         builder.HasOne(m => m.User).WithMany(m => m.AccountsManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.Account).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.AccountId).OnDelete(DeleteBehavior.Cascade);
     }
 }

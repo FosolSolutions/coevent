@@ -5,19 +5,19 @@ using System;
 public class Account : AuditColumns
 {
     #region Properties
-    public long Id { get; protected set; }
+    public long Id { get; set; }
 
-    public string Name { get; protected set; }
+    public string Name { get; set; }
 
-    public string Description { get; protected set; }
+    public string Description { get; set; }
 
-    public AccountType AccountType { get; protected set; }
+    public AccountType AccountType { get; set; }
 
-    public bool IsDisabled { get; protected set; }
+    public bool IsDisabled { get; set; }
 
-    public long OwnerId { get; protected set; }
+    public long OwnerId { get; set; }
 
-    public User Owner { get; protected set; }
+    public User? Owner { get; set; }
 
     public ICollection<Calendar> Calendars { get; } = new List<Calendar>();
 
@@ -43,12 +43,26 @@ public class Account : AuditColumns
     #endregion
 
     #region Constructors
+    protected Account()
+    {
+        this.Name = String.Empty;
+        this.Description = string.Empty;
+        this.Owner = null!;
+    }
+
     public Account(string name, User owner, string createdBy) : base(createdBy)
     {
         this.Name = name;
         this.Description = String.Empty;
         this.Owner = owner ?? throw new ArgumentNullException(nameof(owner));
         this.OwnerId = owner.Id;
+    }
+
+    public Account(string name, long ownerId, string createdBy) : base(createdBy)
+    {
+        this.Name = name;
+        this.Description = String.Empty;
+        this.OwnerId = ownerId;
     }
     #endregion
 

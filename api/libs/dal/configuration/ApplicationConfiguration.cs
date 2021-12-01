@@ -18,6 +18,6 @@ public class ApplicationConfiguration : AuditColumnsConfiguration<Application>
         builder.Property(m => m.Status).IsRequired();
 
         builder.HasOne(m => m.User).WithMany(m => m.Applications).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(m => m.OpeningOccurrence).WithMany(m => m.Applications).HasForeignKey(m => new { m.OpeningId, m.EventOccurrenceId }).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(m => m.OpeningOccurrence).WithMany(m => m.Applications).HasForeignKey(m => new { m.OpeningId, m.EventOccurrenceId }).OnDelete(DeleteBehavior.Restrict);
     }
 }
