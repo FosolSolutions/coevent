@@ -65,6 +65,8 @@ public static class ServiceCollectionExtensions
 
         // Services
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<ICalendarService, CalendarService>();
+        services.AddScoped<IUserService, UserService>();
         return services;
     }
 }
