@@ -18,5 +18,7 @@ else
   echo "Your password is: $varPassword"
 fi
 
+varPaswordHash=$(echo '$varPassword' | docker run --rm -i datalust/seq config hash)
+
 varDbName=coevent
 varAuthDbName=keycloak

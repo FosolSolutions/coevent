@@ -3,7 +3,7 @@ namespace Coevent.Api.Mappings;
 using Mapster;
 using Entity = Coevent.Entities;
 
-public class AudiColumnsMap : IRegister
+public class AuditColumnsMap : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {

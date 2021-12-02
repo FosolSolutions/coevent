@@ -5,12 +5,14 @@ using Coevent.Api.Areas.Admin.Models;
 using Coevent.Dal.Services.Interfaces;
 using Coevent.Entities;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 /// <summary>
 /// UserController class, provides endpoints to manage users.
 /// </summary>
 [ApiController]
+[Authorize]
 [ApiVersion("1.0")]
 [Area("admin")]
 [Route("v{version:apiVersion}/[area]/users")]
@@ -46,7 +48,7 @@ public class UserController : ControllerBase
     public IActionResult Get()
     {
         var users = _dbService.FindAllNoTracking();
-        return new JsonResult(_mapper.Map<Models.UserModel[]>(users));
+        return new JsonResult(_mapper.Map<UserModel[]>(users));
     }
 
     /// <summary>

@@ -61,7 +61,6 @@ public class Startup
     /// <param name="services"></param>
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddSerilogging(this.Configuration);
         services.AddOptions();
         services.AddSingleton(this.Configuration);
         services.AddSingleton(this.Environment);
@@ -106,6 +105,24 @@ public class Startup
             options.ForwardedHeaders = ForwardedHeaders.All;
             options.AllowedHosts = this.Configuration.GetValue<string>("AllowedHosts")?.Split(';').ToList<string>() ?? new List<string>();
         });
+
+        services.AddCors(options =>
+        {
+            var withOrigins = this.Configuration.GetSection("Cors:WithOrigins").Value?.Split(" ") ?? Array.Empty<string>();
+            if (withOrigins.Any())
+            {
+                options.AddPolicy(name: "allowedOrigins",
+                    builder =>
+                    {
+                        builder
+                            .WithOrigins(withOrigins)
+                            .AllowAnyHeader()
+                            .AllowAnyMethod(); ;
+                    });
+            }
+        });
+
+        services.AddCoeventAuthentication(this.Configuration);
     }
 
     /// <summary>
@@ -133,7 +150,7 @@ public class Startup
         //app.UseHttpsRedirection();
 
         app.UseRouting();
-        app.UseCors();
+        app.UseCors("allowedOrigins");
 
         app.UseMiddleware(typeof(LogRequestMiddleware));
 

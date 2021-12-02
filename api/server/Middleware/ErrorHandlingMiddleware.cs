@@ -97,22 +97,16 @@ public class ErrorHandlingMiddleware
         {
             code = HttpStatusCode.BadRequest;
             message = "Data may have been modified or deleted since item was loaded.";
-
-            _logger.LogDebug(ex, "Middleware caught unhandled exception.");
         }
         else if (ex is DbUpdateException)
         {
             code = HttpStatusCode.BadRequest;
             message = "An error occurred while updating this item.";
-
-            _logger.LogDebug(ex, "Middleware caught unhandled exception.");
         }
         else if (ex is KeyNotFoundException)
         {
             code = HttpStatusCode.BadRequest;
             message = "Item does not exist.";
-
-            _logger.LogDebug(ex, "Middleware caught unhandled exception.");
         }
         else
         {

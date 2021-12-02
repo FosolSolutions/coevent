@@ -16,7 +16,7 @@ public static class JsonSerializerOptionsExtensions
     {
         options.DefaultIgnoreCondition = configuration["Serialization:Json:DefaultIgnoreCondition"].TryParseEnum<JsonIgnoreCondition>();
         options.PropertyNameCaseInsensitive = configuration["Serialization:Json:PropertyNameCaseInsensitive"].TryParseBoolean(true);
-        options.PropertyNamingPolicy = configuration["Serialization:Json:PropertyNamingPolicy"] == nameof(JsonNamingPolicy.CamelCase) ? JsonNamingPolicy.CamelCase : null;
+        options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.WriteIndented = configuration["Serialization:Json:WriteIndented"].TryParseBoolean(true);
         return options;
     }

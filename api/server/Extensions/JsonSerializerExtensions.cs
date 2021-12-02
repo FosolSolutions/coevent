@@ -8,13 +8,7 @@ public static class JsonSerializerExtensions
 {
     public static IServiceCollection AddJsonSerializerOptions(this IServiceCollection services, IConfiguration configuration)
     {
-        var jsonSerializerOptions = new JsonSerializerOptions()
-        {
-            DefaultIgnoreCondition = configuration["Serialization:Json:DefaultIgnoreCondition"].TryParseEnum<JsonIgnoreCondition>(),
-            PropertyNameCaseInsensitive = configuration["Serialization:Json:PropertyNameCaseInsensitive"].TryParseBoolean(true),
-            PropertyNamingPolicy = configuration["Serialization:Json:PropertyNamingPolicy"] == nameof(JsonNamingPolicy.CamelCase) ? JsonNamingPolicy.CamelCase : null,
-            WriteIndented = configuration["Serialization:Json:WriteIndented"].TryParseBoolean(true)
-        };
+        var jsonSerializerOptions = configuration.CreateJsonSerializerOptions();
         services.Configure<JsonSerializerOptions>(options =>
         {
             options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;

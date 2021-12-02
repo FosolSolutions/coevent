@@ -3,6 +3,7 @@ version: "3.5"
 services:
   ####################### Database #######################
   database:
+    image: coevent:database
     container_name: ce-database
     restart: on-failure:1
     build:
@@ -18,6 +19,7 @@ services:
 
   ####################### Keycloak #######################
   keycloak:
+    image: coevent:keycloak
     restart: on-failure:1
     container_name: ce-keycloak
     build:
@@ -27,14 +29,33 @@ services:
     volumes:
       - ./auth/keycloak/config/realm-export.json:/tmp/realm-export.json
     ports:
-      - ${KEYCLOAK_PORT:-10001}:8080
+      - ${KEYCLOAK_PORT:-10006}:8080
     depends_on:
       - database
     networks:
       - ce
 
+
+  ####################### SEQ - Logs #######################
+  seq:
+    image: coevent:seq
+    container_name: ce-seq
+    stdin_open: true
+    restart: on-failure:1
+    build:
+      context: tools/seq
+    volumes:
+      - ce-seq-data:/data
+    ports:
+      - ${SEQ_HTTP_PORT:-10006}:80
+      - ${SEQ_INJEST_PORT:-10007}:5341
+    env_file: ./tools/seq/.env
+    networks:
+      - ce
+
   ####################### API #######################
   api:
+    image: coevent:api
     container_name: ce-api
     restart: on-failure:1
     build:
@@ -43,8 +64,8 @@ services:
         BUILD_CONFIGURATION: Debug
     env_file: api/.env
     ports:
-      - ${API_HTTPS_PORT:-10002}:443
-      - ${API_HTTP_PORT:-10003}:8080
+      - ${API_HTTP_PORT:-10002}:80
+      - ${API_HTTPS_PORT:-10003}:443
     depends_on:
       - keycloak
     networks:
@@ -52,6 +73,7 @@ services:
 
   ####################### APP #######################
   app:
+    image: coevent:app
     container_name: ce-app
     stdin_open: true
     tty: true
@@ -64,6 +86,7 @@ services:
       - ce-app-node-cache:/usr/app/node_modules
     ports:
       - ${APP_HTTP_PORT:-10004}:3000
+      - ${APP_HTTPS_PORT:-10005}:443
     depends_on:
       - keycloak
       - api
@@ -81,5 +104,7 @@ networks:
 volumes:
   ce-database-data:
     name: ce-database-data
+  ce-seq-data:
+    name: ce-seq-data
   ce-app-node-cache:
     name: ce-app-node-cache

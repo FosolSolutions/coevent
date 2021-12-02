@@ -65,7 +65,16 @@ public static class ServiceCollectionExtensions
 
         // Services
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IApplicationService, ApplicationService>();
         services.AddScoped<ICalendarService, CalendarService>();
+        services.AddScoped<ICriteriaService, CriteriaService>();
+        services.AddScoped<IEventService, EventService>();
+        services.AddScoped<IOpeningService, OpeningService>();
+        services.AddScoped<IParticipantService, ParticipantService>();
+        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IScheduleService, ScheduleService>();
+        services.AddScoped<ISurveyService, SurveyService>();
+        services.AddScoped<ITraitService, TraitService>();
         services.AddScoped<IUserService, UserService>();
         return services;
     }

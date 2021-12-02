@@ -5,12 +5,14 @@ using Coevent.Api.Areas.Admin.Models;
 using Coevent.Dal.Services.Interfaces;
 using Coevent.Entities;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 /// <summary>
 /// AccountController class, provides endpoints to manage accounts.
 /// </summary>
 [ApiController]
+[Authorize]
 [ApiVersion("1.0")]
 [Area("admin")]
 [Route("v{version:apiVersion}/[area]/accounts")]
@@ -46,7 +48,7 @@ public class AccountController : ControllerBase
     public IActionResult Get()
     {
         var accounts = _dbService.FindAllNoTracking();
-        return new JsonResult(_mapper.Map<Models.AccountModel[]>(accounts));
+        return new JsonResult(_mapper.Map<AccountModel[]>(accounts));
     }
 
     /// <summary>

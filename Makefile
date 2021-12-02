@@ -49,10 +49,6 @@ setup: ## Setup and configure local environment
 # Docker Development
 ##############################################################################
 
-restart: | stop build up ## Restart local docker environment
-
-refresh: | down build up ## Recreates local docker environment
-
 up: ## Runs the local containers (n=service name)
 	$(info Running client and server...)
 	@docker-compose --env-file .env up -d $(n)
@@ -69,23 +65,31 @@ build: ## Builds the local containers (n=service name)
 	$(info Building images...)
 	@docker-compose build --no-cache $(n)
 
-rebuild: ## Build the local contains (n=service name) and then start them after building
+restart: ## Restart local docker container (n=service name)
+	$(info Restart local docker container)
+	@make stop n=$(n)
+	@make up n=$(n)
+
+refresh: ## Build the local contains (n=service name) and then start them after building
+	$(info Build and restart local docker container)
+	@make stop n=$(n)
 	@make build n=$(n)
 	@make up n=$(n)
+
+refresh-npm: ## Cleans and rebuilds the app.  This is useful when npm packages are changed.
+	@make clean-npm; make refresh n=app;
 
 clean: ## Removes all local containers, images, volumes, etc
 	$(info Removing all containers, images, volumes for solution.)
 	@docker-compose rm -f -v -s
-	@docker volume rm -f pims-app-node-cache
-	@docker volume rm -f pims-database-data
+	@docker volume rm -f ce-app-node-cache
+	@docker volume rm -f ce-database-data
+	@docker volume rm -f ce-seq-data
 
-npm-clean: ## Removes local containers, images, volumes, for frontend application.
-	$(info Removing frontend containers and volumes.)
-	@docker-compose stop frontend
-	@docker-compose rm -f -v -s frontend
-	@docker volume rm -f pims-app-node-cache
+clean-npm: ## Removes local containers, images, volumes, for app application.
+	$(info Removing app containers and volumes.)
+	@docker-compose stop app
+	@docker-compose rm -f -v -s app
+	@docker volume rm -f ce-app-node-cache
 
-npm-refresh: ## Cleans and rebuilds the frontend.  This is useful when npm packages are changed.
-	@make npm-clean; make build n=frontend; make up;
-
-.PHONY: local restart refresh up down stop build rebuild clean setup npm-clean npm-refresh
+.PHONY: local up down stop build restart refresh clean clean-npm refresh-npm

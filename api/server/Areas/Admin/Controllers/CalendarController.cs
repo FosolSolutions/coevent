@@ -5,12 +5,14 @@ using Coevent.Api.Areas.Admin.Models;
 using Coevent.Dal.Services.Interfaces;
 using Coevent.Entities;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 /// <summary>
 /// CalendarController class, provides endpoints to manage calendars.
 /// </summary>
 [ApiController]
+[Authorize]
 [ApiVersion("1.0")]
 [Area("admin")]
 [Route("v{version:apiVersion}/[area]/calendars")]
@@ -46,7 +48,7 @@ public class CalendarController : ControllerBase
     public IActionResult Get()
     {
         var calendars = _dbService.FindAllNoTracking();
-        return new JsonResult(_mapper.Map<Models.CalendarModel[]>(calendars));
+        return new JsonResult(_mapper.Map<CalendarModel[]>(calendars));
     }
 
     /// <summary>
