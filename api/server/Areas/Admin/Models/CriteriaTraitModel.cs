@@ -1,23 +1,49 @@
+namespace Coevent.Api.Areas.Admin.Models;
+
 using Coevent.Entities;
 
-namespace Coevent.Api.Areas.Admin.Models
+/// <summary>
+/// get/set -
+/// </summary>
+public class CriteriaTraitModel
 {
-    public class CriteriaTraitModel
-    {
-        public long CriteriaId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long CriteriaId { get; set; }
 
-        public CriteriaModel? Criteria { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public CriteriaModel? Criteria { get; set; }
 
-        public long TraitId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long TraitId { get; set; }
 
-        public TraitModel? Trait { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public TraitModel? Trait { get; set; }
 
-        public Formula Formula { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public Formula Formula { get; set; }
 
-        public string Value { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Value { get; set; } = default!;
 
-        public bool IsRequired { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public bool IsRequired { get; set; }
 
-        public bool IsDisabled { get; set; }
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public bool IsDisabled { get; set; }
 }

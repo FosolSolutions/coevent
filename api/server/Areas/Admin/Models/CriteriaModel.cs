@@ -1,19 +1,42 @@
-namespace Coevent.Api.Areas.Admin.Models
+namespace Coevent.Api.Areas.Admin.Models;
+
+/// <summary>
+/// get/set -
+/// </summary>
+public class CriteriaModel
 {
-    public class CriteriaModel
-    {
-        public long Id { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long Id { get; set; }
 
-        public string Name { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Name { get; set; } = default!;
 
-        public string Description { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Description { get; set; } = default!;
 
-        public long AccountId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long AccountId { get; set; }
 
-        public AccountModel? Account { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public AccountModel? Account { get; set; }
 
-        public ICollection<CriteriaTraitModel> CriteriaTraits { get; set; } = new List<CriteriaTraitModel>();
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ICollection<CriteriaTraitModel> CriteriaTraits { get; set; } = new List<CriteriaTraitModel>();
 
-        public ICollection<OpeningCriteriaModel> OpeningCriterias { get; set; } = new List<OpeningCriteriaModel>();
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ICollection<OpeningCriteriaModel> OpeningCriterias { get; set; } = new List<OpeningCriteriaModel>();
 }

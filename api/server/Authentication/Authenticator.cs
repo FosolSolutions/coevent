@@ -13,6 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Coevent.Dal.Security;
 
+/// <summary>
+/// get/set -
+/// </summary>
 public class Authenticator : IAuthenticator
 {
     #region Variables
@@ -23,6 +26,9 @@ public class Authenticator : IAuthenticator
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// get/set -
+    /// </summary>
     public Authenticator(IOptions<CoeventAuthenticationOptions> options, IUserService dbService, IHttpContextAccessor httpContext)
     {
         _options = options.Value;
@@ -33,6 +39,9 @@ public class Authenticator : IAuthenticator
     #endregion
 
     #region Methods
+    /// <summary>
+    /// get/set -
+    /// </summary>
     public string HashPassword(string password)
     {
         return Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -44,17 +53,26 @@ public class Authenticator : IAuthenticator
             ));
     }
 
-    public Entities.User FindUser(string username)
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public Entities.User? FindUser(string username)
     {
         return _dbService.FindByUsername(username);
     }
 
-    public Entities.User FindUser(Guid key)
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public Entities.User? FindUser(Guid key)
     {
         return _dbService.FindByKey(key);
     }
 
-    public Entities.User Validate(string username, string password)
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public Entities.User? Validate(string username, string password)
     {
         var user = FindUser(username);
         var hash = HashPassword(password);
@@ -63,6 +81,9 @@ public class Authenticator : IAuthenticator
         return user;
     }
 
+    /// <summary>
+    /// get/set -
+    /// </summary>
     public async Task<TokenModel> AuthenticateAsync(Entities.User user)
     {
         var claims = _dbService.GetClaims(user.Id).Select(c => new Claim(c.Name, c.Value, typeof(string).FullName, CoeventIssuer.Account(c.AccountId), CoeventIssuer.OriginalIssuer)).ToList();

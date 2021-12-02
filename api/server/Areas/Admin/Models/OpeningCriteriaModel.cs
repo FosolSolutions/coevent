@@ -1,17 +1,37 @@
-namespace Coevent.Api.Areas.Admin.Models
+namespace Coevent.Api.Areas.Admin.Models;
+
+/// <summary>
+/// get/set -
+/// </summary>
+public class OpeningCriteriaModel
 {
-    public class OpeningCriteriaModel
-    {
-        public long OpeningId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long OpeningId { get; set; }
 
-        public OpeningModel? Opening { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public OpeningModel? Opening { get; set; }
 
-        public long CriteriaId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long CriteriaId { get; set; }
 
-        public CriteriaModel? Criteria { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public CriteriaModel? Criteria { get; set; }
 
-        public long TraitId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long TraitId { get; set; }
 
-        public TraitModel? Trait { get; set; }
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public TraitModel? Trait { get; set; }
 }

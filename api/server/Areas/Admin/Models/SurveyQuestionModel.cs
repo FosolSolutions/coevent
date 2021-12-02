@@ -1,19 +1,42 @@
-namespace Coevent.Api.Areas.Admin.Models
+namespace Coevent.Api.Areas.Admin.Models;
+
+/// <summary>
+/// get/set -
+/// </summary>
+public class SurveyQuestionModel
 {
-    public class SurveyQuestionModel
-    {
-        public long Id { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long Id { get; set; }
 
-        public long SurveyId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long SurveyId { get; set; }
 
-        public SurveyModel? Survey { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public SurveyModel? Survey { get; set; }
 
-        public string Question { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Question { get; set; } = default!;
 
-        public bool IsDisabled { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public bool IsDisabled { get; set; }
 
-        public int DisplayOrder { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public int DisplayOrder { get; set; }
 
-        public bool IsRequired { get; set; }
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public bool IsRequired { get; set; }
 }

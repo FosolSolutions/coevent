@@ -1,28 +1,60 @@
+namespace Coevent.Api.Areas.Admin.Models;
+
 using Coevent.Entities;
 
-namespace Coevent.Api.Areas.Admin.Models
+/// <summary>
+/// get/set -
+/// </summary>
+public class CalendarModel
 {
-    public class CalendarModel
-    {
 
-        public int Id { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public int Id { get; set; }
 
-        public string Name { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Name { get; set; } = default!;
 
-        public string Description { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Description { get; set; } = default!;
 
-        public CalendarType CalendarType { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public CalendarType CalendarType { get; set; }
 
-        public bool IsDisabled { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public bool IsDisabled { get; set; }
 
-        public long AccountId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long AccountId { get; set; }
 
-        public AccountModel? Account { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public AccountModel? Account { get; set; }
 
-        public CalendarStatus Status { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public CalendarStatus Status { get; set; }
 
-        public ICollection<ParticipantModel> Participants { get; set; } = new List<ParticipantModel>();
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ICollection<ParticipantModel> Participants { get; set; } = new List<ParticipantModel>();
 
-        public ICollection<EventModel> Events { get; set; } = new List<EventModel>();
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ICollection<EventModel> Events { get; set; } = new List<EventModel>();
 }

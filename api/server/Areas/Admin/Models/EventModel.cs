@@ -1,39 +1,89 @@
+namespace Coevent.Api.Areas.Admin.Models;
+
 using Coevent.Entities;
 
-namespace Coevent.Api.Areas.Admin.Models
+/// <summary>
+/// get/set -
+/// </summary>
+public class EventModel
 {
-    public class EventModel
-    {
-        public long Id { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long Id { get; set; }
 
-        public string Name { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Name { get; set; } = default!;
 
-        public string Description { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Description { get; set; } = default!;
 
-        public EventType EventType { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public EventType EventType { get; set; }
 
-        public bool IsDisabled { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public bool IsDisabled { get; set; }
 
-        public long AccountId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long AccountId { get; set; }
 
-        public AccountModel? Account { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public AccountModel? Account { get; set; }
 
-        public EventStatus Status { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public EventStatus Status { get; set; }
 
-        public DateTime StartOn { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public DateTime StartOn { get; set; }
 
-        public DateTime EndOn { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public DateTime EndOn { get; set; }
 
-        public long? ScheduleId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long? ScheduleId { get; set; }
 
-        public ScheduleModel? Schedule { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ScheduleModel? Schedule { get; set; }
 
-        public int DisplayOrder { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public int DisplayOrder { get; set; }
 
-        public ICollection<CalendarModel> Calendars { get; set; } = new List<CalendarModel>();
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ICollection<CalendarModel> Calendars { get; set; } = new List<CalendarModel>();
 
-        public ICollection<EventOccurrenceModel> Occurrences { get; set; } = new List<EventOccurrenceModel>();
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ICollection<EventOccurrenceModel> Occurrences { get; set; } = new List<EventOccurrenceModel>();
 
-        public ICollection<OpeningModel> Openings { get; set; } = new List<OpeningModel>();
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ICollection<OpeningModel> Openings { get; set; } = new List<OpeningModel>();
 }

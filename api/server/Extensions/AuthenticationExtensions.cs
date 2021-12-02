@@ -6,8 +6,14 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Coevent.Api.Extensions;
 
+/// <summary>
+/// get/set -
+/// </summary>
 public static class AuthenticationExtensions
 {
+    /// <summary>
+    /// get/set -
+    /// </summary>
     public static IServiceCollection AddCoeventAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IAuthenticator, Authenticator>();

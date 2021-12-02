@@ -1,19 +1,39 @@
+namespace Coevent.Api.Areas.Admin.Models;
+
 using Coevent.Entities;
 
-namespace Coevent.Api.Areas.Admin.Models
+/// <summary>
+/// get/set -
+/// </summary>
+public class OpeningOccurrenceModel
 {
-    public class OpeningOccurrenceModel
-    {
-        public long OpeningId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long OpeningId { get; set; }
 
-        public OpeningModel? Opening { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public OpeningModel? Opening { get; set; }
 
-        public long EventOccurrenceId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long EventOccurrenceId { get; set; }
 
-        public EventOccurrenceModel? EventOccurrence { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public EventOccurrenceModel? EventOccurrence { get; set; }
 
-        public OpeningStatus Status { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public OpeningStatus Status { get; set; }
 
-        public ICollection<ApplicationModel> Applications { get; set; } = new List<ApplicationModel>();
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public ICollection<ApplicationModel> Applications { get; set; } = new List<ApplicationModel>();
 }

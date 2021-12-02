@@ -4,8 +4,14 @@ using Coevent.Core.Extensions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+/// <summary>
+/// get/set -
+/// </summary>
 public static class JsonSerializerExtensions
 {
+    /// <summary>
+    /// get/set -
+    /// </summary>
     public static IServiceCollection AddJsonSerializerOptions(this IServiceCollection services, IConfiguration configuration)
     {
         var jsonSerializerOptions = configuration.CreateJsonSerializerOptions();

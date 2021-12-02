@@ -1,13 +1,27 @@
-namespace Coevent.Api.Areas.Admin.Models
+namespace Coevent.Api.Areas.Admin.Models;
+
+/// <summary>
+/// get/set -
+/// </summary>
+public class CalendarEventModel
 {
-    public class CalendarEventModel
-    {
-        public int CalendarId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public int CalendarId { get; set; }
 
-        public CalendarModel Calendar { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public CalendarModel Calendar { get; set; } = default!;
 
-        public long EventId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long EventId { get; set; }
 
-        public EventModel Event { get; set; }
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public EventModel Event { get; set; } = default!;
 }

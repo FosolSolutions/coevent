@@ -1,17 +1,37 @@
-namespace Coevent.Api.Areas.Admin.Models
+namespace Coevent.Api.Areas.Admin.Models;
+
+/// <summary>
+/// get/set -
+/// </summary>
+public class UserClaimModel
 {
-    public class UserClaimModel
-    {
-        public long UserId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long UserId { get; set; }
 
-        public UserModel? User { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public UserModel? User { get; set; }
 
-        public long AccountId { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public long AccountId { get; set; }
 
-        public AccountModel? Account { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public AccountModel? Account { get; set; }
 
-        public string Name { get; set; }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Name { get; set; } = default!;
 
-        public string Value { get; set; }
-    }
+    /// <summary>
+    /// get/set -
+    /// </summary>
+    public string Value { get; set; } = default!;
 }

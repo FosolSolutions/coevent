@@ -1,3 +1,5 @@
+namespace Coevent.Api.Extensions;
+
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -5,10 +7,14 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Coevent.Api.Extensions;
-
+/// <summary>
+/// get/set -
+/// </summary>
 public static class SwaggerExtensions
 {
+    /// <summary>
+    /// get/set -
+    /// </summary>
     public static IServiceCollection AddCustomwagger(this IServiceCollection services)
     {
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, Swagger.ConfigureSwaggerOptions>();
@@ -71,6 +77,9 @@ public static class SwaggerExtensions
         return services;
     }
 
+    /// <summary>
+    /// get/set -
+    /// </summary>
     public static void UseCustomSwagger(this IApplicationBuilder app, IConfiguration configuration, IApiVersionDescriptionProvider provider, string prefix = "swagger")
     {
         app.UseSwagger(options =>
