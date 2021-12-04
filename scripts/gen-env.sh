@@ -56,6 +56,10 @@ echo \
 # ASPNETCORE_URLS=http://localhost:10002
 ASPNETCORE_ENVIRONMENT=Development
 BaseUrl=/api
+Cors__WithOrigins=http://localhost:10004 https://localhost:10004 http://localhost:3000 https://localhost:3000
+
+# Seq
+SEQ_API_INGESTION_URL=http://host.docker.internal:10007
 
 # Authentication
 Authentication__Issuer=localhost:10002
@@ -64,12 +68,10 @@ Authentication__Secret=$varPassword
 Authentication__Salt=$varPassword
 
 # Database
+ConnectionStrings__DefaultConnection=Server=host.docker.internal,10000;
 DB_NAME=$varDbName
 DB_USER=$varDbUser
-DB_PASSWORD=$varPassword
-
-# Seq
-SEQ_API_INGESTION_URL=http://host.docker.internal:10007" >> ./api/.env
+DB_PASSWORD=$varPassword" >> ./api/.env
     echo -e "\t./api/.env created"
 fi
 
