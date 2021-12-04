@@ -3,16 +3,29 @@
 
 body {
   margin: 0;
+  background-color: $primary-color-rgb;
+  background-image: url("./components/assets/coEventIconBl.svg");
+  background-position: center;
+  background-size: 100px;
+  height: 100%;
 }
 
 body, button, input, textarea {
-  font-family: -apple-system, BlinkMacSystemFont, 'BC Sans', 'Noto Sans', Arial, 'sans serif';
+  font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans', Arial, 'sans serif';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.footer {
+  background-color: $primary-light-color-rgb;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+label {
+  padding-right: 1rem;
 }
 
 p {
@@ -54,7 +67,7 @@ p {
 .type-light.place-bottom {
   padding: 2px 5px 2px 5px;
   border: solid 1px $primary-color;
-  
+
   &:after {
     border-bottom: 5px solid $primary-color !important;
   }

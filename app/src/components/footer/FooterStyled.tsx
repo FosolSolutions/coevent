@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Footer = styled.footer`
   display: flex;
   min-width: 768px;
-  background-color: #003366;
+  background-color: ${(props) => props.theme.primaryLightColorRgb};
   color: #ffffff;
   padding: 5px 5px 5px 50px;
 

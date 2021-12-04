@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Header = styled.header`
   display: flex;
   min-width: 768px;
-  background-color: #003366;
+  background-color: ${(props) => props.theme.primaryLightColorRgb};
   color: #ffffff;
   padding: 10px 00px 10px 3px;
 
@@ -17,8 +17,8 @@ export const Header = styled.header`
     margin-left: 20px;
   }
 
-  img {
-    width: 175px;
+  svg {
+    width: 15rem;
   }
 
   div:last-child {

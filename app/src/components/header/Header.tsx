@@ -1,4 +1,7 @@
-import { MenuToggle, UserMenu } from '..';
+import CoeventLogo from 'components/assets/coEventLogoWh.svg';
+import SVG from 'react-inlinesvg';
+
+import { UserMenu } from '..';
 import * as styled from './HeaderStyled';
 
 interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,16 +23,12 @@ interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Header: React.FC<IHeaderProps> = ({ name, authReady = true, children, ...rest }) => {
   return (
     <styled.Header {...rest}>
-      {authReady && <MenuToggle />}
       <div>
-        <a href="https://www2.gov.bc.ca/gov/content/home">
-          <img alt="BC Gov logo" src="./assets/gov_bc_logo.svg" />
+        <a href="/">
+          <SVG src={CoeventLogo} />
         </a>
       </div>
-      <div>
-        <div className="title">{name}</div>
-        {authReady && <UserMenu />}
-      </div>
+      <div>{authReady && <UserMenu />}</div>
     </styled.Header>
   );
 };

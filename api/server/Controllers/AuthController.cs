@@ -44,7 +44,7 @@ public class AuthController : ControllerBase
     /// <returns></returns>
     [HttpPost("participants/token")]
     [Produces(MediaTypeNames.Application.Json)]
-    public async Task<IActionResult> AuthenticateAsync(RequestModel model)
+    public async Task<IActionResult> AuthenticateAsync(ParticipantLoginModel model)
     {
         var user = _authenticator.FindUser(model.Key);
         if (user == null)

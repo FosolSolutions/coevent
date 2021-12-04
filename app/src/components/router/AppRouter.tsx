@@ -1,6 +1,5 @@
-import { Login, PrivateRoute } from 'components';
-import { NotFound } from 'features';
-import { Home } from 'features/home';
+import { PrivateRoute } from 'components';
+import { Home, Login, NotFound } from 'features';
 import { Claim } from 'hooks';
 import { Route, Switch } from 'react-router-dom';
 
@@ -15,8 +14,8 @@ export const AppRouter = () => {
       <PrivateRoute path="/admin" claims={Claim.administrator}>
         <p>Administration</p>
       </PrivateRoute>
-      <Route path="/" exact={true} component={Home}></Route>
-      <Route path="*" exact={true} component={NotFound} />
+      <PrivateRoute path="/" component={Home} />
+      <Route path="*" exact component={NotFound} />
     </Switch>
   );
 };

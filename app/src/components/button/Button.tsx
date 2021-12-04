@@ -23,11 +23,12 @@ export const Button: React.FC<IButtonProps> = ({
   variant = ButtonVariant.primary,
   tooltip,
   children,
+  type = 'button',
   ...rest
 }) => {
   return (
     <styled.Button
-      type="button"
+      type={type}
       variant={variant}
       {...rest}
       className="btn"

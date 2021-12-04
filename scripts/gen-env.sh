@@ -58,7 +58,8 @@ fi
 # APP
 if ! test -f "./app/.env"; then
 echo \
-"" >> ./app/.env
+"NODE_ENV=development
+CHOKIDAR_USEPOLLING=true" >> ./app/.env
     echo -e "\t./app/.env created"
 fi
 

@@ -1,4 +1,4 @@
-import { Claim, Role } from 'hooks';
+import { Claim, Role, useAccount } from 'hooks';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 interface IPrivateRouteProps extends RouteProps {
@@ -29,11 +29,12 @@ export const PrivateRoute = ({
   children,
   ...rest
 }: IPrivateRouteProps) => {
+  const auth = useAccount();
   return (
     <Route
       {...rest}
       render={(routeProps) => {
-        if (!!claims || !!roles) {
+        if (!auth.authenticated || !!claims || !!roles) {
           return <Redirect to="/login" />;
         } else {
           if (Component) return <Component {...routeProps} />;

@@ -1,9 +1,9 @@
 namespace Coevent.Api.Models.Tokens;
 
 /// <summary>
-/// RequestModel class, provides a model that authenticates a participant key.
+/// ParticipantLoginModel class, provides a model that authenticates a participant key.
 /// </summary>
-public class RequestModel
+public class ParticipantLoginModel
 {
     #region Properties
     /// <summary>
