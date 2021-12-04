@@ -49,9 +49,20 @@ fi
 # API
 if ! test -f "./api/.env"; then
 echo \
-"DB_NAME=$varDbName
+"# Database
+DB_NAME=$varDbName
 DB_USER=$varDbUser
-DB_PASSWORD=$varPassword" >> ./api/.env
+DB_PASSWORD=$varPassword
+
+# API
+ASPNETCORE_URLS=http://host.docker.internal:10002
+ASPNETCORE_ENVIRONMENT=Development
+
+# Authentication
+Authentication__Issuer=localhost:10002
+Authentication__Audience=localhost:10002
+Authentication__Secret=$varPassword
+Authentication__Salt=$varPassword" >> ./api/.env
     echo -e "\t./api/.env created"
 fi
 
@@ -72,3 +83,12 @@ DB_PASSWORD=$varPassword" >> ./api/libs/dal/.env
     echo -e "\t./api/libs/dal/.env created"
 fi
 
+# Seq Logging
+if ! test -f "./tools/seq/.env"; then
+echo \
+"ACCEPT_EULA=Y
+SEQ_FIRSTRUN_ADMINUSERNAME=$varDbName
+SEQ_FIRSTRUN_ADMINPASSWORDHASH=$varPaswordHash
+SEQ_API_INGESTIONPORT=5341" >> ./tools/seq/.env
+    echo -e "\t./tools/seq/.env created"
+fi

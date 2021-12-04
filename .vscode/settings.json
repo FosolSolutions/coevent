@@ -3,5 +3,7 @@
     "Coevent",
     "Formik",
     "Serilog"
-  ]
+  ],
+  "npm.packageManager": "yarn",
+  "eslint.packageManager": "yarn"
 }
