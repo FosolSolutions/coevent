@@ -5,6 +5,8 @@ services:
   database:
     image: coevent:database
     container_name: ce-database
+    profiles:
+      - "core"
     restart: on-failure:1
     build:
       context: db/mssql
@@ -22,6 +24,8 @@ services:
     image: coevent:keycloak
     restart: on-failure:1
     container_name: ce-keycloak
+    profiles:
+      - "disable"
     build:
       context: ./auth/keycloak
     env_file:
@@ -40,6 +44,8 @@ services:
   seq:
     image: coevent:seq
     container_name: ce-seq
+    profiles:
+      - "utility"
     stdin_open: true
     restart: on-failure:1
     build:
@@ -57,6 +63,8 @@ services:
   api:
     image: coevent:api
     container_name: ce-api
+    profiles:
+      - "core"
     restart: on-failure:1
     build:
       context: api
@@ -67,7 +75,7 @@ services:
       - ${API_HTTP_PORT:-10002}:80
       - ${API_HTTPS_PORT:-10003}:443
     depends_on:
-      - keycloak
+      - database
     networks:
       - ce
 
@@ -75,6 +83,8 @@ services:
   app:
     image: coevent:app
     container_name: ce-app
+    profiles:
+      - "core"
     stdin_open: true
     tty: true
     restart: on-failure:1
@@ -88,7 +98,6 @@ services:
       - ${APP_HTTP_PORT:-10004}:3000
       - ${APP_HTTPS_PORT:-10005}:443
     depends_on:
-      - keycloak
       - api
     env_file: ./app/.env
     networks:

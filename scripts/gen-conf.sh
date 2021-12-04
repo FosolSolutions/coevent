@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # DB Migration
 if ! test -f "./api/libs/dal/connectionstrings.json"; then
 echo \
@@ -10,13 +12,13 @@ echo \
 fi
 
 # API
-if ! test -f "./api/connectionstrings.json"; then
+if ! test -f "./api/server/connectionstrings.json"; then
 echo \
 "{
   \"ConnectionStrings\": {
     \"DefaultConnection\": \"Server=localhost,10000;\"
   }
-}" >> ./api/connectionstrings.json
-    echo -e "\t./api/connectionstrings.json created"
+}" >> ./api/server/connectionstrings.json
+    echo -e "\t./api/server/connectionstrings.json created"
 fi
 

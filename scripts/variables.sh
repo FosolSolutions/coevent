@@ -1,3 +1,5 @@
+#!/bin/bash
+
 varDbUser=$(grep -Po 'DB_USER=\K.*$' ./db/mssql/.env)
 if [ -z "$varDbUser" ]
 then
@@ -17,8 +19,6 @@ then
 else
   echo "Your password is: $varPassword"
 fi
-
-varPaswordHash=$(echo '$varPassword' | docker run --rm -i datalust/seq config hash)
 
 varDbName=coevent
 varAuthDbName=keycloak

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Docker Compose
 if ! test -f "./.env"; then
 echo \
@@ -49,20 +51,24 @@ fi
 # API
 if ! test -f "./api/.env"; then
 echo \
-"# Database
-DB_NAME=$varDbName
-DB_USER=$varDbUser
-DB_PASSWORD=$varPassword
-
-# API
-ASPNETCORE_URLS=http://host.docker.internal:10002
+"# API
+# Uncomment ASPNETCORE_URLS if you want to run outside of docker.
+# ASPNETCORE_URLS=http://localhost:10002
 ASPNETCORE_ENVIRONMENT=Development
 
 # Authentication
 Authentication__Issuer=localhost:10002
 Authentication__Audience=localhost:10002
 Authentication__Secret=$varPassword
-Authentication__Salt=$varPassword" >> ./api/.env
+Authentication__Salt=$varPassword
+
+# Database
+DB_NAME=$varDbName
+DB_USER=$varDbUser
+DB_PASSWORD=$varPassword
+
+# Seq
+SEQ_API_INGESTION_URL=http://host.docker.internal:10007" >> ./api/.env
     echo -e "\t./api/.env created"
 fi
 
@@ -70,7 +76,13 @@ fi
 if ! test -f "./app/.env"; then
 echo \
 "NODE_ENV=development
-CHOKIDAR_USEPOLLING=true" >> ./app/.env
+CHOKIDAR_USEPOLLING=true
+
+# Uncommment PORT if you want to run outside of docker.
+# PORT=10004
+PUBLIC_URL=/
+API_URL=http://localhost:10002
+BROWSER=none" >> ./app/.env
     echo -e "\t./app/.env created"
 fi
 
@@ -87,8 +99,8 @@ fi
 if ! test -f "./tools/seq/.env"; then
 echo \
 "ACCEPT_EULA=Y
-SEQ_FIRSTRUN_ADMINUSERNAME=$varDbName
-SEQ_FIRSTRUN_ADMINPASSWORDHASH=$varPaswordHash
+# SEQ_FIRSTRUN_ADMINUSERNAME=$varDbUser
+# SEQ_FIRSTRUN_ADMINPASSWORDHASH=
 SEQ_API_INGESTIONPORT=5341" >> ./tools/seq/.env
     echo -e "\t./tools/seq/.env created"
 fi

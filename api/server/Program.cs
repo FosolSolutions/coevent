@@ -43,7 +43,7 @@ public class Program
         var env = context?.HostingEnvironment.EnvironmentName ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
         builder.AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
-        builder.AddJsonFile("connectionstrings.json", optional: false, reloadOnChange: true);
+        builder.AddJsonFile("connectionstrings.json", optional: true, reloadOnChange: true);
         builder.AddJsonFile($"connectionstrings.{env}.json", optional: true, reloadOnChange: true);
         builder.AddEnvironmentVariables();
         builder.AddCommandLine(args);

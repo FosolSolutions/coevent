@@ -51,7 +51,7 @@ setup: ## Setup and configure local environment
 
 up: ## Runs the local containers (n=service name)
 	$(info Running client and server...)
-	@docker-compose --env-file .env up -d $(n)
+	@docker-compose --env-file .env --profile core up -d $(n)
 
 down: ## Stops the local containers and removes them
 	$(info Stopping client and server...)
@@ -93,3 +93,13 @@ clean-npm: ## Removes local containers, images, volumes, for app application.
 	@docker volume rm -f ce-app-node-cache
 
 .PHONY: local up down stop build restart refresh clean clean-npm refresh-npm
+
+##############################################################################
+# Utilities
+##############################################################################
+
+hash: ## Generate a hash (v={value})
+	$(info Generate a hash (v=$(v)))
+	@./scripts/gen-hash.sh $(v)
+
+.PHONY: hash
