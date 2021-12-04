@@ -1,5 +1,6 @@
 namespace Coevent.Api;
 
+using Coevent.Api.Extensions;
 using Serilog;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore;
@@ -28,39 +29,13 @@ public class Program
     public static IWebHostBuilder CreateWebHostBuilder(string[] args)
     {
         DotNetEnv.Env.Load();
-        var config = ApplyConfiguration(null, new ConfigurationBuilder(), args).Build();
+        var config = WebHostBuilderContextExtensions.ApplyConfiguration(null, new ConfigurationBuilder(), args).Build();
         var builder = WebHost.CreateDefaultBuilder(args);
 
         return WebHost.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((context, config) => ApplyConfiguration(context, config, args))
-            .UseSerilog(ApplyConfiguration)
+            .ConfigureAppConfiguration((context, config) => context.ApplyConfiguration(config, args))
+            .UseSerilog(WebHostBuilderContextExtensions.ApplyConfiguration)
             .UseUrls(config.GetValue<string>("ASPNETCORE_URLS"))
             .UseStartup<Startup>();
-    }
-
-    private static IConfigurationBuilder ApplyConfiguration(WebHostBuilderContext? context, IConfigurationBuilder builder, string[] args)
-    {
-        var env = context?.HostingEnvironment.EnvironmentName ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-        builder.AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
-        builder.AddJsonFile("connectionstrings.json", optional: true, reloadOnChange: true);
-        builder.AddJsonFile($"connectionstrings.{env}.json", optional: true, reloadOnChange: true);
-        builder.AddEnvironmentVariables();
-        builder.AddCommandLine(args);
-        return builder;
-    }
-
-    private static void ApplyConfiguration(WebHostBuilderContext context, LoggerConfiguration config)
-    {
-        var env = context.HostingEnvironment.EnvironmentName;
-        config.ReadFrom.Configuration(context.Configuration)
-            .Enrich.FromLogContext()
-            .Enrich.WithMachineName()
-            .WriteTo.Console()
-            .WriteTo.Seq(context.Configuration.GetValue<string>("SEQ_API_INGESTION_URL"))
-            .Enrich.WithProperty("Environment", env);
-
-        if (!context.HostingEnvironment.IsProduction())
-            config.WriteTo.Debug();
     }
 }

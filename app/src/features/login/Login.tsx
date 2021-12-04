@@ -1,6 +1,7 @@
 import { Button, Text } from 'components';
 import { Formik } from 'formik';
 import { useAccount, useApi } from 'hooks';
+import { useHistory } from 'react-router';
 
 import { IParticipantLoginForm } from './interfaces';
 import * as styled from './LoginStyled';
@@ -11,8 +12,9 @@ import * as styled from './LoginStyled';
  * @returns Login component.
  */
 export const Login = () => {
-  const account = useAccount();
+  const auth = useAccount();
   const api = useApi();
+  const history = useHistory();
 
   const defaultValues: IParticipantLoginForm = { key: '' };
 
@@ -29,8 +31,8 @@ export const Login = () => {
               try {
                 if (!!values.key) {
                   var token = await api.loginAsParticipant({ key: values.key });
-                  account.state.setToken(token);
-                  account.state.setAuthenticated(true);
+                  auth.login(token);
+                  history.push('/');
                   setSubmitting(false);
                 }
               } catch (error) {

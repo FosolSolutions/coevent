@@ -1,3 +1,5 @@
+import { useAccount } from 'hooks';
+
 import { Button, ButtonVariant, LogoutButton } from '..';
 import * as styled from './styled';
 
@@ -11,12 +13,14 @@ import * as styled from './styled';
  * @returns UserMenu component.
  */
 export const UserMenu = () => {
+  const auth = useAccount();
+
   return (
     <div>
-      {false ? (
+      {auth.authenticated ? (
         <styled.UserMenu>
-          <div>display name</div>
-          <LogoutButton onClick={() => null} size={20} />
+          <div>{auth.state.userInfo?.displayName}</div>
+          <LogoutButton onClick={() => auth.logout()} size={20} />
         </styled.UserMenu>
       ) : (
         <Button variant={ButtonVariant.warning} onClick={() => null}>

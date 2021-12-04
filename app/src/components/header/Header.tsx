@@ -6,10 +6,6 @@ import * as styled from './HeaderStyled';
 
 interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
-   * Is authentication client ready?
-   */
-  authReady?: boolean;
-  /**
    * The site name.
    */
   name: string;
@@ -20,7 +16,7 @@ interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
  * @param param0 Header element attributes.
  * @returns Header component.
  */
-export const Header: React.FC<IHeaderProps> = ({ name, authReady = true, children, ...rest }) => {
+export const Header: React.FC<IHeaderProps> = ({ name, children, ...rest }) => {
   return (
     <styled.Header {...rest}>
       <div>
@@ -28,7 +24,7 @@ export const Header: React.FC<IHeaderProps> = ({ name, authReady = true, childre
           <SVG src={CoeventLogo} />
         </a>
       </div>
-      <div>{authReady && <UserMenu />}</div>
+      <div>{<UserMenu />}</div>
     </styled.Header>
   );
 };

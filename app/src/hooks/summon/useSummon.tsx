@@ -1,9 +1,8 @@
 import axios from 'axios';
+import { AccountContext } from 'hooks';
 import { isEmpty } from 'lodash';
 import React from 'react';
 import { toast } from 'react-toastify';
-
-import { SummonContext } from './SummonContext';
 
 export const defaultEnvelope = (x: any) => ({ data: { records: x } });
 
@@ -34,7 +33,7 @@ export const useSummon = ({
   envelope?: typeof defaultEnvelope;
   baseURL?: string;
 } = {}) => {
-  const state = React.useContext(SummonContext);
+  const state = React.useContext(AccountContext);
   let loadingToastId: React.ReactText | undefined = undefined;
 
   const instance = axios.create({
@@ -45,12 +44,21 @@ export const useSummon = ({
   });
 
   instance.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${state.token}`;
-    if (selector !== undefined) {
-      const storedValue = selector(state);
+    if (!!state.token) {
+      config.headers.Authorization = `Bearer ${state.token}`;
+    }
+    const cancelTokenSource = axios.CancelToken.source();
+    // axios.get('', { cancelToken: cancelTokenSource.token });
+    // cancelTokenSource.cancel();
 
-      if (!isEmpty(storedValue)) {
-        throw new axios.Cancel(JSON.stringify(envelope(storedValue)));
+    // TODO: Figure out what this part is all about.
+    if (selector !== undefined) {
+      const cancelToken = selector({
+        token: cancelTokenSource.token,
+      });
+
+      if (!isEmpty(cancelToken)) {
+        throw new axios.Cancel(JSON.stringify(envelope(cancelToken)));
       }
     }
     if (lifecycleToasts?.loadingToast) {

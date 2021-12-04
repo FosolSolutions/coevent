@@ -51,19 +51,19 @@ setup: ## Setup and configure local environment
 
 up: ## Runs the local container(s) (n=service name)
 	$(info Runs the local container(s) (n=$(n)))
-	@docker-compose --env-file .env --profile core up -d $(n)
+	@./scripts/up.sh $(n)
 
 down: ## Stops the local containers and removes them
 	$(info Stops the local containers and removes them)
-	@docker-compose --profile core --profile utility down
+	@docker-compose --profile all down
 
 stop: ## Stops the local container(s) (n=service name)
 	$(info Stops the local container(s) (n=$(n)))
-	@docker-compose --profile core --profile utility stop $(n)
+	@docker-compose --profile all stop $(n)
 
 build: ## Builds the local container(s) (n=service name)
 	$(info Builds the local container(s) (n=$(n)))
-	@docker-compose --profile core --profile utility build --no-cache $(n)
+	@docker-compose --profile all build --no-cache $(n)
 
 restart: ## Restart local docker container(s) (n=service name)
 	$(info Restart local docker container(s) (n=$(n)))
@@ -85,8 +85,8 @@ clean: ## Removes all local containers, images, volumes, etc
 
 clean-npm: ## Removes local containers, images, volumes, for app application.
 	$(info Removing app containers and volumes.)
-	@docker-compose stop app
-	@docker-compose rm -f -v -s app
+	@docker-compose --profile all stop app
+	@docker-compose --profile all rm -f -v -s --profile all app
 	@docker volume rm -f ce-app-node-cache
 
 .PHONY: local up down stop build restart refresh clean clean-npm refresh-npm

@@ -55,6 +55,7 @@ echo \
 # Uncomment ASPNETCORE_URLS if you want to run outside of docker.
 # ASPNETCORE_URLS=http://localhost:10002
 ASPNETCORE_ENVIRONMENT=Development
+BaseUrl=/api
 
 # Authentication
 Authentication__Issuer=localhost:10002
