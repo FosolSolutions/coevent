@@ -49,35 +49,32 @@ setup: ## Setup and configure local environment
 # Docker Development
 ##############################################################################
 
-up: ## Runs the local containers (n=service name)
-	$(info Running client and server...)
+up: ## Runs the local container(s) (n=service name)
+	$(info Runs the local container(s) (n=$(n)))
 	@docker-compose --env-file .env --profile core up -d $(n)
 
 down: ## Stops the local containers and removes them
-	$(info Stopping client and server...)
-	@docker-compose down
+	$(info Stops the local containers and removes them)
+	@docker-compose --profile core --profile utility down
 
-stop: ## Stops the local containers (n=service name)
-	$(info Stopping client and server...)
-	@docker-compose stop $(n)
+stop: ## Stops the local container(s) (n=service name)
+	$(info Stops the local container(s) (n=$(n)))
+	@docker-compose --profile core --profile utility stop $(n)
 
-build: ## Builds the local containers (n=service name)
-	$(info Building images...)
-	@docker-compose build --no-cache $(n)
+build: ## Builds the local container(s) (n=service name)
+	$(info Builds the local container(s) (n=$(n)))
+	@docker-compose --profile core --profile utility build --no-cache $(n)
 
-restart: ## Restart local docker container (n=service name)
-	$(info Restart local docker container)
-	@make stop n=$(n)
-	@make up n=$(n)
+restart: ## Restart local docker container(s) (n=service name)
+	$(info Restart local docker container(s) (n=$(n)))
+	@make stop up n=$(n)
 
-refresh: ## Build the local contains (n=service name) and then start them after building
-	$(info Build and restart local docker container)
-	@make stop n=$(n)
-	@make build n=$(n)
-	@make up n=$(n)
+refresh: ## Stop, build the local container(s) and then start them after building (n=service name)
+	$(info Stop, build the local container(s) and then start them after building (n=$(n)))
+	@make stop build up n=$(n)
 
 refresh-npm: ## Cleans and rebuilds the app.  This is useful when npm packages are changed.
-	@make clean-npm; make refresh n=app;
+	@make clean-npm refresh n=app;
 
 clean: ## Removes all local containers, images, volumes, etc
 	$(info Removing all containers, images, volumes for solution.)
