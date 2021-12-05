@@ -78,7 +78,7 @@ public class CriteriaController : ControllerBase
     public IActionResult Add(CriteriaModel model)
     {
         var criteria = _dbService.AddAndSave(_mapper.Map<Criteria>(model));
-        return new JsonResult(_mapper.Map<CriteriaModel>(criteria));
+        return CreatedAtAction(nameof(Get), new { id = criteria.Id }, _mapper.Map<CriteriaModel>(criteria));
     }
 
     /// <summary>

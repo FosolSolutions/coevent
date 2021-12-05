@@ -28,7 +28,7 @@ public class CriteriaTrait : AuditColumns
         this.Value = String.Empty;
     }
 
-    public CriteriaTrait(Criteria criteria, Trait trait, Formula formula, string value, string createdBy) : base(createdBy)
+    public CriteriaTrait(Criteria criteria, Trait trait, Formula formula, string value)
     {
         this.Criteria = criteria ?? throw new ArgumentNullException(nameof(criteria));
         this.CriteriaId = criteria.Id;
@@ -39,7 +39,7 @@ public class CriteriaTrait : AuditColumns
         this.IsRequired = true;
     }
 
-    public CriteriaTrait(long criteriaId, long traitId, Formula formula, string value, string createdBy) : base(createdBy)
+    public CriteriaTrait(long criteriaId, long traitId, Formula formula, string value)
     {
         this.CriteriaId = criteriaId;
         this.TraitId = traitId;

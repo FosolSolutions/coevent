@@ -78,7 +78,7 @@ public class TraitController : ControllerBase
     public IActionResult Add(TraitModel model)
     {
         var trait = _dbService.AddAndSave(_mapper.Map<Trait>(model));
-        return new JsonResult(_mapper.Map<TraitModel>(trait));
+        return CreatedAtAction(nameof(Get), new { id = trait.Id }, _mapper.Map<TraitModel>(trait));
     }
 
     /// <summary>

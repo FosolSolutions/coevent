@@ -1,9 +1,11 @@
+using Coevent.Api.Models;
+
 namespace Coevent.Api.Areas.Admin.Models;
 
 /// <summary>
 /// get/set -
 /// </summary>
-public class RoleModel
+public class RoleModel : AuditColumnsModel
 {
     /// <summary>
     /// get/set -

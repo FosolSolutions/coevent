@@ -1,9 +1,11 @@
+using Coevent.Api.Models;
+
 namespace Coevent.Api.Areas.Admin.Models;
 
 /// <summary>
 /// get/set -
 /// </summary>
-public class CalendarEventModel
+public class CalendarEventModel : AuditColumnsModel
 {
     /// <summary>
     /// get/set -

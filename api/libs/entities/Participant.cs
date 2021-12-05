@@ -27,7 +27,7 @@ public class Participant : AuditColumns
         this.User = null!;
     }
 
-    public Participant(Calendar calendar, User user, string createdBy) : base(createdBy)
+    public Participant(Calendar calendar, User user)
     {
         this.Calendar = calendar ?? throw new ArgumentNullException(nameof(calendar));
         this.CalendarId = calendar.Id;
@@ -35,7 +35,7 @@ public class Participant : AuditColumns
         this.UserId = user.Id;
     }
 
-    public Participant(int calendarId, long userId, string createdBy) : base(createdBy)
+    public Participant(int calendarId, long userId)
     {
         this.CalendarId = calendarId;
         this.UserId = userId;

@@ -27,7 +27,7 @@ public class Claim : AuditColumns
         this.Account = null!;
     }
 
-    public Claim(Account account, string name, string createdBy) : base(createdBy)
+    public Claim(Account account, string name)
     {
         this.Account = account ?? throw new ArgumentNullException(nameof(account));
         this.AccountId = account.Id;
@@ -35,7 +35,7 @@ public class Claim : AuditColumns
         this.Description = String.Empty;
     }
 
-    public Claim(long accountId, string name, string createdBy) : base(createdBy)
+    public Claim(long accountId, string name)
     {
         this.AccountId = accountId;
         this.Name = name ?? throw new ArgumentNullException(nameof(name));

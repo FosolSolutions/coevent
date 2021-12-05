@@ -583,6 +583,7 @@ namespace Coevent.Dal.Migrations
                     Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
                     EventId = table.Column<long>(type: "bigint", nullable: false),
+                    Group = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false),
                     OpeningType = table.Column<int>(type: "int", nullable: false),
                     ApplyType = table.Column<int>(type: "int", nullable: false),

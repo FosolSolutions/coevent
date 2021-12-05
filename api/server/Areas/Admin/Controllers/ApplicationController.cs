@@ -78,7 +78,7 @@ public class ApplicationController : ControllerBase
     public IActionResult Add(ApplicationModel model)
     {
         var application = _dbService.AddAndSave(_mapper.Map<Application>(model));
-        return new JsonResult(_mapper.Map<ApplicationModel>(application));
+        return CreatedAtAction(nameof(Get), new { id = application.Id }, _mapper.Map<ApplicationModel>(application));
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
-import { defaultEnvelope, ITokenModel, LifecycleToasts, useSummon } from 'hooks';
+import { defaultEnvelope, LifecycleToasts, useSummon } from 'hooks';
 
-import { IParticipantLoginModel, Settings } from '.';
+import { Settings, useApiAuth } from '.';
 
 /**
  * Common hook to make requests to the PIMS APi.
@@ -15,18 +15,11 @@ export const useApi = (
   } = {},
 ) => {
   const summon = useSummon({ ...options, baseURL: options.baseURL ?? Settings.ApiPath });
+  const auth = useApiAuth();
 
-  const loginAsParticipant = async (model: IParticipantLoginModel): Promise<ITokenModel> => {
-    try {
-      const response = await summon.post(`/auth/participants/token`, model);
-      return response.data as ITokenModel;
-    } catch (error) {
-      // Handle error;
-      return Promise.reject(error);
-    }
-  };
   return {
-    loginAsParticipant,
+    ...summon,
+    auth,
   };
 };
 

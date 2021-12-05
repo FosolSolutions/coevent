@@ -26,7 +26,7 @@ public class Criteria : AuditColumns
         this.Account = null!;
     }
 
-    public Criteria(string name, Account account, string createdBy) : base(createdBy)
+    public Criteria(string name, Account account)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;
@@ -34,7 +34,7 @@ public class Criteria : AuditColumns
         this.AccountId = account.Id;
     }
 
-    public Criteria(string name, long accountId, string createdBy) : base(createdBy)
+    public Criteria(string name, long accountId)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;

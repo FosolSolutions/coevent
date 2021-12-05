@@ -78,7 +78,7 @@ public class ScheduleController : ControllerBase
     public IActionResult Add(ScheduleModel model)
     {
         var schedule = _dbService.AddAndSave(_mapper.Map<Schedule>(model));
-        return new JsonResult(_mapper.Map<ScheduleModel>(schedule));
+        return CreatedAtAction(nameof(Get), new { id = schedule.Id }, _mapper.Map<ScheduleModel>(schedule));
     }
 
     /// <summary>

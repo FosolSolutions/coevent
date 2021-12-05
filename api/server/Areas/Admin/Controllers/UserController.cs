@@ -78,7 +78,7 @@ public class UserController : ControllerBase
     public IActionResult Add(UserModel model)
     {
         var user = _dbService.AddAndSave(_mapper.Map<User>(model));
-        return new JsonResult(_mapper.Map<UserModel>(user));
+        return CreatedAtAction(nameof(Get), new { id = user.Id }, _mapper.Map<UserModel>(user));
     }
 
     /// <summary>

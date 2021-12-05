@@ -14,6 +14,7 @@ public class OpeningConfiguration : AuditColumnsConfiguration<Opening>
         builder.Property(m => m.Id).ValueGeneratedOnAdd();
         builder.Property(m => m.Name).IsRequired().HasMaxLength(100);
         builder.Property(m => m.Description).IsRequired(false).HasMaxLength(2000);
+        builder.Property(m => m.Group).IsRequired(false).HasMaxLength(100);
         builder.Property(m => m.OpeningType).IsRequired();
         builder.Property(m => m.IsDisabled).IsRequired();
         builder.Property(m => m.EventId).IsRequired();

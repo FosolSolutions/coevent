@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCookies } from 'react-cookie';
 
 import { IAccountProviderProps, IAccountState, IToken, IUserInfo } from './interfaces';
 
@@ -30,11 +31,16 @@ export const AccountProvider: React.FC<IAccountProviderProps> = ({
   const [token, setToken] = React.useState<IToken | null | undefined>(initToken);
   const [authenticated, setAuthenticated] = React.useState<boolean>(initAuthenticated);
   const [userInfo, setUserInfo] = React.useState<IUserInfo | undefined>(initUserInfo);
+  const [cookies, setCookies] = useCookies();
 
   React.useEffect(() => {
     // Configure account authentication solution.
+    if (!!cookies.token) {
+      setToken(cookies.token as IToken);
+      setAuthenticated(true);
+    }
     setAuthReady(true);
-  }, [setAuthReady]);
+  }, [setAuthReady, cookies, setCookies]);
 
   return (
     <AccountContext.Provider

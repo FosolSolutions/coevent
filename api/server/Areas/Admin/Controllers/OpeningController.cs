@@ -78,7 +78,7 @@ public class OpeningController : ControllerBase
     public IActionResult Add(OpeningModel model)
     {
         var opening = _dbService.AddAndSave(_mapper.Map<Opening>(model));
-        return new JsonResult(_mapper.Map<OpeningModel>(opening));
+        return CreatedAtAction(nameof(Get), new { id = opening.Id }, _mapper.Map<OpeningModel>(opening));
     }
 
     /// <summary>

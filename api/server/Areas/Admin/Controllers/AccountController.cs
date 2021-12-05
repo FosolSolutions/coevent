@@ -78,7 +78,7 @@ public class AccountController : ControllerBase
     public IActionResult Add(AccountModel model)
     {
         var account = _dbService.AddAndSave(_mapper.Map<Account>(model));
-        return new JsonResult(_mapper.Map<AccountModel>(account));
+        return CreatedAtAction(nameof(Get), new { id = account.Id }, _mapper.Map<AccountModel>(account));
     }
 
     /// <summary>

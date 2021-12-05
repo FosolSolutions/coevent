@@ -78,7 +78,7 @@ public class RoleController : ControllerBase
     public IActionResult Add(RoleModel model)
     {
         var role = _dbService.AddAndSave(_mapper.Map<Role>(model));
-        return new JsonResult(_mapper.Map<RoleModel>(role));
+        return CreatedAtAction(nameof(Get), new { id = role.Id }, _mapper.Map<RoleModel>(role));
     }
 
     /// <summary>

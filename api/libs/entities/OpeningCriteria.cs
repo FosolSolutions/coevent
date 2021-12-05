@@ -24,7 +24,7 @@ public class OpeningCriteria : AuditColumns
         this.Trait = null!;
     }
 
-    public OpeningCriteria(Opening opening, Criteria criteria, Trait trait, string createdBy) : base(createdBy)
+    public OpeningCriteria(Opening opening, Criteria criteria, Trait trait)
     {
         this.Opening = opening ?? throw new ArgumentNullException(nameof(opening));
         this.OpeningId = opening.Id;
@@ -34,7 +34,7 @@ public class OpeningCriteria : AuditColumns
         this.TraitId = trait.Id;
     }
 
-    public OpeningCriteria(long openingId, long criteriaId, long traitId, string createdBy) : base(createdBy)
+    public OpeningCriteria(long openingId, long criteriaId, long traitId)
     {
         this.OpeningId = openingId;
         this.CriteriaId = criteriaId;

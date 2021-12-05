@@ -56,9 +56,9 @@ public class CalendarController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("{id:long}")]
+    [HttpGet("{id}")]
     [Produces(MediaTypeNames.Application.Json)]
-    public IActionResult Get(long id)
+    public IActionResult Get(int id)
     {
         var calendar = _dbService.Find(id);
 
@@ -78,7 +78,7 @@ public class CalendarController : ControllerBase
     public IActionResult Add(CalendarModel model)
     {
         var calendar = _dbService.AddAndSave(_mapper.Map<Calendar>(model));
-        return new JsonResult(_mapper.Map<CalendarModel>(calendar));
+        return CreatedAtAction(nameof(Get), new { id = calendar.Id }, _mapper.Map<CalendarModel>(calendar));
     }
 
     /// <summary>

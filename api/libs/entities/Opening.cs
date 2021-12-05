@@ -15,6 +15,8 @@ public class Opening : AuditColumns
 
     public Event? Event { get; set; }
 
+    public string? Group { get; set; }
+
     public int DisplayOrder { get; set; }
 
     public OpeningType OpeningType { get; set; }
@@ -40,7 +42,7 @@ public class Opening : AuditColumns
         this.Event = null!;
     }
 
-    public Opening(string name, Event cevent, string createdBy) : base(createdBy)
+    public Opening(string name, Event cevent)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;
@@ -50,7 +52,7 @@ public class Opening : AuditColumns
         this.ApplyType = ApplyType.Application;
     }
 
-    public Opening(string name, long eventId, string createdBy) : base(createdBy)
+    public Opening(string name, long eventId)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;

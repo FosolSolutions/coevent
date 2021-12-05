@@ -1,27 +1,40 @@
 import { AccountContext, IAccountHook, IAccountHookProps, IToken } from 'hooks';
 import React from 'react';
-import Cookies from 'react-cookie';
+import { useCookies } from 'react-cookie';
 
 export const useAccount = ({ token }: IAccountHookProps = {}): IAccountHook => {
   const state = React.useContext(AccountContext);
-  const cookies = new Cookies();
+  const [, setCookies] = useCookies();
+
+  const storeToken = React.useCallback(
+    (token: IToken | null) => {
+      setCookies('token', token, { path: '/' });
+    },
+    [setCookies],
+  );
 
   React.useEffect(() => {
-    state.setToken(token);
-  }, [state, token]);
+    if (!!token) {
+      state.setToken(token);
+      state.setAuthenticated(true);
+      storeToken(token);
+    }
+  }, [state, token, storeToken]);
 
   const login = React.useCallback(
     (token: IToken) => {
       state.setToken(token);
       state.setAuthenticated(true);
+      storeToken(token);
     },
-    [state],
+    [state, storeToken],
   );
 
   const logout = React.useCallback(() => {
+    storeToken(null);
     state.setToken(null);
     state.setAuthenticated(false);
-  }, [state]);
+  }, [state, storeToken]);
 
   return {
     state,

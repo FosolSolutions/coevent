@@ -1,3 +1,4 @@
+import { MenuStatus } from 'components/menu';
 import React from 'react';
 
 import { Footer, Header, Loading, MenuProvider } from '..';
@@ -24,10 +25,9 @@ export const Layout: React.FC<ILayoutProps> = ({ name, children, ...rest }) => {
 
   return (
     <styled.Layout {...rest}>
-      <MenuProvider>
+      <MenuProvider status={MenuStatus.full}>
         <Header name={name} />
         <div className="main-window">
-          {children.menu}
           <main>
             {children.router}
             {isLoading && <Loading />}

@@ -32,7 +32,7 @@ public class Role : AuditColumns
         this.Account = null!;
     }
 
-    public Role(Account account, string name, string createdBy) : base(createdBy)
+    public Role(Account account, string name)
     {
         this.Account = account ?? throw new ArgumentNullException(nameof(account));
         this.AccountId = account.Id;
@@ -40,7 +40,7 @@ public class Role : AuditColumns
         this.Description = String.Empty;
     }
 
-    public Role(long accountId, string name, string createdBy) : base(createdBy)
+    public Role(long accountId, string name)
     {
         this.AccountId = accountId;
         this.Name = name ?? throw new ArgumentNullException(nameof(name));

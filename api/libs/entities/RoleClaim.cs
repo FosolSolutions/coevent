@@ -19,7 +19,7 @@ public class RoleClaim : AuditColumns
         this.Claim = null!;
     }
 
-    public RoleClaim(Role role, Claim claim, string createdBy) : base(createdBy)
+    public RoleClaim(Role role, Claim claim)
     {
         this.Role = role ?? throw new ArgumentNullException(nameof(role));
         this.RoleId = role.Id;
@@ -27,7 +27,7 @@ public class RoleClaim : AuditColumns
         this.ClaimId = claim.Id;
     }
 
-    public RoleClaim(int roleId, long claimId, string createdBy) : base(createdBy)
+    public RoleClaim(int roleId, long claimId)
     {
         this.RoleId = roleId;
         this.ClaimId = claimId;

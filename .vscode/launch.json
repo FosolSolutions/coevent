@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (api)",
+      "name": "API - Launch",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "api-build",
@@ -18,7 +18,8 @@
       //   "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
       // },
       "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:10002"
       },
       "envFile": "${workspaceFolder}/api/.env",
       "sourceFileMap": {
@@ -26,7 +27,7 @@
       }
     },
     {
-      "name": "Launch Edge - App",
+      "name": "APP - Launch Edge",
       "request": "launch",
       "type": "pwa-msedge",
       "url": "http://localhost:10004",
@@ -35,14 +36,14 @@
       "browserLaunchLocation": "ui",
     },
     {
-      "name": "Launch Yarn - App",
+      "name": "APP - Launch Yarn",
       "cwd": "${workspaceFolder}/app",
       "command": "yarn start",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "name": "Attach Edge - App",
+      "name": "APP - Attach Edge",
       "port": 10004,
       "request": "attach",
       "type": "pwa-msedge",

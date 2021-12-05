@@ -1,9 +1,11 @@
+using Coevent.Api.Models;
+
 namespace Coevent.Api.Areas.Admin.Models;
 
 /// <summary>
 /// get/set -
 /// </summary>
-public class SurveyModel
+public class SurveyModel : AuditColumnsModel
 {
     /// <summary>
     /// get/set -

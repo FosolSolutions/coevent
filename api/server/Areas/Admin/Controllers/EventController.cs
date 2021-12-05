@@ -78,7 +78,7 @@ public class EventController : ControllerBase
     public IActionResult Add(EventModel model)
     {
         var cevent = _dbService.AddAndSave(_mapper.Map<Event>(model));
-        return new JsonResult(_mapper.Map<EventModel>(cevent));
+        return CreatedAtAction(nameof(Get), new { id = cevent.Id }, _mapper.Map<EventModel>(cevent));
     }
 
     /// <summary>

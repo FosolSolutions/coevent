@@ -38,42 +38,36 @@ help:
 ##############################################################################
 
 db-migrations: ## Display a list of migrations.
-	@echo "$(P) Display a list of migrations."
+	$(info Display a list of migrations.)
 	@cd libs/dal; dotnet ef migrations list
 
 db-add: ## Add a new database migration for the specified name (n=name of migration).
-	@echo "$(P) Create a new database migration for the specified name."
+	$(info Add a new database migration for the specified name (n=$(n)).)
 	@cd libs/dal; dotnet ef migrations add $(n); code -r ./Migrations/*_$(n).cs
 	@./scripts/db-migration.sh $(n);
 
 db-update: ## Update the database with the latest migration.
-	@echo "$(P) Updating database with latest migration..."
-	@docker-compose --env-file .env up -d database; cd libs/dal; dotnet ef database update
+	$(info Update the database with the latest migration.)
+	@cd libs/dal; dotnet ef database update
 
 db-rollback: ## Rollback to the specified database migration (n=name of migration).
-	@echo "$(P) Rollback to the specified database migration."
+	$(info Rollback to the specified database migration (n=$(n)).)
 	@cd libs/dal; dotnet ef database update $(n);
 
-db-remove: ## Remove the last database migration.
-	@echo "$(P) Remove the last migration."
+db-remove: ## Remove the last database migration from source control
+	$(info Remove the last database migration from source control)
 	@cd libs/dal; dotnet ef migrations remove --force;
 
-db-clean: ## Re-creates an empty docker database - ready for seeding.
-	@echo "$(P) Refreshing the database..."
+db-refresh: ## Drop and recreate the database.
+	$(info Drop and recreate the database.)
 	@cd libs/dal; dotnet ef database drop --force; dotnet ef database update
 
-db-refresh: | server-run pause-30 db-clean db-seed keycloak-sync ## Refresh the database and seed it with data.
-
 db-drop: ## Drop the database.
-	@echo "$(P) Drop the database."
-	@cd libs/dal; dotnet ef database drop;
-
-db-seed: ## Imports a JSON file of properties into PIMS
-	@echo "$(P) Seeding docker database..."
-	@cd tools/import; dotnet build; dotnet run;
+	$(info Drop the database.)
+	@cd libs/dal; dotnet ef database drop --force;
 
 db-script: ## Export an SQL script from the migration (from=0 to=Initial).
-	@echo "$(P) Exporting script to 'db-migration.sql'"
+	$(info Export an SQL script from the migration (from=$(from) to=$(to)).)
 	@cd libs/dal; dotnet ef migrations script ${from} ${to} --output ../../db-migration.sql
 
 .PHONY: db-migrations db-add db-update db-rollback db-remove db-clean db-refresh db-seed db-script

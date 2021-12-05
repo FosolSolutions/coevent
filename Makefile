@@ -84,12 +84,26 @@ clean: ## Removes all local containers, images, volumes, etc
 	@docker volume rm -f ce-seq-data
 
 clean-npm: ## Removes local containers, images, volumes, for app application.
-	$(info Removing app containers and volumes.)
+	$(info Removes local containers, images, volumes, for app application)
 	@docker-compose --profile all stop app
-	@docker-compose --profile all rm -f -v -s --profile all app
+	@docker-compose --profile all rm -f -v -s app
 	@docker volume rm -f ce-app-node-cache
 
 .PHONY: local up down stop build restart refresh clean clean-npm refresh-npm
+
+##############################################################################
+# Databas Utilities
+##############################################################################
+
+db-install-cli: ## Install EF CLI
+	$(info Install EF CLI)
+	@dotnet tool install --global dotnet-ef
+
+db-update: ## Run the databse migration.
+	$(info Run the database migration)
+	@cd api; make db-update;
+
+.PHONY: db-install-cli db-update
 
 ##############################################################################
 # Utilities

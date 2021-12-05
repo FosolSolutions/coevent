@@ -34,7 +34,7 @@ public class EventOccurrence : AuditColumns
         this.Event = null!;
     }
 
-    public EventOccurrence(Event parent, string createdBy) : base(createdBy)
+    public EventOccurrence(Event parent)
     {
         this.Event = parent ?? throw new ArgumentNullException(nameof(parent));
         this.EventId = parent.Id;
@@ -47,7 +47,7 @@ public class EventOccurrence : AuditColumns
         this.DisplayOrder = parent.DisplayOrder;
     }
 
-    public EventOccurrence(long parentId, string name, string createdBy) : base(createdBy)
+    public EventOccurrence(long parentId, string name)
     {
         this.EventId = parentId;
         this.Name = name ?? throw new ArgumentNullException(nameof(name));

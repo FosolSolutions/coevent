@@ -58,7 +58,7 @@ public class User : AuditColumns
         this.LastName = String.Empty;
     }
 
-    public User(string username, string email, string firstName, string lastName, string createdBy) : base(createdBy)
+    public User(string username, string email, string firstName, string lastName)
     {
         this.Username = username;
         this.DisplayName = username;

@@ -25,7 +25,7 @@ public class SurveyQuestion : AuditColumns
         this.Question = null!;
     }
 
-    public SurveyQuestion(string question, Survey survey, string createdBy) : base(createdBy)
+    public SurveyQuestion(string question, Survey survey)
     {
         this.Question = question ?? throw new ArgumentNullException(nameof(question));
         this.Survey = survey ?? throw new ArgumentNullException(nameof(survey));
@@ -33,7 +33,7 @@ public class SurveyQuestion : AuditColumns
         this.IsRequired = true;
     }
 
-    public SurveyQuestion(string question, long surveyId, string createdBy) : base(createdBy)
+    public SurveyQuestion(string question, long surveyId)
     {
         this.Question = question ?? throw new ArgumentNullException(nameof(question));
         this.SurveyId = surveyId;

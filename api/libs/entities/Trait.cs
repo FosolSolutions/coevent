@@ -28,7 +28,7 @@ public class Trait : AuditColumns
         this.Account = null!;
     }
 
-    public Trait(string name, Account account, string createdBy) : base(createdBy)
+    public Trait(string name, Account account)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;
@@ -36,7 +36,7 @@ public class Trait : AuditColumns
         this.AccountId = account.Id;
     }
 
-    public Trait(string name, long accountId, string createdBy) : base(createdBy)
+    public Trait(string name, long accountId)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;

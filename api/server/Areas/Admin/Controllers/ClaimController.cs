@@ -78,7 +78,7 @@ public class ClaimController : ControllerBase
     public IActionResult Add(ClaimModel model)
     {
         var claim = _dbService.AddAndSave(_mapper.Map<Claim>(model));
-        return new JsonResult(_mapper.Map<ClaimModel>(claim));
+        return CreatedAtAction(nameof(Get), new { id = claim.Id }, _mapper.Map<ClaimModel>(claim));
     }
 
     /// <summary>

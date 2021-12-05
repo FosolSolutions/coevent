@@ -23,7 +23,7 @@ public class OpeningOccurrence : AuditColumns
         this.EventOccurrence = null!;
     }
 
-    public OpeningOccurrence(Opening opening, EventOccurrence eventOccurrence, string createdBy) : base(createdBy)
+    public OpeningOccurrence(Opening opening, EventOccurrence eventOccurrence)
     {
         this.Opening = opening ?? throw new ArgumentNullException(nameof(opening));
         this.OpeningId = opening.Id;
@@ -32,7 +32,7 @@ public class OpeningOccurrence : AuditColumns
         this.Status = OpeningStatus.Draft;
     }
 
-    public OpeningOccurrence(long openingId, long eventOccurrenceId, string createdBy) : base(createdBy)
+    public OpeningOccurrence(long openingId, long eventOccurrenceId)
     {
         this.OpeningId = openingId;
         this.EventOccurrenceId = eventOccurrenceId;

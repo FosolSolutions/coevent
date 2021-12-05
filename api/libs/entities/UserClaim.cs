@@ -25,7 +25,7 @@ public class UserClaim : AuditColumns
         this.Account = null!;
     }
 
-    public UserClaim(User user, Account account, string name, string value, string createdBy) : base(createdBy)
+    public UserClaim(User user, Account account, string name, string value)
     {
         this.User = user ?? throw new ArgumentNullException(nameof(user));
         this.UserId = user.Id;
@@ -35,7 +35,7 @@ public class UserClaim : AuditColumns
         this.Value = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    public UserClaim(long userId, long accountId, string name, string value, string createdBy) : base(createdBy)
+    public UserClaim(long userId, long accountId, string name, string value)
     {
         this.UserId = userId;
         this.AccountId = accountId;

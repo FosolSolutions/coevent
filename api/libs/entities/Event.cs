@@ -46,7 +46,7 @@ public class Event : AuditColumns
         this.Account = null!;
     }
 
-    public Event(string name, Account account, string createdBy) : base(createdBy)
+    public Event(string name, Account account)
     {
         this.Name = name;
         this.Description = String.Empty;
@@ -54,7 +54,7 @@ public class Event : AuditColumns
         this.AccountId = account.Id;
     }
 
-    public Event(string name, long accountId, string createdBy) : base(createdBy)
+    public Event(string name, long accountId)
     {
         this.Name = name;
         this.Description = String.Empty;

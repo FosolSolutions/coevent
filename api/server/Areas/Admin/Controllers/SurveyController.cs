@@ -78,7 +78,7 @@ public class SurveyController : ControllerBase
     public IActionResult Add(SurveyModel model)
     {
         var survey = _dbService.AddAndSave(_mapper.Map<Survey>(model));
-        return new JsonResult(_mapper.Map<SurveyModel>(survey));
+        return CreatedAtAction(nameof(Get), new { id = survey.Id }, _mapper.Map<SurveyModel>(survey));
     }
 
     /// <summary>

@@ -25,7 +25,7 @@ public class Application : AuditColumns
         this.OpeningOccurrence = null!;
     }
 
-    public Application(User user, OpeningOccurrence openingOccurrence, string createdBy) : base(createdBy)
+    public Application(User user, OpeningOccurrence openingOccurrence)
     {
         this.User = user ?? throw new ArgumentNullException(nameof(user));
         this.UserId = user.Id;
@@ -35,10 +35,9 @@ public class Application : AuditColumns
         this.Status = ApplicationStatus.Submitted;
     }
 
-    public Application(User user, long openingId, long eventOccurrenceId, string createdBy) : base(createdBy)
+    public Application(long userId, long openingId, long eventOccurrenceId)
     {
-        this.User = user ?? throw new ArgumentNullException(nameof(user));
-        this.UserId = user.Id;
+        this.UserId = userId;
         this.OpeningId = openingId;
         this.EventOccurrenceId = eventOccurrenceId;
         this.Status = ApplicationStatus.Submitted;

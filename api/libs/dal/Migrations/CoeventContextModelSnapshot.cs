@@ -570,6 +570,10 @@ namespace Coevent.Dal.Migrations
                     b.Property<long>("EventId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Group")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<bool>("IsDisabled")
                         .HasColumnType("bit");
 

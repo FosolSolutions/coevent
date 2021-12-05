@@ -30,11 +30,11 @@ export const PrivateRoute = ({
   ...rest
 }: IPrivateRouteProps) => {
   const auth = useAccount();
-  return (
+  return auth.state.authReady ? (
     <Route
       {...rest}
       render={(routeProps) => {
-        if (!auth.authenticated || !!claims || !!roles) {
+        if (!auth.authenticated) {
           return <Redirect to="/login" />;
         } else {
           if (Component) return <Component {...routeProps} />;
@@ -42,5 +42,5 @@ export const PrivateRoute = ({
         }
       }}
     ></Route>
-  );
+  ) : null;
 };

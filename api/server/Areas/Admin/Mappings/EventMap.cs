@@ -4,9 +4,9 @@ using Mapster;
 using Entity = Coevent.Entities;
 
 /// <summary>
-/// AccountMap class, provides mapping for mapster.
+/// EventMap class, provides mapping for mapster.
 /// </summary>
-public class AccountMap : IRegister
+public class EventMap : IRegister
 {
     /// <summary>
     /// Register this map.
@@ -14,8 +14,8 @@ public class AccountMap : IRegister
     /// <param name="config"></param>
     public void Register(TypeAdapterConfig config)
     {
-        var ctor = typeof(Entity.Account).GetConstructor(new[] { typeof(string), typeof(long), typeof(string) });
-        config.NewConfig<Models.AccountModel, Entity.Account>()
+        var ctor = typeof(Entity.Event).GetConstructor(new[] { typeof(string), typeof(long) });
+        config.NewConfig<Models.EventModel, Entity.Event>()
             .MapToConstructor(ctor ?? null!);
     }
 }

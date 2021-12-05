@@ -19,7 +19,7 @@ public class UserAccount : AuditColumns
         this.Account = null!;
     }
 
-    public UserAccount(User user, Account account, string createdBy) : base(createdBy)
+    public UserAccount(User user, Account account)
     {
         this.User = user ?? throw new ArgumentNullException(nameof(user));
         this.UserId = user.Id;
@@ -27,7 +27,7 @@ public class UserAccount : AuditColumns
         this.AccountId = account.Id;
     }
 
-    public UserAccount(long userId, long accountId, string createdBy) : base(createdBy)
+    public UserAccount(long userId, long accountId)
     {
         this.UserId = userId;
         this.AccountId = accountId;

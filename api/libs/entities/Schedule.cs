@@ -40,7 +40,7 @@ public class Schedule : AuditColumns
         this.Account = null!;
     }
 
-    public Schedule(string name, Account account, TimeSpan startOnTime, TimeSpan endOnTime, string createdBy) : base(createdBy)
+    public Schedule(string name, Account account, TimeSpan startOnTime, TimeSpan endOnTime)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;
@@ -54,7 +54,7 @@ public class Schedule : AuditColumns
         this.RepeatSize = 0;
     }
 
-    public Schedule(string name, long accountId, TimeSpan startOnTime, TimeSpan endOnTime, string createdBy) : base(createdBy)
+    public Schedule(string name, long accountId, TimeSpan startOnTime, TimeSpan endOnTime)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;

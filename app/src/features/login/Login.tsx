@@ -30,7 +30,7 @@ export const Login = () => {
             onSubmit={async (values, { setSubmitting }) => {
               try {
                 if (!!values.key) {
-                  var token = await api.loginAsParticipant({ key: values.key });
+                  var token = await api.auth.loginAsParticipant({ key: values.key });
                   auth.login(token);
                   history.push('/');
                   setSubmitting(false);

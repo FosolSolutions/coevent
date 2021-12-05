@@ -28,7 +28,7 @@ public class Survey : AuditColumns
         this.Account = null!;
     }
 
-    public Survey(string name, Account account, string createdBy) : base(createdBy)
+    public Survey(string name, Account account)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;
@@ -36,7 +36,7 @@ public class Survey : AuditColumns
         this.AccountId = account.Id;
     }
 
-    public Survey(string name, long accountId, string createdBy) : base(createdBy)
+    public Survey(string name, long accountId)
     {
         this.Name = name ?? throw new ArgumentNullException(nameof(name));
         this.Description = String.Empty;

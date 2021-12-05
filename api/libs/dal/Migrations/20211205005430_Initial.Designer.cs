@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Coevent.Dal.Migrations
 {
     [DbContext(typeof(CoeventContext))]
-    [Migration("20211130001328_Initial")]
+    [Migration("20211205005430_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -571,6 +571,10 @@ namespace Coevent.Dal.Migrations
 
                     b.Property<long>("EventId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Group")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDisabled")
                         .HasColumnType("bit");

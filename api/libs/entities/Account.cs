@@ -50,7 +50,7 @@ public class Account : AuditColumns
         this.Owner = null!;
     }
 
-    public Account(string name, User owner, string createdBy) : base(createdBy)
+    public Account(string name, User owner)
     {
         this.Name = name;
         this.Description = String.Empty;
@@ -58,7 +58,7 @@ public class Account : AuditColumns
         this.OwnerId = owner.Id;
     }
 
-    public Account(string name, long ownerId, string createdBy) : base(createdBy)
+    public Account(string name, long ownerId)
     {
         this.Name = name;
         this.Description = String.Empty;

@@ -34,7 +34,7 @@ public class Calendar : AuditColumns
         this.Account = null!;
     }
 
-    public Calendar(string name, Account account, string createdBy) : base(createdBy)
+    public Calendar(string name, Account account)
     {
         this.Name = name;
         this.Description = String.Empty;
@@ -44,7 +44,7 @@ public class Calendar : AuditColumns
         this.Status = CalendarStatus.Draft;
     }
 
-    public Calendar(string name, int accountId, string createdBy) : base(createdBy)
+    public Calendar(string name, int accountId)
     {
         this.Name = name;
         this.Description = String.Empty;

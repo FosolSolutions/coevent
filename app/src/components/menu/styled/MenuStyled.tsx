@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Menu = styled.nav`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-grow: 0;
   padding: 2px;
   background-color: rgb(${(props) => props.theme.css.primaryLightColorRgb}, 0.85);

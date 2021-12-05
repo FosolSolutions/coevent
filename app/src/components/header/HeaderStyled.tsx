@@ -38,6 +38,24 @@ export const Header = styled.header`
       margin-right: 10px;
     }
   }
+
+  nav {
+    ul {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #eee;
+      text-decoration: underline;
+    }
+  }
 `;
 
 export default Header;

@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (api)",
+      "name": "API - Launch",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
@@ -18,7 +18,8 @@
       //   "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
       // },
       "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:10002"
       },
       "envFile": "${workspaceFolder}/.env",
       "sourceFileMap": {

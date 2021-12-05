@@ -78,7 +78,7 @@ public class ParticipantController : ControllerBase
     public IActionResult Add(ParticipantModel model)
     {
         var participant = _dbService.AddAndSave(_mapper.Map<Participant>(model));
-        return new JsonResult(_mapper.Map<ParticipantModel>(participant));
+        return CreatedAtAction(nameof(Get), new { id = participant.Id }, _mapper.Map<ParticipantModel>(participant));
     }
 
     /// <summary>
