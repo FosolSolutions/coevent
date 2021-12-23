@@ -9,10 +9,6 @@ interface ILayoutProps extends React.HTMLAttributes<HTMLDivElement> {
    * Site name to display in header.
    */
   name: string;
-  children: {
-    menu: React.ReactNode;
-    router: React.ReactNode;
-  };
 }
 
 /**
@@ -27,12 +23,10 @@ export const Layout: React.FC<ILayoutProps> = ({ name, children, ...rest }) => {
     <styled.Layout {...rest}>
       <MenuProvider status={MenuStatus.full}>
         <Header name={name} />
-        <div className="main-window">
-          <main>
-            {children.router}
-            {isLoading && <Loading />}
-          </main>
-        </div>
+        <main>
+          {children}
+          {isLoading && <Loading />}
+        </main>
         <Footer />
       </MenuProvider>
     </styled.Layout>

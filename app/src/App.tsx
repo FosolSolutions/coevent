@@ -1,4 +1,3 @@
-import { NavMenu } from 'components';
 import { Layout } from 'components';
 import { AppRouter } from 'components/router';
 import { AccountProvider, SummonProvider } from 'hooks';
@@ -14,7 +13,9 @@ function App() {
       <AccountProvider>
         <SummonProvider>
           <BrowserRouter basename={process.env.PUBLIC_URL}>
-            <Layout name={name}>{{ menu: <NavMenu />, router: <AppRouter /> }}</Layout>
+            <Layout name={name}>
+              <AppRouter />
+            </Layout>
           </BrowserRouter>
 
           <ReactTooltip id="main-tooltip" effect="float" type="light" place="top" />
