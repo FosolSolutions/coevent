@@ -15,6 +15,7 @@ public class UserConfiguration : AuditColumnsConfiguration<User>
         builder.Property(m => m.Username).IsRequired().HasMaxLength(50);
         builder.Property(m => m.Email).IsRequired().HasMaxLength(100);
         builder.Property(m => m.Key).IsRequired();
+        builder.Property(m => m.Password).IsRequired().HasMaxLength(500);
         builder.Property(m => m.DisplayName).IsRequired().HasMaxLength(50);
         builder.Property(m => m.FirstName).IsRequired().HasMaxLength(50);
         builder.Property(m => m.MiddleName).IsRequired(false).HasMaxLength(50);

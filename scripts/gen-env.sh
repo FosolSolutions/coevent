@@ -64,8 +64,8 @@ SEQ_API_INGESTION_URL=http://host.docker.internal:10007
 # Authentication
 Authentication__Issuer=localhost:10002
 Authentication__Audience=localhost:10002
-Authentication__Secret=$varPassword
-Authentication__Salt=$varPassword
+Authentication__PrivateKey=$varPassword
+Authentication__SaltLength=50
 
 # Database
 ConnectionStrings__DefaultConnection=Server=host.docker.internal,10000;
@@ -94,7 +94,10 @@ if ! test -f "./api/libs/dal/.env"; then
 echo \
 "DB_NAME=$varDbName
 DB_USER=$varDbUser
-DB_PASSWORD=$varPassword" >> ./api/libs/dal/.env
+DB_PASSWORD=$varPassword
+
+DEFAULT_PASSWORD=$varPassword
+SALT_LENGTH=50" >> ./api/libs/dal/.env
     echo -e "\t./api/libs/dal/.env created"
 fi
 

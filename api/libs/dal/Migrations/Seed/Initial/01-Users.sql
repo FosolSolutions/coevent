@@ -5,6 +5,7 @@ INSERT INTO dbo.[Users] (
   , [Username]
   , [Email]
   , [Key]
+  , [Password]
   , [DisplayName]
   , [FirstName]
   , [MiddleName]
@@ -21,6 +22,7 @@ INSERT INTO dbo.[Users] (
   , 'admin'
   , 'admin@test.com'
   , '24e8ae15-848f-44ee-8a79-e014f89c538e'
+  , ''
   , 'Administrator'
   , 'System'
   , ''

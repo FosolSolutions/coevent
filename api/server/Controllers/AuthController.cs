@@ -39,6 +39,26 @@ public class AuthController : ControllerBase
 
     #region Endpoints
     /// <summary>
+    /// Validate the username and password and authenticate the user.
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("login")]
+    [Produces(MediaTypeNames.Application.Json)]
+    public async Task<IActionResult> AuthenticateAsync(LoginModel model)
+    {
+        try
+        {
+            var user = _authenticator.Validate(model.Username, model.Password);
+            var token = await _authenticator.AuthenticateAsync(user);
+            return new JsonResult(token);
+        }
+        catch (AuthenticationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    /// <summary>
     /// Authenticate the participant.
     /// </summary>
     /// <returns></returns>

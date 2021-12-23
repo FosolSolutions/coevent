@@ -43,15 +43,20 @@ setup: ## Setup and configure local environment
 	@sh ./scripts/gen-env.sh
 	@sh ./scripts/gen-conf.sh
 
+init: ## Initialize local environment
+	@setup
+	@make up p=core
+	@make db-update
+
 .PHONY: setup
 
 ##############################################################################
 # Docker Development
 ##############################################################################
 
-up: ## Runs the local container(s) (n=service name)
-	$(info Runs the local container(s) (n=$(n)))
-	@./scripts/up.sh $(n)
+up: ## Runs the local container(s) (n=service name, p=profile name)
+	$(info Runs the local container(s) (n=$(n), p=$(if $(p),$(p),all)))
+	@docker-compose --profile $(if $(p),$(p),all) up $(n) -d
 
 down: ## Stops the local containers and removes them
 	$(info Stops the local containers and removes them)
@@ -78,15 +83,12 @@ refresh-npm: ## Cleans and rebuilds the app.  This is useful when npm packages a
 
 clean: ## Removes all local containers, images, volumes, etc
 	$(info Removing all containers, images, volumes for solution.)
-	@docker-compose rm -f -v -s
-	@docker volume rm -f ce-app-node-cache
-	@docker volume rm -f ce-database-data
-	@docker volume rm -f ce-seq-data
+	@docker-compose --profile all down -v
 
-clean-npm: ## Removes local containers, images, volumes, for app application.
-	$(info Removes local containers, images, volumes, for app application)
-	@docker-compose --profile all stop app
-	@docker-compose --profile all rm -f -v -s app
+clean-npm: ## Removes local containers, images, volumes, for app application (n=service name).
+	$(info Removes local containers, images, volumes, for app application (n=$(n)))
+	@make stop n=$(n)
+	@docker-compose --profile all rm -f -v -s $(n)
 	@docker volume rm -f ce-app-node-cache
 
 .PHONY: local up down stop build restart refresh clean clean-npm refresh-npm
@@ -99,11 +101,39 @@ db-install-cli: ## Install EF CLI
 	$(info Install EF CLI)
 	@dotnet tool install --global dotnet-ef
 
-db-update: ## Run the databse migration.
-	$(info Run the database migration)
-	@cd api; make db-update;
+db-migrations: ## Display a list of migrations.
+	$(info Display a list of migrations.)
+	@cd api; make db-migrations
 
-.PHONY: db-install-cli db-update
+db-add: ## Add a new database migration for the specified name (n=name of migration).
+	$(info Add a new database migration for the specified name (n=$(n)).)
+	@cd api; make db-add n=$(n)
+
+db-update: ## Update the database with the latest migration.
+	$(info Update the database with the latest migration.)
+	@cd api; make db-update
+
+db-rollback: ## Rollback to the specified database migration (n=name of migration).
+	$(info Rollback to the specified database migration (n=$(n)).)
+	@cd api; make db-rollback n=$(n)
+
+db-remove: ## Remove the last database migration from source control
+	$(info Remove the last database migration from source control)
+	@cd api; make db-remove
+
+db-refresh: ## Drop and recreate the database.
+	$(info Drop and recreate the database.)
+	@cd api; make db-refresh
+
+db-drop: ## Drop the database.
+	$(info Drop the database.)
+	@cd api; make db-drop
+
+db-script: ## Export an SQL script from the migration (from=0 to=Initial).
+	$(info Export an SQL script from the migration (from=$(from) to=$(to)).)
+	@cd api; make db-script from=$(from) to=$(to)
+
+.PHONY: db-install-cli db-update db-migrations db-add db-rollback db-remove db-refresh db-drop db-script
 
 ##############################################################################
 # Utilities

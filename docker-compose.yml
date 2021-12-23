@@ -6,8 +6,8 @@ services:
     image: coevent:database
     container_name: ce-database
     profiles:
-      - "all"
-      - "core"
+      - all
+      - core
     restart: on-failure:1
     build:
       context: db/mssql
@@ -26,8 +26,7 @@ services:
     restart: on-failure:1
     container_name: ce-keycloak
     profiles:
-      - "all"
-      - "disable"
+      - all
     build:
       context: ./auth/keycloak
     env_file:
@@ -47,8 +46,8 @@ services:
     image: coevent:seq
     container_name: ce-seq
     profiles:
-      - "all"
-      - "utility"
+      - all
+      - utility
     stdin_open: true
     restart: on-failure:1
     build:
@@ -67,8 +66,8 @@ services:
     image: coevent:api
     container_name: ce-api
     profiles:
-      - "all"
-      - "core"
+      - all
+      - core
     restart: on-failure:1
     build:
       context: api
@@ -88,8 +87,8 @@ services:
     image: coevent:app
     container_name: ce-app
     profiles:
-      - "all"
-      - "core"
+      - all
+      - core
     stdin_open: true
     tty: true
     restart: on-failure:1

@@ -4,6 +4,8 @@
     "Coevent",
     "cref",
     "Formik",
+    "HMACSHA",
+    "Pbkdf",
     "Serilog"
   ],
   "npm.packageManager": "yarn",

@@ -1,5 +1,6 @@
 namespace Coevent.Dal;
 
+using System;
 using System.Data.SqlClient;
 using System.IO;
 using System.Text.Json;
@@ -10,6 +11,9 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
+/// <summary>
+/// CoeventContextFactory class, provides a way to initialize the CoeventContext to run database migrations.
+/// </summary>
 public class CoeventContextFactory : IDesignTimeDbContextFactory<CoeventContext>
 {
     #region Variables
@@ -17,6 +21,9 @@ public class CoeventContextFactory : IDesignTimeDbContextFactory<CoeventContext>
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// Creates a new instance of a CoeventContextFactory object.
+    /// </summary>
     public CoeventContextFactory()
     {
         var loggerFactory = LoggerFactory.Create(builder =>
@@ -54,6 +61,12 @@ public class CoeventContextFactory : IDesignTimeDbContextFactory<CoeventContext>
         sqlBuilder.UserID = !String.IsNullOrWhiteSpace(sqlBuilder.UserID) ? sqlBuilder.UserID : configuration["DB_USER"];
         sqlBuilder.InitialCatalog = !String.IsNullOrWhiteSpace(sqlBuilder.InitialCatalog) ? sqlBuilder.InitialCatalog : configuration["DB_NAME"];
         sqlBuilder.Password = !String.IsNullOrWhiteSpace(sqlBuilder.Password) ? sqlBuilder.Password : configuration["DB_PASSWORD"];
+
+        FactorySettings.DefaultPassword = !String.IsNullOrWhiteSpace(configuration["DEFAULT_PASSWORD"]) ? configuration["DEFAULT_PASSWORD"] : throw new Exception("Configuration 'DEFAULT_PASSWORD' is required.");
+        if (Int32.TryParse(configuration["SALT_LENGTH"], out int saltLength))
+        {
+            FactorySettings.SaltLength = saltLength;
+        }
 
         var optionsBuilder = new DbContextOptionsBuilder<CoeventContext>();
         optionsBuilder.UseSqlServer(sqlBuilder.ConnectionString, options =>

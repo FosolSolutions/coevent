@@ -12,27 +12,34 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Coevent.Dal.Security;
+using Coevent.Core.Encryption;
 
 /// <summary>
-/// get/set -
+/// Authenticator class, provides a way to authenticate users.
 /// </summary>
 public class Authenticator : IAuthenticator
 {
     #region Variables
     private readonly CoeventAuthenticationOptions _options;
-    private readonly byte[] _salt;
+    private readonly byte[] _privateKey;
+    private readonly int _saltLength;
+    private readonly IHashPassword _HashPassword;
     private readonly IUserService _dbService;
     private readonly IHttpContextAccessor _httpContext;
     #endregion
 
     #region Constructors
     /// <summary>
-    /// get/set -
+    /// Creates a new instance of an Authenticator object, initializes with specified arguments.
     /// </summary>
-    public Authenticator(IOptions<CoeventAuthenticationOptions> options, IUserService dbService, IHttpContextAccessor httpContext)
+    public Authenticator(IOptions<CoeventAuthenticationOptions> options, IHashPassword hashPassword, IUserService dbService, IHttpContextAccessor httpContext)
     {
+        if (options.Value.SaltLength <= 0) throw new ArgumentOutOfRangeException(nameof(options), "Authentication:SaltLength configuration is required and must be greater than zero.");
+
         _options = options.Value;
-        _salt = Encoding.UTF8.GetBytes(_options.Salt ?? throw new InvalidOperationException("Authentication:Secret configuration is required."));
+        _privateKey = Encoding.UTF8.GetBytes(_options.PrivateKey ?? throw new InvalidOperationException("Authentication:PrivateKey configuration is required."));
+        _saltLength = _options.SaltLength;
+        _HashPassword = hashPassword;
         _dbService = dbService;
         _httpContext = httpContext;
     }
@@ -40,50 +47,61 @@ public class Authenticator : IAuthenticator
 
     #region Methods
     /// <summary>
-    /// get/set -
+    /// Hash the specified password, with the configured salt.
     /// </summary>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public string HashPassword(string password)
     {
-        return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: password,
-            salt: _salt,
-            prf: KeyDerivationPrf.HMACSHA1,
-            iterationCount: 10000,
-            numBytesRequested: 256 / 8
-            ));
+        return _HashPassword.Hash(password, _saltLength);
     }
 
     /// <summary>
-    /// get/set -
+    /// Find the user for the specified username.
     /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
     public Entities.User? FindUser(string username)
     {
         return _dbService.FindByUsername(username);
     }
 
     /// <summary>
-    /// get/set -
+    /// Find the user for the specified key.
     /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public Entities.User? FindUser(Guid key)
     {
         return _dbService.FindByKey(key);
     }
 
     /// <summary>
-    /// get/set -
+    /// Validate the username and password.
     /// </summary>
-    public Entities.User? Validate(string username, string password)
+    /// <param name="username"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    /// <exception cref="AuthenticationException"></exception>
+    public Entities.User Validate(string username, string password)
     {
         var user = FindUser(username);
-        var hash = HashPassword(password);
-        // if (user.Password != hash) throw new InvalidOperationException("Unable to authenticate user.");
+
+        if (String.IsNullOrWhiteSpace(user?.Password)) throw new AuthenticationException("Unable to authenticate user.");
+
+        // Extract salt from password.
+        var salt = user.Password[.._saltLength];
+        var hash = _HashPassword.Hash(password, salt);
+        if (user.Password != hash) throw new AuthenticationException("Unable to authenticate user.");
 
         return user;
     }
 
     /// <summary>
-    /// get/set -
+    /// Authenticate the specified user and create a token for them.
     /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     public async Task<TokenModel> AuthenticateAsync(Entities.User user)
     {
         var claims = _dbService.GetClaims(user.Id).Select(c => new Claim(c.Name, c.Value, typeof(string).FullName, CoeventIssuer.Account(c.AccountId), CoeventIssuer.OriginalIssuer)).ToList();
@@ -120,7 +138,7 @@ public class Authenticator : IAuthenticator
             Audience = _options.Audience,
             Subject = user.Identity as ClaimsIdentity,
             Expires = DateTime.UtcNow.Add(expiresIn),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_salt), SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_privateKey), SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);

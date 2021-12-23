@@ -11,6 +11,8 @@ public class User : AuditColumns
 
     public Guid Key { get; set; }
 
+    public string Password { get; set; }
+
     public string DisplayName { get; set; }
 
     public string FirstName { get; set; }
@@ -56,6 +58,7 @@ public class User : AuditColumns
         this.FirstName = String.Empty;
         this.MiddleName = String.Empty;
         this.LastName = String.Empty;
+        this.Password = String.Empty;
     }
 
     public User(string username, string email, string firstName, string lastName)
@@ -66,6 +69,7 @@ public class User : AuditColumns
         this.FirstName = firstName;
         this.MiddleName = String.Empty;
         this.LastName = lastName;
+        this.Password = String.Empty;
     }
     #endregion
 }

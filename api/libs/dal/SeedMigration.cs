@@ -54,6 +54,16 @@ public abstract class SeedMigration : Migration
 
     #region Methods
     /// <summary>
+    /// Insert the seed data specified by this method.
+    /// Override this method in a partial class to automatically run.
+    /// </summary>
+    /// <param name="migrationBuilder"></param>
+    public virtual void InsertData(MigrationBuilder migrationBuilder)
+    {
+
+    }
+
+    /// <summary>
     /// Execute any scripts in the migration \Up\ folder.
     /// </summary>
     /// <param name="migrationBuilder"></param>
@@ -87,6 +97,8 @@ public abstract class SeedMigration : Migration
         migrationBuilder.Sql($"PRINT 'PostUp Scripts'");
 
         ScriptDeploy(migrationBuilder, Path.Combine(this.DefaultMigrationsPath, this.Version, Path.Combine("Up", "PostUp")));
+
+        InsertData(migrationBuilder);
     }
 
     /// <summary>

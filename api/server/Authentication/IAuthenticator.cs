@@ -25,7 +25,7 @@ public interface IAuthenticator
     /// <summary>
     /// get/set -
     /// </summary>
-    Entities.User? Validate(string username, string password);
+    Entities.User Validate(string username, string password);
 
     /// <summary>
     /// get/set -

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Coevent.Dal.Migrations
 {
     [DbContext(typeof(CoeventContext))]
-    [Migration("20211205005430_Initial")]
+    [Migration("20211223002337_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1157,6 +1157,11 @@ namespace Coevent.Dal.Migrations
                     b.Property<string>("MiddleName")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()

@@ -32,7 +32,7 @@ public static class AuthenticationExtensions
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = config.Issuer,
                     ValidAudience = config.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.Secret ?? throw new InvalidOperationException("Cookie secret configuration is required."))),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.PrivateKey ?? throw new InvalidOperationException("Authentication:PrivateKey configuration is required."))),
                     ClockSkew = TimeSpan.Zero
                 };
                 //options.Events = new JwtBearerEvents()

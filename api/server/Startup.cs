@@ -20,6 +20,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 using System.Diagnostics.CodeAnalysis;
+using Coevent.Core.Encryption;
 
 /// <summary>
 /// Startup class, provides a way to startup the .netcore RESTful API and configure it.
@@ -122,6 +123,7 @@ public class Startup
             }
         });
 
+        services.AddSingleton<IHashPassword, HashPassword>();
         services.AddCoeventAuthentication(this.Configuration);
     }
 

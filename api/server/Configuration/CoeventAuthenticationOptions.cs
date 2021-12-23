@@ -7,24 +7,24 @@ public class CoeventAuthenticationOptions
 {
     #region  Properties
     /// <summary>
-    /// get/set -
+    /// get/set - The number of characters for the password salt.
     /// </summary>
-    public string? Salt { get; set; }
+    public int SaltLength { get; set; }
 
     /// <summary>
-    /// get/set -
+    /// get/set - The issuer of the token.
     /// </summary>
     public string? Issuer { get; set; }
 
     /// <summary>
-    /// get/set -
+    /// get/set - The audience of the token.
     /// </summary>
     public string? Audience { get; set; }
 
     /// <summary>
-    /// get/set -
+    /// get/set - The private key used for signing tokens.
     /// </summary>
-    public string? Secret { get; set; }
+    public string? PrivateKey { get; set; }
 
     /// <summary>
     /// get/set -
