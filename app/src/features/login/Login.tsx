@@ -1,6 +1,6 @@
 import { Button, Text } from 'components';
 import { Formik } from 'formik';
-import { useAccount, useApi } from 'hooks';
+import { usePadlock, useApi } from 'hooks';
 import { useHistory } from 'react-router';
 
 import { IParticipantLoginForm } from './interfaces';
@@ -12,7 +12,7 @@ import * as styled from './LoginStyled';
  * @returns Login component.
  */
 export const Login = () => {
-  const auth = useAccount();
+  const auth = usePadlock();
   const api = useApi();
   const history = useHistory();
 

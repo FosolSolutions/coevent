@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export const Footer = styled.footer`
   display: flex;
   min-width: 768px;
-  background-color: ${(props) => props.theme.primaryLightColorRgb};
+  background-color: ${(props) => props.theme.css.primaryLightColorRgb};
   color: #ffffff;
   padding: 5px 5px 5px 50px;
-
+  min-height: 25px;
   border-top: 2px solid #fcba19;
 
   div {

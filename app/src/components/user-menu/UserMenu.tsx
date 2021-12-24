@@ -1,4 +1,4 @@
-import { useAccount } from 'hooks';
+import { usePadlock } from 'hooks';
 
 import { Button, ButtonVariant, LogoutButton } from '..';
 import * as styled from './styled';
@@ -13,7 +13,7 @@ import * as styled from './styled';
  * @returns UserMenu component.
  */
 export const UserMenu = () => {
-  const auth = useAccount();
+  const auth = usePadlock();
 
   return (
     <div>

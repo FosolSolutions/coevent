@@ -2,7 +2,7 @@ import CoeventLogo from 'components/assets/coEventLogoWh.svg';
 import SVG from 'react-inlinesvg';
 import { Link } from 'react-router-dom';
 
-import { UserMenu } from '..';
+import { HomeMenu, UserMenu } from '..';
 import * as styled from './HeaderStyled';
 
 interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,24 +21,12 @@ export const Header: React.FC<IHeaderProps> = ({ name, children, ...rest }) => {
   return (
     <styled.Header {...rest}>
       <div>
-        <a href="/">
-          <SVG src={CoeventLogo} />
-        </a>
+        <Link to="/">
+          <SVG src={CoeventLogo} title="Home" />
+        </Link>
       </div>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/schedule">Schedule</Link>
-            </li>
-            <li>
-              <Link to="/admin">Administration</Link>
-            </li>
-          </ul>
-        </nav>
+        <HomeMenu />
       </div>
       <div>{<UserMenu />}</div>
     </styled.Header>

@@ -1,5 +1,15 @@
 import { PrivateRoute } from 'components';
-import { Home, Login, NotFound, Schedule } from 'features';
+import {
+  Accounts,
+  Calendar,
+  Calendars,
+  Draft,
+  Home,
+  Login,
+  NotFound,
+  Schedule,
+  Users,
+} from 'features';
 import { Claim } from 'hooks';
 import { Route, Switch } from 'react-router-dom';
 
@@ -11,11 +21,13 @@ export const AppRouter = () => {
   return (
     <Switch>
       <Route path="/login" component={Login}></Route>
-      <PrivateRoute path="/admin" claims={Claim.administrator}>
-        <p>Administration</p>
-      </PrivateRoute>
+      <PrivateRoute path="/admin/calendars" claims={Claim.administrator} component={Calendars} />
+      <PrivateRoute path="/admin/accounts" claims={Claim.administrator} component={Accounts} />
+      <PrivateRoute path="/admin/users" claims={Claim.administrator} component={Users} />
+      <PrivateRoute path="/admin/roles" claims={Claim.administrator} component={Draft} />
+      <PrivateRoute path="/calendar" component={Calendar} />
       <PrivateRoute path="/schedule" component={Schedule} />
-      <PrivateRoute path="/" component={Home} />
+      <PrivateRoute path="/" exact component={Home} />
       <Route path="*" exact component={NotFound} />
     </Switch>
   );

@@ -1,3 +1,7 @@
+using System.IdentityModel.Tokens.Jwt;
+using Coevent.Core.Extensions;
+using Microsoft.IdentityModel.Tokens;
+
 namespace Coevent.Api.Models.Tokens;
 
 /// <summary>
@@ -47,16 +51,15 @@ public class TokenModel
     /// Creates a new instance of a TokenModel object, initializes with specified parameters.
     /// </summary>
     /// <param name="accessToken"></param>
-    /// <param name="expiresIn"></param>
     /// <param name="refreshToken"></param>
-    /// <param name="refreshExpiresIn"></param>
     /// <param name="scope"></param>
-    public TokenModel(string accessToken, TimeSpan expiresIn, string refreshToken, TimeSpan refreshExpiresIn, string scope)
+    public TokenModel(SecurityToken accessToken, SecurityToken? refreshToken, string scope)
     {
-        this.AccessToken = accessToken;
-        this.ExpiresIn = expiresIn.TotalSeconds;
-        this.RefreshToken = refreshToken;
-        this.RefreshExpiresIn = refreshExpiresIn.TotalSeconds;
+        var tokenHandler = new JwtSecurityTokenHandler();
+        this.AccessToken = tokenHandler.WriteToken(accessToken);
+        this.ExpiresIn = accessToken.ValidTo.ConvertToUnixTimestamp();
+        this.RefreshToken = tokenHandler.WriteToken(refreshToken);
+        this.RefreshExpiresIn = refreshToken?.ValidTo.ConvertToUnixTimestamp() ?? 0;
         this.Scope = scope;
     }
     #endregion

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Header = styled.header`
   display: flex;
   min-width: 768px;
-  background-color: ${(props) => props.theme.primaryLightColorRgb};
+  background-color: ${(props) => props.theme.css.primaryLightColorRgb};
   color: #ffffff;
   padding: 10px 00px 10px 3px;
 
@@ -36,24 +36,6 @@ export const Header = styled.header`
 
     div div:last-child {
       margin-right: 10px;
-    }
-  }
-
-  nav {
-    ul {
-      display: flex;
-      flex-direction: row;
-      gap: 1rem;
-    }
-
-    a {
-      color: #ffffff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: #eee;
-      text-decoration: underline;
     }
   }
 `;

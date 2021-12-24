@@ -27,13 +27,13 @@ export const Text = styled.input<ITextProps>`
       case TextVariant.link:
         return '#1a5a96';
       default:
-        return props.theme.primaryColor;
+        return props.theme.css.primaryColor;
     }
   }};
   background-color: ${(props) => {
     switch (props.variant) {
       case TextVariant.primary:
-        return props.theme.formBackgroundColor;
+        return props.theme.css.formBackgroundColor;
       case TextVariant.secondary:
         return '#6c757d';
       case TextVariant.success:
@@ -80,7 +80,7 @@ export const Text = styled.input<ITextProps>`
         case TextVariant.link:
           return '#0631f3';
         default:
-          return props.theme.primaryColor;
+          return props.theme.css.primaryColor;
       }
     }};
     border-color: ${(props) => {

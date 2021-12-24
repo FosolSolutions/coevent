@@ -1,6 +1,6 @@
 import { IToken, IUserInfo } from '.';
 
-export interface IAccountState {
+export interface IPadlockState {
   authReady: boolean;
   setAuthReady: React.Dispatch<React.SetStateAction<boolean>>;
   authenticated: boolean;

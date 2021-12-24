@@ -1,7 +1,6 @@
-import { MenuStatus } from 'components/menu';
 import React from 'react';
 
-import { Footer, Header, Loading, MenuProvider } from '..';
+import { Footer, Header, Loading } from '..';
 import * as styled from './LayoutStyled';
 
 interface ILayoutProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,14 +20,12 @@ export const Layout: React.FC<ILayoutProps> = ({ name, children, ...rest }) => {
 
   return (
     <styled.Layout {...rest}>
-      <MenuProvider status={MenuStatus.full}>
-        <Header name={name} />
-        <main>
-          {children}
-          {isLoading && <Loading />}
-        </main>
-        <Footer />
-      </MenuProvider>
+      <Header name={name} />
+      <main>
+        {children}
+        {isLoading && <Loading />}
+      </main>
+      <Footer />
     </styled.Layout>
   );
 };

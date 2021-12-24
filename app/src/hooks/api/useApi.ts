@@ -1,26 +1,26 @@
-import { defaultEnvelope, LifecycleToasts, useSummon } from 'hooks';
+import React from 'react';
 
-import { Settings, useApiAuth } from '.';
+import { useAccounts, useAuth, useBase, useEvents } from '.';
 
 /**
  * Common hook to make requests to the PIMS APi.
  * @returns CustomAxios object setup for the PIMS API.
  */
-export const useApi = (
-  options: {
-    lifecycleToasts?: LifecycleToasts;
-    selector?: Function;
-    envelope?: typeof defaultEnvelope;
-    baseURL?: string;
-  } = {},
-) => {
-  const summon = useSummon({ ...options, baseURL: options.baseURL ?? Settings.ApiPath });
-  const auth = useApiAuth();
+export const useApi = () => {
+  const base = useBase();
+  const auth = useAuth();
+  const accounts = useAccounts();
+  const events = useEvents();
 
-  return {
-    ...summon,
-    auth,
-  };
+  return React.useMemo(
+    () => ({
+      ...base,
+      auth,
+      accounts,
+      events,
+    }),
+    [base, auth, events, accounts],
+  );
 };
 
 export default useApi;

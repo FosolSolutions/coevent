@@ -1,5 +1,5 @@
 import { IToken } from '.';
 
-export interface IAccountHookProps {
+export interface IPadlockHookProps {
   token?: IToken | null;
 }

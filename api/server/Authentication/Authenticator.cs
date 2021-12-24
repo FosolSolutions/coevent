@@ -120,16 +120,16 @@ public class Authenticator : IAuthenticator
         var accessToken = GenerateJwtToken(new ClaimsPrincipal(identity), _options.AccessTokenExpiresIn);
         var refreshToken = GenerateJwtToken(GeneratePrincipal(JwtBearerDefaults.AuthenticationScheme, refreshClaims), _options.RefreshTokenExpiresIn);
 
-        return await Task.FromResult(new TokenModel(accessToken, _options.AccessTokenExpiresIn, refreshToken, _options.RefreshTokenExpiresIn, _options.DefaultScope));
+        return await Task.FromResult(new TokenModel(accessToken, refreshToken, _options.DefaultScope));
     }
 
-    private ClaimsPrincipal GeneratePrincipal(string authenticationScheme, params Claim[] claims)
+    private static ClaimsPrincipal GeneratePrincipal(string authenticationScheme, params Claim[] claims)
     {
         var identity = new ClaimsIdentity(claims, authenticationScheme);
         return new ClaimsPrincipal(identity);
     }
 
-    private string GenerateJwtToken(ClaimsPrincipal user, TimeSpan expiresIn)
+    private SecurityToken GenerateJwtToken(ClaimsPrincipal user, TimeSpan expiresIn)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -140,8 +140,7 @@ public class Authenticator : IAuthenticator
             Expires = DateTime.UtcNow.Add(expiresIn),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_privateKey), SecurityAlgorithms.HmacSha256Signature)
         };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+        return tokenHandler.CreateToken(tokenDescriptor);
     }
     #endregion
 }

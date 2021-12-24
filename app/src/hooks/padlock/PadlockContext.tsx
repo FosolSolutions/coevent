@@ -1,12 +1,13 @@
+import moment from 'moment';
 import React from 'react';
 import { useCookies } from 'react-cookie';
 
-import { IAccountProviderProps, IAccountState, IToken, IUserInfo } from './interfaces';
+import { IPadlockProviderProps, IPadlockState, IToken, IUserInfo } from './interfaces';
 
 /**
- * AccountContext, provides shared state between AJAX requests.
+ * PadlockContext, provides shared state between AJAX requests.
  */
-export const AccountContext = React.createContext<IAccountState>({
+export const PadlockContext = React.createContext<IPadlockState>({
   authReady: false,
   setAuthReady: () => {},
   authenticated: false,
@@ -16,11 +17,11 @@ export const AccountContext = React.createContext<IAccountState>({
 });
 
 /**
- * AccountProvider, provides a way to initialize context.
- * @param param0 AccountProvider initialization properties.
+ * PadlockProvider, provides a way to initialize context.
+ * @param param0 PadlockProvider initialization properties.
  * @returns
  */
-export const AccountProvider: React.FC<IAccountProviderProps> = ({
+export const PadlockProvider: React.FC<IPadlockProviderProps> = ({
   authReady: initAuthReady = false,
   authenticated: initAuthenticated = false,
   token: initToken,
@@ -35,15 +36,16 @@ export const AccountProvider: React.FC<IAccountProviderProps> = ({
 
   React.useEffect(() => {
     // Configure account authentication solution.
-    if (!!cookies.token) {
-      setToken(cookies.token as IToken);
-      setAuthenticated(true);
+    const token = cookies.token as IToken;
+    if (!!token) {
+      setToken(token);
+      setAuthenticated(moment.unix(token.expiresIn).isAfter(moment.now()));
     }
     setAuthReady(true);
   }, [setAuthReady, cookies, setCookies]);
 
   return (
-    <AccountContext.Provider
+    <PadlockContext.Provider
       value={{
         authReady,
         setAuthReady,
@@ -56,8 +58,8 @@ export const AccountProvider: React.FC<IAccountProviderProps> = ({
       }}
     >
       {children}
-    </AccountContext.Provider>
+    </PadlockContext.Provider>
   );
 };
 
-export const AccountConsumer = AccountContext.Consumer;
+export const PadlockConsumer = PadlockContext.Consumer;

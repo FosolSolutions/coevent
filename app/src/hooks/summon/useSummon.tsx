@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AccountContext } from 'hooks';
+import { PadlockContext } from 'hooks';
 import { isEmpty } from 'lodash';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -33,19 +33,23 @@ export const useSummon = ({
   envelope?: typeof defaultEnvelope;
   baseURL?: string;
 } = {}) => {
-  const state = React.useContext(AccountContext);
+  const state = React.useContext(PadlockContext);
   let loadingToastId: React.ReactText | undefined = undefined;
 
-  const instance = axios.create({
-    baseURL,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
-  });
+  const instance = React.useMemo(
+    () =>
+      axios.create({
+        baseURL,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      }),
+    [baseURL],
+  );
 
   instance.interceptors.request.use((config) => {
     if (!!state.token) {
-      config.headers.Authorization = `Bearer ${state.token}`;
+      config.headers.Authorization = `Bearer ${state.token.accessToken}`;
     }
     const cancelTokenSource = axios.CancelToken.source();
     // axios.get('', { cancelToken: cancelTokenSource.token });
@@ -93,7 +97,7 @@ export const useSummon = ({
     },
   );
 
-  return React.useMemo(() => instance, [instance]);
+  return instance;
 };
 
 export default useSummon;

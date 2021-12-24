@@ -1,4 +1,4 @@
-import { Claim, Role, useAccount } from 'hooks';
+import { Claim, Role, usePadlock } from 'hooks';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 interface IPrivateRouteProps extends RouteProps {
@@ -29,7 +29,7 @@ export const PrivateRoute = ({
   children,
   ...rest
 }: IPrivateRouteProps) => {
-  const auth = useAccount();
+  const auth = usePadlock();
   return auth.state.authReady ? (
     <Route
       {...rest}
