@@ -44,7 +44,7 @@ setup: ## Setup and configure local environment
 	@sh ./scripts/gen-conf.sh
 
 init: ## Initialize local environment
-	@setup
+	@make setup
 	@make up p=core
 	@make db-update
 
