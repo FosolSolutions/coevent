@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. ./scripts/variables.sh
+
 # Docker Compose
 if ! test -f "./.env"; then
 echo \
