@@ -43,9 +43,15 @@ setup: ## Setup and configure local environment
 	@sh ./scripts/gen-conf.sh
 
 init: ## Initialize local environment
+	$(info Initialize local environment)
 	@make setup
 	@make up p=core
 	@make db-update
+
+nuke: ## Destroy local environment so that you can restart from scratch.
+	$(info Destroy local environment so that you can restart from scratch.)
+	@make down clean
+	@./scripts/nuke.sh
 
 .PHONY: setup
 
@@ -59,7 +65,7 @@ up: ## Runs the local container(s) (n=service name, p=profile name)
 
 down: ## Stops the local containers and removes them
 	$(info Stops the local containers and removes them)
-	@docker-compose --profile all down
+	@docker-compose --profile all down -v
 
 stop: ## Stops the local container(s) (n=service name)
 	$(info Stops the local container(s) (n=$(n)))
