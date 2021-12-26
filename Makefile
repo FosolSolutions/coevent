@@ -43,7 +43,7 @@ setup: ## Setup and configure local environment
 	@sh ./scripts/gen-conf.sh
 
 init: ## Initialize local environment
-	@setup
+	@make setup
 	@make up p=core
 	@make db-update
 
@@ -82,7 +82,7 @@ refresh-npm: ## Cleans and rebuilds the app.  This is useful when npm packages a
 
 clean: ## Removes all local containers, images, volumes, etc
 	$(info Removing all containers, images, volumes for solution.)
-	@docker-compose --profile all down -v
+	@docker-compose --profile all down -v --rmi all
 
 clean-npm: ## Removes local containers, images, volumes, for app application (n=service name).
 	$(info Removes local containers, images, volumes, for app application (n=$(n)))
