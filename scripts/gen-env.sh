@@ -99,7 +99,7 @@ echo \
 DB_USER=$varDbUser
 DB_PASSWORD=$varPassword
 
-DEFAULT_PASSWORD=$varPassword
+DEFAULT_PASSWORD=$varUserPassword
 SALT_LENGTH=50" >> ./api/libs/dal/.env
     echo -e "\t./api/libs/dal/.env created"
 fi
