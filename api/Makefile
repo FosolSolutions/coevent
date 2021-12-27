@@ -37,6 +37,10 @@ help:
 # Docker Development
 ##############################################################################
 
+db-install-cli: ## Install EF CLI
+	$(info Install EF CLI)
+	@dotnet tool install --global dotnet-ef
+
 db-migrations: ## Display a list of migrations.
 	$(info Display a list of migrations.)
 	@cd libs/dal; dotnet ef migrations list

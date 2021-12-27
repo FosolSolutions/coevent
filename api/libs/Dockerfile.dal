@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0
+WORKDIR /src
+COPY . .
+
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+RUN dotnet tool install --global dotnet-ef --version 6.0.0
+
+WORKDIR /src/dal
+
+RUN dotnet restore
+RUN dotnet build "Coevent.Dal.csproj"
+RUN dotnet ef database update -- --verbose --no-build
+
+# ENTRYPOINT ["tail", "-f", "/dev/null"]

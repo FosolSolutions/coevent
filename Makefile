@@ -102,43 +102,11 @@ clean-npm: ## Removes local containers, images, volumes, for app application (n=
 # Databas Utilities
 ##############################################################################
 
-db-install-cli: ## Install EF CLI
-	$(info Install EF CLI)
-	@dotnet tool install --global dotnet-ef
-
-db-migrations: ## Display a list of migrations.
-	$(info Display a list of migrations.)
-	@cd api; make db-migrations
-
-db-add: ## Add a new database migration for the specified name (n=name of migration).
-	$(info Add a new database migration for the specified name (n=$(n)).)
-	@cd api; make db-add n=$(n)
-
 db-update: ## Update the database with the latest migration.
 	$(info Update the database with the latest migration.)
-	@cd api; make db-update
+	@./scripts/db-update.sh
 
-db-rollback: ## Rollback to the specified database migration (n=name of migration).
-	$(info Rollback to the specified database migration (n=$(n)).)
-	@cd api; make db-rollback n=$(n)
-
-db-remove: ## Remove the last database migration from source control
-	$(info Remove the last database migration from source control)
-	@cd api; make db-remove
-
-db-refresh: ## Drop and recreate the database.
-	$(info Drop and recreate the database.)
-	@cd api; make db-refresh
-
-db-drop: ## Drop the database.
-	$(info Drop the database.)
-	@cd api; make db-drop
-
-db-script: ## Export an SQL script from the migration (from=0 to=Initial).
-	$(info Export an SQL script from the migration (from=$(from) to=$(to)).)
-	@cd api; make db-script from=$(from) to=$(to)
-
-.PHONY: db-install-cli db-update db-migrations db-add db-rollback db-remove db-refresh db-drop db-script
+.PHONY: db-update
 
 ##############################################################################
 # Utilities
