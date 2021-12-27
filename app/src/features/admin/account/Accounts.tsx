@@ -2,10 +2,9 @@ import { GridTable } from 'components';
 import { IAccountModel, useApi } from 'hooks';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTable } from 'react-table';
+import { Row } from 'react-table';
 
 import { columns } from './accountColumns';
-import * as styled from './styled';
 
 /**
  * Accounts component provides a way to list and filter accounts.
@@ -27,7 +26,7 @@ export const Accounts = () => {
         <GridTable
           columns={columns}
           data={accounts}
-          onRowClick={(row) => navigate(`/admin/accounts/${row.original.id}`)}
+          onRowClick={(row: Row<IAccountModel>) => navigate(`/admin/accounts/${row.original.id}`)}
         ></GridTable>
       </div>
     </div>

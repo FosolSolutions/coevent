@@ -1,4 +1,3 @@
-import React from 'react';
 import { Column, Row, useTable } from 'react-table';
 
 import * as styled from './styled';
