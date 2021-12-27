@@ -3,18 +3,18 @@ import '@szhsin/react-menu/dist/transitions/slide.css';
 
 import { Menu } from '@szhsin/react-menu';
 import { usePadlock } from 'hooks';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { MenuLink } from '.';
 import * as styled from './styled';
 
 export const HomeMenu = () => {
   const account = usePadlock();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return account.authenticated ? (
     <styled.Menu>
-      <styled.MenuButton onClick={() => history.push('/calendar')}>Calendar</styled.MenuButton>
+      <styled.MenuButton onClick={() => navigate('/calendar')}>Calendar</styled.MenuButton>
       <Menu menuButton={<styled.MenuButton>Schedules</styled.MenuButton>} transition>
         <MenuLink to="/schedule">Victoria Ecclesia</MenuLink>
       </Menu>

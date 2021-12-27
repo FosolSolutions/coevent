@@ -20,27 +20,6 @@ services:
     networks:
       - ce
 
-  ####################### Keycloak #######################
-  keycloak:
-    image: coevent:keycloak
-    restart: on-failure:1
-    container_name: ce-keycloak
-    profiles:
-      - all
-    build:
-      context: ./auth/keycloak
-    env_file:
-      - auth/keycloak/.env
-    volumes:
-      - ./auth/keycloak/config/realm-export.json:/tmp/realm-export.json
-    ports:
-      - ${KEYCLOAK_PORT:-10006}:8080
-    depends_on:
-      - database
-    networks:
-      - ce
-
-
   ####################### SEQ - Logs #######################
   seq:
     image: coevent:seq

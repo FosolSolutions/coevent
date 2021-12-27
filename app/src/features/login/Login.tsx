@@ -1,7 +1,7 @@
 import { Button, Text } from 'components';
 import { Formik } from 'formik';
-import { usePadlock, useApi } from 'hooks';
-import { useHistory } from 'react-router';
+import { useApi, usePadlock } from 'hooks';
+import { useNavigate } from 'react-router';
 
 import { IParticipantLoginForm } from './interfaces';
 import * as styled from './LoginStyled';
@@ -14,7 +14,7 @@ import * as styled from './LoginStyled';
 export const Login = () => {
   const auth = usePadlock();
   const api = useApi();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const defaultValues: IParticipantLoginForm = { key: '' };
 
@@ -29,10 +29,10 @@ export const Login = () => {
             initialValues={defaultValues}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                if (!!values.key) {
-                  var token = await api.auth.loginAsParticipant({ key: values.key });
+                if (values.key) {
+                  const token = await api.auth.loginAsParticipant({ key: values.key });
                   auth.login(token);
-                  history.push('/');
+                  navigate('/');
                   setSubmitting(false);
                 }
               } catch (error) {

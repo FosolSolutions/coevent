@@ -1,5 +1,6 @@
 import { PrivateRoute } from 'components';
 import {
+  Account,
   Accounts,
   Calendar,
   Calendars,
@@ -11,7 +12,7 @@ import {
   Users,
 } from 'features';
 import { Claim } from 'hooks';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 /**
  * AppRouter provides a SPA router to manage routes.
@@ -19,16 +20,48 @@ import { Route, Switch } from 'react-router-dom';
  */
 export const AppRouter = () => {
   return (
-    <Switch>
-      <Route path="/login" component={Login}></Route>
-      <PrivateRoute path="/admin/calendars" claims={Claim.administrator} component={Calendars} />
-      <PrivateRoute path="/admin/accounts" claims={Claim.administrator} component={Accounts} />
-      <PrivateRoute path="/admin/users" claims={Claim.administrator} component={Users} />
-      <PrivateRoute path="/admin/roles" claims={Claim.administrator} component={Draft} />
-      <PrivateRoute path="/calendar" component={Calendar} />
-      <PrivateRoute path="/schedule" component={Schedule} />
-      <PrivateRoute path="/" exact component={Home} />
-      <Route path="*" exact component={NotFound} />
-    </Switch>
+    <Routes>
+      <Route path="/login" element={<Login />}></Route>
+      <Route
+        path="/calendar"
+        element={<PrivateRoute redirectTo="/login" element={<Calendar />} />}
+      />
+      <Route
+        path="/schedule"
+        element={<PrivateRoute redirectTo="/login" element={<Schedule />} />}
+      />
+      <Route
+        path="/admin/calendars"
+        element={
+          <PrivateRoute redirectTo="/login" claims={Claim.administrator} element={<Calendars />} />
+        }
+      />
+      <Route
+        path="/admin/accounts"
+        element={
+          <PrivateRoute redirectTo="/login" claims={Claim.administrator} element={<Accounts />} />
+        }
+      />
+      <Route
+        path="/admin/accounts/:id"
+        element={
+          <PrivateRoute redirectTo="/login" claims={Claim.administrator} element={<Account />} />
+        }
+      />
+      <Route
+        path="/admin/users"
+        element={
+          <PrivateRoute redirectTo="/login" claims={Claim.administrator} element={<Users />} />
+        }
+      />
+      <Route
+        path="/admin/roles"
+        element={
+          <PrivateRoute redirectTo="/login" claims={Claim.administrator} element={<Draft />} />
+        }
+      />
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };

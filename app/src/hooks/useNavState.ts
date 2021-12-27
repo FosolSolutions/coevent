@@ -27,7 +27,7 @@ export const useNavState = (initState?: INavState) => {
     dispatch(storeStatus(status));
   };
 
-  if (!!initState) {
+  if (initState) {
     setStatus(initState.status);
   }
 

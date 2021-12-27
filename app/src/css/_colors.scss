@@ -11,17 +11,22 @@ $form-background-color: #d9d9d9;
 $dropdown-background-color: #32507c;
 $accent-color: #fcba19;
 $light-accent-color: #fcd573;
-$table-color: #dee2e6;
-$table-header-color: #e9ecef;
 $sres-icon-color: #172b4d;
 $danger-color: #d8292f;
-$light-danger-color: #fae1e7;
+$light-danger-color: #414040;
 $icon-light-color: #3b99fc;
 $active-color: #007bff;
 $completed-color: #2e8540;
 $filter-background-color: #f2f2f2;
 $slide-out-blue: #1a5a96;
 $selected-color: #dff0d8;
+
+$table-color: #dee2e6;
+$table-header-color: #e9ecef;
+$table-row-color: #ffffff;
+$table-row-n-color: #e9ecef;
+$table-row-hover-color: #38598a;
+$table-row-active-color: #38598a;
 
 // Bootstrap defaults
 $bs-text-opacity: 1;

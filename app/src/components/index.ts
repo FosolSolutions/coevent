@@ -1,5 +1,6 @@
 export * from './button';
 export * from './footer';
+export * from './grid-table';
 export * from './header';
 export * from './layout';
 export * from './loading';
