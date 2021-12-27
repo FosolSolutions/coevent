@@ -31,7 +31,7 @@ export const useAccounts = () => {
       },
       add: async (model: IAccountModel): Promise<IAccountModel> => {
         try {
-          const response = await api.post(`/admin/accounts`, model);
+          const response = await api.post('/admin/accounts', model);
           return response.data as IAccountModel;
         } catch (error) {
           // Handle error;

@@ -1,5 +1,5 @@
 import { applyStatics, MenuItem, MenuItemProps } from '@szhsin/react-menu';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * MenuLink properties.
@@ -17,14 +17,14 @@ export interface IMenuLinkProps extends MenuItemProps {
  * @returns MenuLink component.
  */
 export const MenuLink: React.FC<IMenuLinkProps> = ({ to, ...rest }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <MenuItem
       href={to}
       onClick={(e) => {
         e.syntheticEvent.preventDefault();
-        history.push(to);
+        navigate(to);
       }}
       {...rest}
     ></MenuItem>

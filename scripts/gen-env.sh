@@ -86,7 +86,7 @@ CHOKIDAR_USEPOLLING=true
 # Uncommment PORT if you want to run outside of docker.
 # PORT=10004
 PUBLIC_URL=/
-WDS_SOCKET_PORT=0
+WDS_SOCKET_PORT=10004
 # API_URL=http://localhost:10002
 BROWSER=none" >> ./app/.env
     echo -e "\t./app/.env created"

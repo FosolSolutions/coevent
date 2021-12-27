@@ -1,4 +1,5 @@
 import { usePadlock } from 'hooks';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, ButtonVariant, LogoutButton } from '..';
 import * as styled from './styled';
@@ -14,6 +15,7 @@ import * as styled from './styled';
  */
 export const UserMenu = () => {
   const auth = usePadlock();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -23,7 +25,7 @@ export const UserMenu = () => {
           <LogoutButton onClick={() => auth.logout()} size={20} />
         </styled.UserMenu>
       ) : (
-        <Button variant={ButtonVariant.warning} onClick={() => null}>
+        <Button variant={ButtonVariant.warning} onClick={() => navigate('/login')}>
           Login
         </Button>
       )}

@@ -13,7 +13,7 @@ export const useAuth = () => {
     () => ({
       login: async (model: ILoginModel): Promise<ITokenModel> => {
         try {
-          const response = await api.post(`/auth/login`, model);
+          const response = await api.post('/auth/login', model);
           return response.data as ITokenModel;
         } catch (error) {
           // Handle error;
@@ -22,7 +22,7 @@ export const useAuth = () => {
       },
       loginAsParticipant: async (model: IParticipantLoginModel): Promise<ITokenModel> => {
         try {
-          const response = await api.post(`/auth/participants/token`, model);
+          const response = await api.post('/auth/participants/token', model);
           return response.data as ITokenModel;
         } catch (error) {
           // Handle error;

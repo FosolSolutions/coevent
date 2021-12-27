@@ -1,16 +1,20 @@
+import { GridTable } from 'components';
 import { IAccountModel, useApi } from 'hooks';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
 
-import { tableColumns } from './tableColumns';
+import { columns } from './accountColumns';
+import * as styled from './styled';
 
+/**
+ * Accounts component provides a way to list and filter accounts.
+ * @returns Account administrative component.
+ */
 export const Accounts = () => {
   const api = useApi();
+  const navigate = useNavigate();
   const [accounts, setAccounts] = React.useState<IAccountModel[]>([]);
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    columns: tableColumns,
-    data: accounts,
-  });
 
   React.useEffect(() => {
     api.accounts.getPage(1).then((results) => setAccounts(results));
@@ -20,59 +24,11 @@ export const Accounts = () => {
     <div>
       <h1>Accounts</h1>
       <div>
-        <table {...getTableProps()}>
-          <thead>
-            {
-              // Loop over the header rows
-              headerGroups.map((headerGroup) => (
-                // Apply the header row props
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {
-                    // Loop over the headers in each row
-                    headerGroup.headers.map((column) => (
-                      // Apply the header cell props
-                      <th {...column.getHeaderProps()}>
-                        {
-                          // Render the header
-                          column.render('Header')
-                        }
-                      </th>
-                    ))
-                  }
-                </tr>
-              ))
-            }
-          </thead>
-          {/* Apply the table body props */}
-          <tbody {...getTableBodyProps()}>
-            {
-              // Loop over the table rows
-              rows.map((row) => {
-                // Prepare the row for display
-                prepareRow(row);
-                return (
-                  // Apply the row props
-                  <tr {...row.getRowProps()}>
-                    {
-                      // Loop over the rows cells
-                      row.cells.map((cell) => {
-                        // Apply the cell props
-                        return (
-                          <td {...cell.getCellProps()}>
-                            {
-                              // Render the cell contents
-                              cell.render('Cell')
-                            }
-                          </td>
-                        );
-                      })
-                    }
-                  </tr>
-                );
-              })
-            }
-          </tbody>
-        </table>
+        <GridTable
+          columns={columns}
+          data={accounts}
+          onRowClick={(row) => navigate(`/admin/accounts/${row.original.id}`)}
+        ></GridTable>
       </div>
     </div>
   );

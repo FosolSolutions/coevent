@@ -34,7 +34,7 @@ export const useSummon = ({
   baseURL?: string;
 } = {}) => {
   const state = React.useContext(PadlockContext);
-  let loadingToastId: React.ReactText | undefined = undefined;
+  let loadingToastId: React.ReactText | undefined;
 
   const instance = React.useMemo(
     () =>
@@ -48,8 +48,8 @@ export const useSummon = ({
   );
 
   instance.interceptors.request.use((config) => {
-    if (!!state.token) {
-      config.headers.Authorization = `Bearer ${state.token.accessToken}`;
+    if (state.token) {
+      config!.headers!.Authorization = `Bearer ${state.token.accessToken}`;
     }
     const cancelTokenSource = axios.CancelToken.source();
     // axios.get('', { cancelToken: cancelTokenSource.token });
@@ -91,7 +91,7 @@ export const useSummon = ({
       }
 
       // TODO: This is not returning the error to an async/await try/catch implementation...
-      //const errorMessage =
+      // const errorMessage =
       //  errorToastMessage || (error.response && error.response.data.message) || String.ERROR;
       return Promise.reject(error);
     },

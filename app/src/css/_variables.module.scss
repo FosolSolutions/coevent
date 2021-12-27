@@ -19,8 +19,6 @@
   dropdownBackgroundColor: $dropdown-background-color;
   accentColor: $accent-color;
   lightAccentColor: $light-accent-color;
-  tableColor: $table-color;
-  tableHeaderColor: $table-header-color;
   sresIconColor: $sres-icon-color;
   dangerColor: $danger-color;
   lightDangerColor: $light-danger-color;
@@ -29,6 +27,13 @@
   completedColor: $completed-color;
   filterBackgroundColor: $filter-background-color;
   slideOutBlue: $slide-out-blue;
+
+  tableColor: $table-color;
+  tableHeaderColor: $table-header-color;
+  tableRowColor: $table-row-color;
+  tableRowNColor: $table-row-n-color;
+  tableRowHoverColor: $table-row-hover-color;
+  tableRowActiveColor: $table-row-active-color;
 
   primary: $bs-primary;
   secondary: $bs-secondary;

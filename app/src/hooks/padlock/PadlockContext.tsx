@@ -37,7 +37,7 @@ export const PadlockProvider: React.FC<IPadlockProviderProps> = ({
   React.useEffect(() => {
     // Configure account authentication solution.
     const token = cookies.token as IToken;
-    if (!!token) {
+    if (token) {
       setToken(token);
       setAuthenticated(moment.unix(token.expiresIn).isAfter(moment.now()));
     }

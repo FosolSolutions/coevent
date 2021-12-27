@@ -1,12 +1,11 @@
 import { Claim, Role, usePadlock } from 'hooks';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { Navigate, RouteProps } from 'react-router-dom';
 
 interface IPrivateRouteProps extends RouteProps {
   /**
-   * The component to load if the route is active.
-   * You can use children elements instead.
+   * The path to redirect to if user is unauthorized.
    */
-  component?: React.ComponentType<any>;
+  redirectTo: string;
   /**
    * A role the user belongs to.
    */
@@ -15,6 +14,14 @@ interface IPrivateRouteProps extends RouteProps {
    * A claim the user has.
    */
   claims?: Claim | Array<Claim>;
+  /**
+   * The element to load if authorized.
+   */
+  element?: React.ReactElement | null;
+  /**
+   * The children elements to load if authorized.
+   */
+  children?: React.ReactNode;
 }
 
 /**
@@ -23,24 +30,23 @@ interface IPrivateRouteProps extends RouteProps {
  * @returns PrivateRoute component.
  */
 export const PrivateRoute = ({
-  component: Component,
+  redirectTo,
   claims,
   roles,
+  element,
   children,
-  ...rest
 }: IPrivateRouteProps) => {
   const auth = usePadlock();
-  return auth.state.authReady ? (
-    <Route
-      {...rest}
-      render={(routeProps) => {
-        if (!auth.authenticated) {
-          return <Redirect to="/login" />;
-        } else {
-          if (Component) return <Component {...routeProps} />;
-          else return children;
-        }
-      }}
-    ></Route>
-  ) : null;
+
+  if (!auth.state.authReady) <></>;
+
+  if (
+    !auth.authenticated ||
+    (!!claims && !auth.hasClaim(claims)) ||
+    (!!roles && !auth.hasRole(roles))
+  ) {
+    return <Navigate to={redirectTo} />;
+  }
+
+  return element || <>{children}</>;
 };

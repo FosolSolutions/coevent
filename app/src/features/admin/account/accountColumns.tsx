@@ -1,7 +1,11 @@
 import { IAccountModel } from 'hooks/api';
 import { Column } from 'react-table';
 
-export const tableColumns: Column<IAccountModel>[] = [
+const disabledColumn = ({ value }: { value: boolean }) => (
+  <input type="checkbox" defaultChecked={value} value={value ? 'true' : 'false'} />
+);
+
+export const columns: Column<IAccountModel>[] = [
   {
     Header: 'Name',
     accessor: 'name',
@@ -17,5 +21,6 @@ export const tableColumns: Column<IAccountModel>[] = [
   {
     Header: 'Disabled',
     accessor: 'isDisabled',
+    Cell: disabledColumn,
   },
 ];
