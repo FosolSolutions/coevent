@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {

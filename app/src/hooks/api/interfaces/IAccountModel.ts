@@ -1,9 +1,9 @@
-import { AccountTypes } from '..';
+import { AccountTypes, IBaseModel } from '..';
 
 /**
  * IAccountModel interface, represents a CoEvent account object.
  */
-export interface IAccountModel {
+export interface IAccountModel extends IBaseModel {
   id: number;
   name: string;
   description: string;

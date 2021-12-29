@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Coevent.Api.Authentication;
 using Coevent.Api.Models.Tokens;
 using Coevent.Core.Extensions;
+using CoEvent.Api.Authentication;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -46,52 +47,84 @@ public class AuthController : ControllerBase
     [Produces(MediaTypeNames.Application.Json)]
     public async Task<IActionResult> AuthenticateAsync(LoginModel model)
     {
-        try
-        {
-            var user = _authenticator.Validate(model.Username, model.Password);
-            var token = await _authenticator.AuthenticateAsync(user);
-            return new JsonResult(token);
-        }
-        catch (AuthenticationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        return await AccessTokenAsync(new RequestTokenModel() { GrantType = GrantTypes.Password, Username = model.Username, Password = model.Password });
     }
 
     /// <summary>
     /// Authenticate the participant.
     /// </summary>
     /// <returns></returns>
-    [HttpPost("participants/token")]
+    [HttpPost("participants/login")]
     [Produces(MediaTypeNames.Application.Json)]
     public async Task<IActionResult> AuthenticateAsync(ParticipantLoginModel model)
     {
-        var user = _authenticator.FindUser(model.Key);
-        if (user == null)
-            return BadRequest("Invalid Participant Key");
-
-        var token = await _authenticator.AuthenticateAsync(user);
-        return new JsonResult(token);
+        return await AccessTokenAsync(new RequestTokenModel() { GrantType = GrantTypes.AuthorizationCode, Code = model.Key.ToString() });
     }
 
     /// <summary>
-    /// Refresh the access token if the refresh token is valid.
+    /// Generate or refresh the access token if the provided credentials are authenticated and authorized.
     /// </summary>
+    /// <param name="model"></param>
     /// <returns></returns>
     /// <exception cref="SecurityTokenException"></exception>
     /// <exception cref="SecurityTokenExpiredException"></exception>
-    [HttpPost("token/refresh")]
+    [HttpPost("token")]
     [Produces(MediaTypeNames.Application.Json)]
-    public async Task<IActionResult> RefreshTokenAsync()
+    public async Task<IActionResult> AccessTokenAsync(RequestTokenModel model)
     {
-        var id = User.GetClaim(ClaimTypes.NameIdentifier)?.Value ?? throw new SecurityTokenException();
-        var key = Guid.Parse(id);
-        var user = _authenticator.FindUser(key);
+        try
+        {
+            if (model.GrantType == GrantTypes.Password)
+            {
+                var user = _authenticator.Validate(model.Username, model.Password);
+                var token = await _authenticator.AuthenticateAsync(user);
+                return new JsonResult(token);
+            }
+            else if (model.GrantType == GrantTypes.AuthorizationCode)
+            {
+                if (Guid.TryParse(model.Code, out Guid key))
+                {
+                    var user = _authenticator.FindUser(key);
+                    if (user == null)
+                        return BadRequest("Invalid Participant Key");
 
-        if (user != null)
-            return new JsonResult(await _authenticator.AuthenticateAsync(user));
+                    var token = await _authenticator.AuthenticateAsync(user);
+                    return new JsonResult(token);
+                }
 
-        throw new SecurityTokenExpiredException();
+                return BadRequest("Key is missing or is invalid.");
+            }
+            else if (model.GrantType == GrantTypes.RefreshToken)
+            {
+                var id = User.GetClaim(ClaimTypes.NameIdentifier)?.Value ?? throw new SecurityTokenException();
+                var key = Guid.Parse(id);
+                var user = _authenticator.FindUser(key);
+
+                if (user != null)
+                    return new JsonResult(await _authenticator.AuthenticateAsync(user));
+
+                throw new SecurityTokenExpiredException();
+            }
+            else if (model.GrantType == GrantTypes.ClientCredentials)
+            {
+                return BadRequest("Client credentials grant not available.");
+            }
+            else if (model.GrantType == GrantTypes.JWTBearer)
+            {
+                return BadRequest("JWT bearer assertion grant not available.");
+            }
+            else if (model.GrantType == GrantTypes.SAML2Bearer)
+            {
+                return BadRequest("SAML 2.0 bearer assertion grant not available.");
+                throw new AuthenticationException();
+            }
+
+            return BadRequest("Grant type invalid");
+        }
+        catch (AuthenticationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     /// <summary>

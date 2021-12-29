@@ -22,7 +22,19 @@ export const useAuth = () => {
       },
       loginAsParticipant: async (model: IParticipantLoginModel): Promise<ITokenModel> => {
         try {
-          const response = await api.post('/auth/participants/token', model);
+          const response = await api.post('/auth/participants/login', model);
+          return response.data as ITokenModel;
+        } catch (error) {
+          // Handle error;
+          return Promise.reject(error);
+        }
+      },
+      refreshToken: async (refreshToken: string): Promise<ITokenModel> => {
+        try {
+          const response = await api.post('/auth/token', {
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken,
+          });
           return response.data as ITokenModel;
         } catch (error) {
           // Handle error;

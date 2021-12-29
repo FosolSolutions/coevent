@@ -1,12 +1,8 @@
 import { Claim, Role } from 'hooks';
 
-import { IPadlockState, IToken } from '.';
+import { IPadlockState } from '.';
 
-export interface IPadlockHook {
-  state: IPadlockState;
-  authenticated: boolean;
-  login: (token: IToken) => void;
-  logout: () => void;
+export interface IPadlockHook extends IPadlockState {
   hasClaim: (claims: Claim | Array<Claim>) => boolean;
   hasRole: (roles: Role | Array<Role>) => boolean;
 }

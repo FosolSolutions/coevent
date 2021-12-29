@@ -8,7 +8,7 @@ export const GridTable = styled.div`
   grid-auto-rows: auto;
   gap: 0.25em;
 
-  div[role='headerGroup'] {
+  div[role='rowheader'] {
     div[role='row'] {
       border-top-left-radius: 0.25em;
       border-top-right-radius: 0.25em;

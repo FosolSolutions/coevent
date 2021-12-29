@@ -1,9 +1,5 @@
-import { Claim, IPadlockHook, IPadlockHookProps, IToken, PadlockContext, Role } from 'hooks';
-import moment from 'moment';
+import { Claim, IPadlockHook, IPadlockHookProps, PadlockContext, Role } from 'hooks';
 import React from 'react';
-import { useCookies } from 'react-cookie';
-
-const COOKIE_NAME = 'token';
 
 /**
  * Padlock hook provides a way for a user to login/logout and authorize actions based on claims and roles.
@@ -11,40 +7,7 @@ const COOKIE_NAME = 'token';
  * @returns Padlock component.
  */
 export const usePadlock = ({ token }: IPadlockHookProps = {}): IPadlockHook => {
-  const state = React.useContext(PadlockContext);
-  const [, setCookies, removeCookie] = useCookies();
-
-  const storeToken = React.useCallback(
-    (token: IToken | null) => {
-      setCookies(COOKIE_NAME, token, { path: '/' });
-      state.setToken(token);
-      state.setAuthenticated(moment.unix(token?.expiresIn ?? 0).isAfter(moment.now()));
-      console.info('authenticated:' + state.authenticated);
-    },
-    [setCookies, state],
-  );
-
-  React.useEffect(() => {
-    if (token) {
-      storeToken(token);
-      console.info('token', token);
-    }
-  }, [token, storeToken]);
-
-  const login = React.useCallback(
-    (token: IToken) => {
-      storeToken(token);
-    },
-    [storeToken],
-  );
-
-  const logout = React.useCallback(() => {
-    removeCookie(COOKIE_NAME);
-    storeToken(null);
-    state.setToken(null);
-    state.setAuthenticated(false);
-    console.info('logout');
-  }, [state, storeToken, removeCookie]);
+  const context = React.useContext(PadlockContext);
 
   /**
    * Validate the current user account as at least one of the specified claims.
@@ -65,10 +28,7 @@ export const usePadlock = ({ token }: IPadlockHookProps = {}): IPadlockHook => {
   }, []);
 
   return {
-    state,
-    authenticated: state.authenticated,
-    login,
-    logout,
+    ...context,
     hasClaim,
     hasRole,
   };
