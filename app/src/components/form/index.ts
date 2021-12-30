@@ -1,6 +1,7 @@
 export * from './auto-complete';
 export * from './checkbox';
 export * from './dropdown';
+export * from './formik-auto-complete';
 export * from './formik-checkbox';
 export * from './formik-dropdown';
 export * from './formik-input';

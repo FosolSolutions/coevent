@@ -2,6 +2,7 @@ import {
   Button,
   ButtonVariant,
   castEnumToOptions,
+  FormikAutoComplete,
   FormikCheckbox,
   FormikDropdown,
   FormikText,
@@ -79,6 +80,12 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
                   required
                   options={castEnumToOptions(AccountTypes)}
                 ></FormikDropdown>
+                <FormikAutoComplete
+                  name="ownerId"
+                  label="Owner:"
+                  required
+                  options={['Admin']}
+                ></FormikAutoComplete>
               </div>
               <div>
                 <Button type="submit" variant={ButtonVariant.primary} disabled={isSubmitting}>
