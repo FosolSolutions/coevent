@@ -1,7 +1,6 @@
 import React, { SelectHTMLAttributes } from 'react';
-import { enumKeyValues } from 'utils';
 
-import { DropdownVariant, IOption } from '.';
+import { DropdownVariant, instanceOfIOption, IOption } from '.';
 import * as styled from './DropdownStyled';
 
 export interface IDropdownProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -60,20 +59,5 @@ export const Dropdown: React.FC<IDropdownProps> = ({
           })
         : children}
     </styled.Dropdown>
-  );
-};
-
-function instanceOfIOption(object: any): object is IOption {
-  return object.discriminator === 'IOption';
-}
-
-/**
- * Cast enum object into an array of IOption.
- * @param enumObject Enum object.
- * @returns An array of IOption.
- */
-export const castEnumToOptions = (enumObject: any) => {
-  return enumKeyValues(enumObject).map(
-    (kv) => ({ label: kv.key, value: kv.value, discriminator: 'IOption' } as IOption),
   );
 };
