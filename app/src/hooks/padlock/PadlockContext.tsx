@@ -1,4 +1,4 @@
-import { Settings, SummonProvider, tokenExpired } from 'hooks';
+import { SummonProvider, tokenExpired } from 'hooks';
 import moment from 'moment';
 import React from 'react';
 import { useCookies } from 'react-cookie';
@@ -30,9 +30,11 @@ export const PadlockContext = React.createContext<IPadlockState>({
 });
 
 /**
- * PadlockProvider, provides a way to initialize context.
+ * PadlockProvider, provides a way to initialize context which manages user authentication and authorization state.
+ * Additionally, it is currently tightly coupled with 'summon' (a wrapper for axios).
+ * Which enables AJAX requests to include JWT headers to authorize API endpoints.
  * @param param0 PadlockProvider initialization properties.
- * @returns
+ * @returns PadlockProvider context component.
  */
 export const PadlockProvider: React.FC<IPadlockProviderProps> = ({
   oidc: initOIDC = {},
@@ -40,6 +42,9 @@ export const PadlockProvider: React.FC<IPadlockProviderProps> = ({
   authenticated: initAuthenticated = false,
   token: initToken,
   userInfo: initUserInfo,
+  baseApiUrl = 'api/',
+  autoRefreshToken,
+  loginPath,
   children,
 }) => {
   const [oidc] = React.useState<IOIDCEndpoints>(initOIDC);
@@ -123,7 +128,13 @@ export const PadlockProvider: React.FC<IPadlockProviderProps> = ({
         logout,
       }}
     >
-      <SummonProvider baseURL={Settings.ApiPath}>{children}</SummonProvider>
+      <SummonProvider
+        baseApiUrl={baseApiUrl}
+        autoRefreshToken={autoRefreshToken}
+        loginPath={loginPath}
+      >
+        {children}
+      </SummonProvider>
     </PadlockContext.Provider>
   );
 };

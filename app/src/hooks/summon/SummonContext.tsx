@@ -17,10 +17,12 @@ export const SummonContext = React.createContext<ISummonState>({ summon: axios.c
  * @returns
  */
 export const SummonProvider: React.FC<ISummonProviderProps> = ({
-  baseURL,
+  baseApiUrl,
   lifecycleToasts,
   selector,
   envelope = defaultEnvelope,
+  loginPath = '/login',
+  autoRefreshToken = true,
   children,
 }) => {
   const auth = usePadlock();
@@ -32,14 +34,14 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
 
   const instance = React.useMemo(() => {
     const instance = axios.create({
-      baseURL,
+      baseURL: baseApiUrl,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
     });
 
     return instance;
-  }, [baseURL]);
+  }, [baseApiUrl]);
 
   instance.interceptors.request.use((config) => {
     if (accessToken && !config?.headers?.Authorization) {
@@ -85,10 +87,12 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
       }
 
       // TODO: Handle when requests fail due to authentication.  This should redirect user to login page.
+      // TODO: Provide popup dialog to indicate a need to login to access route.
+      // TODO: Resolve uncaught promise error resulting from this code.
       if (error!.response!.status === 401) {
-        const url = `${window.location.protocol}://${window.location.host}${
-          parseInt(window.location!.port ?? '80') !== 80 ? ':' + window.location!.port : null
-        }/login?redirect_uri=${window.location.pathname}`;
+        const url = `${window.location.href.replace(window.location.pathname, loginPath)}${
+          window.location.search ? '&' : '?'
+        }redirect_uri=${window.location.pathname}`;
         window.location.replace(url);
       }
 
@@ -137,14 +141,17 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
   const refHandleRefresh = React.useRef(handleRefresh);
   refHandleRefresh.current = handleRefresh;
   React.useEffect(() => {
-    const timer = setInterval(() => {
-      refHandleRefresh.current();
-    }, interval);
+    // TODO: A refresh should only occur if the user is still on the page.  Need an isActive listener.
+    if (autoRefreshToken) {
+      const timer = setInterval(() => {
+        refHandleRefresh.current();
+      }, interval);
 
-    return () => {
-      clearInterval(timer);
-    };
-  }, [interval]);
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [interval, autoRefreshToken]);
 
   const props = { summon: instance };
 
