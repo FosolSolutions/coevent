@@ -1,9 +1,9 @@
-import { Button, Text } from 'components';
+import { Button, FormikText } from 'components';
 import { Formik } from 'formik';
 import { useApi, usePadlock } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 
-import { IParticipantLoginForm } from './interfaces';
+import { IParticipantLoginForm, IUserLoginForm } from '.';
 import * as styled from './LoginStyled';
 
 /**
@@ -17,17 +17,15 @@ export const Login = () => {
   const navigate = useNavigate();
   const redirect_uri = new URLSearchParams(window.location.search).get('redirect_uri');
 
-  const defaultValues: IParticipantLoginForm = { key: '' };
+  const defaultParticipantValues: IParticipantLoginForm = { key: '' };
+  const defaultUserValues: IUserLoginForm = { username: '', password: '' };
 
   return (
     <styled.Login>
       <div>
         <div>
-          <label>Participant Code:</label>
-        </div>
-        <div>
           <Formik
-            initialValues={defaultValues}
+            initialValues={defaultParticipantValues}
             onSubmit={async (values) => {
               try {
                 if (values.key) {
@@ -40,24 +38,61 @@ export const Login = () => {
               }
             }}
           >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-            }) => (
+            {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
               <form onSubmit={handleSubmit}>
-                <Text
+                <FormikText
                   name="key"
+                  label="Participant Code:"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.key}
                   placeholder="Enter your key"
-                ></Text>
-                {errors.key && touched.key && errors.key}
+                ></FormikText>
+                <Button type="submit" disabled={isSubmitting}>
+                  Login
+                </Button>
+              </form>
+            )}
+          </Formik>
+        </div>
+        <div>Or login with your user account</div>
+        <div>
+          <Formik
+            initialValues={defaultUserValues}
+            onSubmit={async (values) => {
+              try {
+                if (values.username && values.password) {
+                  const token = await api.auth.login({
+                    username: values.username,
+                    password: values.password,
+                  });
+                  auth.login(token);
+                  navigate(redirect_uri ?? '/');
+                }
+              } catch (error) {
+                // Handle error
+              }
+            }}
+          >
+            {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+              <form onSubmit={handleSubmit}>
+                <FormikText
+                  name="username"
+                  label="Username:"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.username}
+                  placeholder="Enter your username"
+                ></FormikText>
+                <FormikText
+                  name="password"
+                  type="password"
+                  label="Password:"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  placeholder="Enter your password"
+                ></FormikText>
                 <Button type="submit" disabled={isSubmitting}>
                   Login
                 </Button>
