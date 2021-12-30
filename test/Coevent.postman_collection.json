@@ -1,0 +1,3092 @@
+{
+	"info": {
+		"_postman_id": "599d6243-0042-46a4-b78b-fac8c25c33d9",
+		"name": "Coevent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "participant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"access-token\", jsonData.accessToken);\r",
+									"\r",
+									"pm.response.to.have.status(200);\r",
+									"pm.expect(jsonData.accessToken).to.not.be.empty;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"key\": \"24e8ae15-848f-44ee-8a79-e014f89c538e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/auth/participants/token",
+							"protocol": "{{scheme}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}{{path}}",
+							"path": [
+								"auth",
+								"participants",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"access-token\", jsonData.accessToken);\r",
+									"\r",
+									"pm.response.to.have.status(200);\r",
+									"pm.expect(jsonData.accessToken).to.not.be.empty;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/auth/login",
+							"protocol": "{{scheme}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}{{path}}",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/auth/token/refresh",
+							"protocol": "{{scheme}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}{{path}}",
+							"path": [
+								"auth",
+								"token",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user/info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/auth/user/info",
+							"protocol": "{{scheme}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}{{path}}",
+							"path": [
+								"auth",
+								"user",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "accounts",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/accounts",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/accounts/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"accounts",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"A description\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/accounts",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/accounts/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"accounts",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/accounts/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"accounts",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/users",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/users/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"A description\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/users",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/users/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/users/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "roles",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/roles",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/roles/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"A description\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/roles",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/roles/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/roles/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"roles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "calendars",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/calendars",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"calendars"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/calendars/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"calendars",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"A description\",\r\n    \"CalendarType\": \"Default\",\r\n    \"IsDisabled\": false,\r\n    \"AccountId\": 1,\r\n    \"Status\": \"Draft\",\r\n    \"Participants\": [],\r\n    \"Events\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/calendars",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"calendars"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Coevent\",\r\n    \"description\": \"A description\",\r\n    \"calendarType\": \"Default\",\r\n    \"isDisabled\": false,\r\n    \"accountId\": 1,\r\n    \"account\": null,\r\n    \"status\": \"Draft\",\r\n    \"participants\": [],\r\n    \"events\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9Q=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/calendars/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"calendars",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Coevent\",\r\n    \"description\": \"A description\",\r\n    \"calendarType\": \"Default\",\r\n    \"isDisabled\": false,\r\n    \"accountId\": 1,\r\n    \"account\": null,\r\n    \"status\": \"Draft\",\r\n    \"participants\": [],\r\n    \"events\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9Q=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/calendars/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"calendars",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "schedules",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Memorial\",\r\n    \"Description\": \"Memorial meeting\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"AccountId\": 1,\r\n    \"IsDisabled\": false,\r\n    \"StartOnTime\": \"0.11:00:00.0000\",\r\n    \"EndOnTime\": \"0.13:00:00.0000\",\r\n    \"DaysOfWeek\": \"Sunday\",\r\n    \"Months\": \"None\",\r\n    \"RepeatType\": \"Weekly\",\r\n    \"RepeatSize\": 0,\r\n    \"DisplayOrder\": 0,\r\n    \"Events\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Memorial\",\r\n    \"description\": \"Memorial meeting\",\r\n    \"accountId\": 1,\r\n    \"account\": null,\r\n    \"isDisabled\": false,\r\n    \"startOnTime\": \"11:00:00\",\r\n    \"endOnTime\": \"13:00:00\",\r\n    \"daysOfWeek\": \"Sunday\",\r\n    \"months\": \"None\",\r\n    \"repeatType\": \"Weekly\",\r\n    \"repeatSize\": 0,\r\n    \"displayOrder\": 0,\r\n    \"events\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Memorial\",\r\n    \"description\": \"Memorial meeting\",\r\n    \"accountId\": 1,\r\n    \"account\": null,\r\n    \"isDisabled\": false,\r\n    \"startOnTime\": \"11:00:00\",\r\n    \"endOnTime\": \"13:00:00\",\r\n    \"daysOfWeek\": \"Sunday\",\r\n    \"months\": \"None\",\r\n    \"repeatType\": \"Weekly\",\r\n    \"repeatSize\": 0,\r\n    \"displayOrder\": 0,\r\n    \"events\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "events",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Memorial\",\r\n    \"Description\": \"Sunday memorial meeting\",\r\n    \"EventType\": \"Default\",\r\n    \"IsDisabled\": false,\r\n    \"AccountId\": 1,\r\n    \"Status\": \"Draft\",\r\n    \"StartOn\": \"2022-01-01T00:00:00\",\r\n    \"EndOn\": \"2022-06-30T11:59:59\",\r\n    \"ScheduleId\": 1,\r\n    \"DisplayOrder\": 0,\r\n    \"Calendars\": [],\r\n    \"Occurrences\": [],\r\n    \"Openings\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Memorial\",\r\n    \"description\": \"Sunday memorial meeting\",\r\n    \"eventType\": \"Default\",\r\n    \"isDisabled\": false,\r\n    \"accountId\": 1,\r\n    \"account\": null,\r\n    \"status\": \"Draft\",\r\n    \"startOn\": \"2022-01-01T00:00:00\",\r\n    \"endOn\": \"2022-06-30T11:59:59\",\r\n    \"scheduleId\": 1,\r\n    \"schedule\": null,\r\n    \"displayOrder\": 0,\r\n    \"calendars\": [],\r\n    \"occurrences\": [],\r\n    \"openings\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9Y=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Memorial\",\r\n    \"description\": \"Sunday memorial meeting\",\r\n    \"eventType\": \"Default\",\r\n    \"isDisabled\": false,\r\n    \"accountId\": 1,\r\n    \"account\": null,\r\n    \"status\": \"Draft\",\r\n    \"startOn\": \"2022-01-01T00:00:00\",\r\n    \"endOn\": \"2022-06-30T11:59:59\",\r\n    \"scheduleId\": 1,\r\n    \"schedule\": null,\r\n    \"displayOrder\": 0,\r\n    \"calendars\": [],\r\n    \"occurrences\": [],\r\n    \"openings\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9Y=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id/occurrences",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events/:id/occurrences?startOn=2022-01-01&endsOn=2022-06-31",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events",
+										":id",
+										"occurrences"
+									],
+									"query": [
+										{
+											"key": "startOn",
+											"value": "2022-01-01"
+										},
+										{
+											"key": "endsOn",
+											"value": "2022-06-31"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "generate-occurrences",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Memorial\",\r\n    \"description\": \"Sunday memorial meeting\",\r\n    \"eventType\": \"Default\",\r\n    \"isDisabled\": false,\r\n    \"accountId\": 1,\r\n    \"account\": null,\r\n    \"status\": \"Draft\",\r\n    \"startOn\": \"2022-01-01T00:00:00\",\r\n    \"endOn\": \"2022-06-30T11:59:59\",\r\n    \"scheduleId\": 1,\r\n    \"schedule\": null,\r\n    \"displayOrder\": 0,\r\n    \"calendars\": [],\r\n    \"occurrences\": [],\r\n    \"openings\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9Y=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events/:id/occurrences",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events",
+										":id",
+										"occurrences"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "openings",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"openings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"openings",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Preside\",\r\n    \"Description\": \"Preside for memorial meeting\",\r\n    \"EventId\": 1,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 0,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"openings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Preside\",\r\n    \"description\": \"Preside for memorial meeting\",\r\n    \"isDisabled\": false,\r\n    \"eventId\": 1,\r\n    \"event\": null,\r\n    \"displayOrder\": 0,\r\n    \"openingType\": \"Default\",\r\n    \"applyType\": \"Preapproved\",\r\n    \"quantity\": 1,\r\n    \"surveyId\": null,\r\n    \"survey\": null,\r\n    \"openingCriterias\": [],\r\n    \"openingOccurrences\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9g=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"openings",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Preside\",\r\n    \"description\": \"Preside for memorial meeting\",\r\n    \"isDisabled\": false,\r\n    \"eventId\": 1,\r\n    \"event\": null,\r\n    \"displayOrder\": 0,\r\n    \"openingType\": \"Default\",\r\n    \"applyType\": \"Preapproved\",\r\n    \"quantity\": 1,\r\n    \"surveyId\": null,\r\n    \"survey\": null,\r\n    \"openingCriterias\": [],\r\n    \"openingOccurrences\": [],\r\n    \"rowVersion\": \"AAAAAAAAB9g=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"openings",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "participants",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/participants",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/participants/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"participants",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"A description\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/participants",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"participants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/participants/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"participants",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/participants/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"participants",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "surveys",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/surveys",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"surveys"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/surveys/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"surveys",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"A description\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/surveys",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"surveys"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/surveys/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"surveys",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/surveys/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"surveys",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "traits",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/traits",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"traits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/traits/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"traits",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"A description\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/traits",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"traits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/traits/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"traits",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/traits/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"traits",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "criterias",
+					"item": [
+						{
+							"name": "all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/criterias",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"criterias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ":id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/criterias/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"criterias",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"A description\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/criterias",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"criterias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update/:id",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/criterias/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"criterias",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete/:id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 1,\r\n    \"Name\": \"Coevent\",\r\n    \"Description\": \"\",\r\n    \"AccountType\": \"Free\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": [],\r\n    \"RowVersion\": \"AAAAAAAAB9U=\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/criterias/:id",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"criterias",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "seed",
+			"item": [
+				{
+					"name": "memorial",
+					"item": [
+						{
+							"name": "openings",
+							"item": [
+								{
+									"name": "preside",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Presider\",\r\n    \"Description\": \"Preside for memorial meeting, Sunday evening lecture, and Thursday Bible class\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": null,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 1,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "exhort",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Exhorter\",\r\n    \"Description\": \"Exhort for memorial meeting\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": null,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 2,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "pianist",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Pianist\",\r\n    \"Description\": \"Play for memorial meeting\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": null,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 3,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "doorman",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Doorman\",\r\n    \"Description\": \"Doorman for memorial meeting\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": null,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 4,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "reader",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Reader\",\r\n    \"Description\": \"Read for memorial meeting\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": null,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 5,\r\n    \"Quantity\": 2,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "prayer-bread",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Bread Prayer\",\r\n    \"Description\": \"Pray for memorial meeting\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": \"Prayer\",\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 6,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "prayer-wine",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Wine Prayer\",\r\n    \"Description\": \"Pray for memorial meeting\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": \"Prayer\",\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 6,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "prayer-close",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Closing Prayer\",\r\n    \"Description\": \"Pray for memorial meeting\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": \"Prayer\",\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 6,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"event-id\", jsonData.id);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Memorial\",\r\n    \"Description\": \"Sunday memorial meeting\",\r\n    \"EventType\": \"Default\",\r\n    \"IsDisabled\": false,\r\n    \"AccountId\": {{account-id}},\r\n    \"Status\": \"Draft\",\r\n    \"StartOn\": \"2022-01-01T00:00:00\",\r\n    \"EndOn\": \"2022-06-30T11:59:59\",\r\n    \"ScheduleId\": {{schedule-id}},\r\n    \"DisplayOrder\": 0,\r\n    \"Calendars\": [],\r\n    \"Occurrences\": [],\r\n    \"Openings\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "schedule",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"schedule-id\", jsonData.id);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Memorial\",\r\n    \"Description\": \"Memorial meeting\",\r\n    \"AccountId\": {{account-id}},\r\n    \"IsDisabled\": false,\r\n    \"StartOnTime\": \"0.11:00:00.0000\",\r\n    \"EndOnTime\": \"0.13:00:00.0000\",\r\n    \"DaysOfWeek\": \"Sunday\",\r\n    \"Months\": \"None\",\r\n    \"RepeatType\": \"Weekly\",\r\n    \"RepeatSize\": 0,\r\n    \"DisplayOrder\": 0,\r\n    \"Events\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "lecture",
+					"item": [
+						{
+							"name": "openings",
+							"item": [
+								{
+									"name": "speak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Speak\",\r\n    \"Description\": \"Speak for Sunday evening public lecture.g\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": null,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 0,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"event-id\", jsonData.id);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Bible Talk\",\r\n    \"Description\": \"Sunday evening Bible lecture\",\r\n    \"EventType\": \"Default\",\r\n    \"IsDisabled\": false,\r\n    \"AccountId\": {{account-id}},\r\n    \"Status\": \"Draft\",\r\n    \"StartOn\": \"2022-01-01T00:00:00\",\r\n    \"EndOn\": \"2022-06-30T11:59:59\",\r\n    \"ScheduleId\": {{schedule-id}},\r\n    \"DisplayOrder\": 0,\r\n    \"Calendars\": [],\r\n    \"Occurrences\": [],\r\n    \"Openings\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "schedule",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"schedule-id\", jsonData.id);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Bible Talks\",\r\n    \"Description\": \"Sunday evening Bible lecture.\",\r\n    \"AccountId\": {{account-id}},\r\n    \"IsDisabled\": false,\r\n    \"StartOnTime\": \"0.19:00:00.0000\",\r\n    \"EndOnTime\": \"0.20:00:00.0000\",\r\n    \"DaysOfWeek\": \"Sunday\",\r\n    \"Months\": \"None\",\r\n    \"RepeatType\": \"Weekly\",\r\n    \"RepeatSize\": 0,\r\n    \"DisplayOrder\": 0,\r\n    \"Events\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "bible class",
+					"item": [
+						{
+							"name": "openings",
+							"item": [
+								{
+									"name": "speak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Speak\",\r\n    \"Description\": \"Speak for Bible class\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": null,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 1,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "pianist",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Pianist\",\r\n    \"Description\": \"Play for Bible class\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": null,\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 2,\r\n    \"Quantity\": 1,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"event-id\", jsonData.id);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Bible Class\",\r\n    \"Description\": \"Thursday evening Bible class\",\r\n    \"EventType\": \"Default\",\r\n    \"IsDisabled\": false,\r\n    \"AccountId\": {{account-id}},\r\n    \"Status\": \"Draft\",\r\n    \"StartOn\": \"2022-01-01T00:00:00\",\r\n    \"EndOn\": \"2022-06-30T11:59:59\",\r\n    \"ScheduleId\": {{schedule-id}},\r\n    \"DisplayOrder\": 0,\r\n    \"Calendars\": [],\r\n    \"Occurrences\": [],\r\n    \"Openings\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "schedule",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"schedule-id\", jsonData.id);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Bible Class\",\r\n    \"Description\": \"Thursday evening Bible class.\",\r\n    \"AccountId\": {{account-id}},\r\n    \"IsDisabled\": false,\r\n    \"StartOnTime\": \"0.19:30:00.0000\",\r\n    \"EndOnTime\": \"0.20:30:00.0000\",\r\n    \"DaysOfWeek\": \"Thursday\",\r\n    \"Months\": \"None\",\r\n    \"RepeatType\": \"Weekly\",\r\n    \"RepeatSize\": 0,\r\n    \"DisplayOrder\": 0,\r\n    \"Events\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "hall cleaning",
+					"item": [
+						{
+							"name": "openings",
+							"item": [
+								{
+									"name": "clean",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var jsonData = JSON.parse(responseBody);\r",
+													"\r",
+													"pm.response.to.have.status(201);\r",
+													"pm.expect(jsonData.id).to.be.greaterThan(0);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Name\": \"Clean\",\r\n    \"Description\": \"Hall cleaning\",\r\n    \"EventId\": {{event-id}},\r\n    \"Group\": \"Clean\",\r\n    \"IsDisabled\": false,\r\n    \"OpeningType\": \"Default\",\r\n    \"ApplyType\": \"Preapproved\",\r\n    \"DisplayOrder\": 0,\r\n    \"Quantity\": 4,\r\n    \"SurveyId\": null,\r\n    \"OpeningCriterias\": [],\r\n    \"OpeningOccurrences\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/openings",
+											"protocol": "{{scheme}}",
+											"host": [
+												"{{host}}"
+											],
+											"port": "{{port}}{{path}}",
+											"path": [
+												"admin",
+												"openings"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"event-id\", jsonData.id);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Hall Cleaning\",\r\n    \"Description\": \"Saturday hall cleaning\",\r\n    \"EventType\": \"Default\",\r\n    \"IsDisabled\": false,\r\n    \"AccountId\": {{account-id}},\r\n    \"Status\": \"Draft\",\r\n    \"StartOn\": \"2022-01-01T00:00:00\",\r\n    \"EndOn\": \"2022-06-30T11:59:59\",\r\n    \"ScheduleId\": {{schedule-id}},\r\n    \"DisplayOrder\": 0,\r\n    \"Calendars\": [],\r\n    \"Occurrences\": [],\r\n    \"Openings\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/events",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "schedule",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.collectionVariables.set(\"schedule-id\", jsonData.id);\r",
+											"\r",
+											"pm.response.to.have.status(201);\r",
+											"pm.expect(jsonData.id).to.be.greaterThan(0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"Hall Cleaning\",\r\n    \"Description\": \"Saturday hall cleaning.\",\r\n    \"AccountId\": {{account-id}},\r\n    \"IsDisabled\": false,\r\n    \"StartOnTime\": \"0.10:00:00.0000\",\r\n    \"EndOnTime\": \"0.12:00:00.0000\",\r\n    \"DaysOfWeek\": \"Saturday\",\r\n    \"Months\": \"None\",\r\n    \"RepeatType\": \"Weekly\",\r\n    \"RepeatSize\": 0,\r\n    \"DisplayOrder\": 0,\r\n    \"Events\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/schedules",
+									"protocol": "{{scheme}}",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}{{path}}",
+									"path": [
+										"admin",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"account-id\", jsonData.id);\r",
+									"\r",
+									"pm.response.to.have.status(201);\r",
+									"pm.expect(jsonData.id).to.be.greaterThan(0);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Victoria Ecclesia\",\r\n    \"Description\": \"Christadelphian ecclesia in Victoria BC, Canada.\",\r\n    \"AccountType\": \"Subscriber\",\r\n    \"IsDisabled\": false,\r\n    \"OwnerId\": 1,\r\n    \"Owner\": null,\r\n    \"Calendars\": [],\r\n    \"Events\": [],\r\n    \"Schedules\": [],\r\n    \"Traits\": [],\r\n    \"Criterias\": [],\r\n    \"Surveys\": [],\r\n    \"UsersManyToMany\": [],\r\n    \"Users\": [],\r\n    \"Roles\": [],\r\n    \"Claims\": [],\r\n    \"UserClaims\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/admin/accounts",
+							"protocol": "{{scheme}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}{{path}}",
+							"path": [
+								"admin",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "swagger",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{scheme}}://{{host}}:{{port}}{{path}}/swagger",
+					"protocol": "{{scheme}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}{{path}}",
+					"path": [
+						"swagger"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

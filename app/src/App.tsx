@@ -1,6 +1,6 @@
 import { Layout } from 'components';
 import { AppRouter } from 'components/router';
-import { PadlockProvider } from 'hooks';
+import { PadlockProvider, Settings } from 'hooks';
 import { CookiesProvider } from 'react-cookie';
 import { BrowserRouter } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
@@ -14,6 +14,7 @@ function App() {
         oidc={{
           token: '/auth/token',
         }}
+        baseApiUrl={Settings.ApiPath}
       >
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Layout name={name}>
