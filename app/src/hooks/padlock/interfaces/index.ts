@@ -1,3 +1,4 @@
+export * from './IOIDCEndpoints';
 export * from './IPadlockHook';
 export * from './IPadlockHookProps';
 export * from './IPadlockProviderProps';

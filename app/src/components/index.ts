@@ -1,5 +1,6 @@
 export * from './button';
 export * from './footer';
+export * from './form';
 export * from './grid-table';
 export * from './header';
 export * from './layout';
@@ -7,5 +8,4 @@ export * from './loading';
 export * from './menu';
 export * from './router';
 export * from './spinner';
-export * from './text';
 export * from './user-menu';

@@ -1,12 +1,18 @@
 import { IToken, IUserInfo } from '.';
+import { IOIDCEndpoints } from './IOIDCEndpoints';
 
 export interface IPadlockState {
+  oidc?: IOIDCEndpoints;
   authReady: boolean;
-  setAuthReady: React.Dispatch<React.SetStateAction<boolean>>;
   authenticated: boolean;
-  setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   token?: IToken | null;
-  setToken: React.Dispatch<React.SetStateAction<IToken | null | undefined>>;
   userInfo?: IUserInfo;
-  setUserInfo: React.Dispatch<React.SetStateAction<IUserInfo | undefined>>;
+  state: {
+    setAuthReady: React.Dispatch<React.SetStateAction<boolean>>;
+    setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+    setToken: React.Dispatch<React.SetStateAction<IToken | null | undefined>>;
+    setUserInfo: React.Dispatch<React.SetStateAction<IUserInfo | undefined>>;
+  };
+  login: (token: IToken) => void;
+  logout: () => void;
 }

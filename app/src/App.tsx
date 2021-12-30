@@ -1,6 +1,6 @@
 import { Layout } from 'components';
 import { AppRouter } from 'components/router';
-import { PadlockProvider, SummonProvider } from 'hooks';
+import { PadlockProvider } from 'hooks';
 import { CookiesProvider } from 'react-cookie';
 import { BrowserRouter } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
@@ -10,17 +10,19 @@ function App() {
 
   return (
     <CookiesProvider>
-      <PadlockProvider>
-        <SummonProvider>
-          <BrowserRouter basename={process.env.PUBLIC_URL}>
-            <Layout name={name}>
-              <AppRouter />
-            </Layout>
-          </BrowserRouter>
+      <PadlockProvider
+        oidc={{
+          token: '/auth/token',
+        }}
+      >
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <Layout name={name}>
+            <AppRouter />
+          </Layout>
+        </BrowserRouter>
 
-          <ReactTooltip id="main-tooltip" effect="float" type="light" place="top" />
-          <ReactTooltip id="main-tooltip-right" effect="solid" type="light" place="right" />
-        </SummonProvider>
+        <ReactTooltip id="main-tooltip" effect="float" type="light" place="top" />
+        <ReactTooltip id="main-tooltip-right" effect="solid" type="light" place="right" />
       </PadlockProvider>
     </CookiesProvider>
   );

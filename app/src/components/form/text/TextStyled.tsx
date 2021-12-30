@@ -33,7 +33,7 @@ export const Text = styled.input<ITextProps>`
   background-color: ${(props) => {
     switch (props.variant) {
       case TextVariant.primary:
-        return props.theme.css.formBackgroundColor;
+        return props.theme.css.inputBackgroundColor;
       case TextVariant.secondary:
         return '#6c757d';
       case TextVariant.success:

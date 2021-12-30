@@ -1,1 +1,1 @@
-export * from './GridStyled';
+export * from './AccountStyled';

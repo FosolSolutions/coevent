@@ -73,7 +73,10 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-react": "7.28.0",
+    "eslint-plugin-react-hooks": "4.3.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
+    "husky": "7.0.4",
+    "lint-staged": "12.1.4",
     "prettier": "2.5.1",
     "pretty": "2.0.0",
     "pretty-quick": "3.1.3",
@@ -95,23 +98,55 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "pretty-quick": "pretty-quick",
-    "lint": "eslint src/ --ext .jsx,.js,.ts,.tsx --max-warnings 0",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "eslint --cache src/ --ext .jsx,.js,.ts,.tsx --max-warnings 0",
+    "lint:fix": "yarn run lint --fix",
     "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "check": "prettier --check \"./src/**/*.{js,jsx,ts,tsx,css,scss}\""
   },
   "eslintConfig": {
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": "latest"
+    },
     "extends": [
+      "eslint:recommended",
       "react-app",
       "plugin:prettier/recommended"
     ],
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
     "plugins": [
-      "simple-import-sort"
+      "simple-import-sort",
+      "import",
+      "prettier",
+      "react",
+      "react-hooks",
+      "@typescript-eslint"
     ],
     "rules": {
+      "no-console": "warn",
+      "eqeqeq": "error",
       "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error"
-    }
+      "simple-import-sort/exports": "error",
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-duplicates": "error",
+      "prettier/prettier": "error",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/explicit-function-return-type": "off"
+    },
+    "ignorePatterns": [
+      "node_modules",
+      "build",
+      "dist",
+      "public"
+    ]
   },
   "browserslist": {
     "production": [
@@ -124,5 +159,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "yarn run lint:fix"
   }
 }

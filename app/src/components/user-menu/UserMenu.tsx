@@ -21,7 +21,7 @@ export const UserMenu = () => {
     <div>
       {auth.authenticated ? (
         <styled.UserMenu>
-          <div>{auth.state.userInfo?.displayName}</div>
+          <div>{auth.userInfo?.displayName}</div>
           <LogoutButton onClick={() => auth.logout()} size={20} />
         </styled.UserMenu>
       ) : (

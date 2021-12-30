@@ -20,17 +20,19 @@ export interface ITextProps extends InputHTMLAttributes<HTMLInputElement> {
  * @returns Text component.
  */
 export const Text: React.FC<ITextProps> = ({
+  type = 'text',
   variant = TextVariant.primary,
   tooltip,
   children,
+  className,
   ...rest
 }) => {
   return (
     <styled.Text
-      type="text"
+      type={type}
       variant={variant}
       {...rest}
-      className="btn"
+      className={`btn ${className}`}
       data-for="main"
       data-tip={tooltip}
     >

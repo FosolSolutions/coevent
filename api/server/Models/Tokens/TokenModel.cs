@@ -58,8 +58,11 @@ public class TokenModel
         var tokenHandler = new JwtSecurityTokenHandler();
         this.AccessToken = tokenHandler.WriteToken(accessToken);
         this.ExpiresIn = accessToken.ValidTo.ConvertToUnixTimestamp();
-        this.RefreshToken = tokenHandler.WriteToken(refreshToken);
-        this.RefreshExpiresIn = refreshToken?.ValidTo.ConvertToUnixTimestamp() ?? 0;
+        if (refreshToken != null)
+        {
+            this.RefreshToken = tokenHandler.WriteToken(refreshToken);
+            this.RefreshExpiresIn = refreshToken?.ValidTo.ConvertToUnixTimestamp() ?? 0;
+        }
         this.Scope = scope;
     }
     #endregion

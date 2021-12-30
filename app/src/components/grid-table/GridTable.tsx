@@ -33,7 +33,7 @@ export const GridTable = <T extends object>({ columns, data, onRowClick }: IGrid
 
   return (
     <styled.GridTable {...getTableProps()}>
-      <div role="headerGroup">
+      <div role="rowheader">
         {headerGroups.map((headerGroup) => (
           <div {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (

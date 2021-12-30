@@ -1,7 +1,7 @@
 import { Button, Text } from 'components';
 import { Formik } from 'formik';
 import { useApi, usePadlock } from 'hooks';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { IParticipantLoginForm } from './interfaces';
 import * as styled from './LoginStyled';
@@ -15,6 +15,7 @@ export const Login = () => {
   const auth = usePadlock();
   const api = useApi();
   const navigate = useNavigate();
+  const redirect_uri = new URLSearchParams(window.location.search).get('redirect_uri');
 
   const defaultValues: IParticipantLoginForm = { key: '' };
 
@@ -27,13 +28,12 @@ export const Login = () => {
         <div>
           <Formik
             initialValues={defaultValues}
-            onSubmit={async (values, { setSubmitting }) => {
+            onSubmit={async (values) => {
               try {
                 if (values.key) {
                   const token = await api.auth.loginAsParticipant({ key: values.key });
                   auth.login(token);
-                  navigate('/');
-                  setSubmitting(false);
+                  navigate(redirect_uri ?? '/');
                 }
               } catch (error) {
                 // Handle error

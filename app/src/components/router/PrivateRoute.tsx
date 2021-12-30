@@ -1,11 +1,13 @@
+import axios from 'axios';
 import { Claim, Role, usePadlock } from 'hooks';
+import React from 'react';
 import { Navigate, RouteProps } from 'react-router-dom';
 
 interface IPrivateRouteProps extends RouteProps {
   /**
    * The path to redirect to if user is unauthorized.
    */
-  redirectTo: string;
+  loginPath?: string;
   /**
    * A role the user belongs to.
    */
@@ -30,7 +32,7 @@ interface IPrivateRouteProps extends RouteProps {
  * @returns PrivateRoute component.
  */
 export const PrivateRoute = ({
-  redirectTo,
+  loginPath = '/login',
   claims,
   roles,
   element,
@@ -38,14 +40,18 @@ export const PrivateRoute = ({
 }: IPrivateRouteProps) => {
   const auth = usePadlock();
 
-  if (!auth.state.authReady) <></>;
+  if (!auth.authReady) <></>;
 
   if (
     !auth.authenticated ||
     (!!claims && !auth.hasClaim(claims)) ||
     (!!roles && !auth.hasRole(roles))
   ) {
-    return <Navigate to={redirectTo} />;
+    const query = {
+      redirect_uri: window.location.pathname,
+    };
+    const path = axios.getUri({ url: loginPath, params: query });
+    return <Navigate to={path} />;
   }
 
   return element || <>{children}</>;

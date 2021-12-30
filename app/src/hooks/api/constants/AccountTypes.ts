@@ -5,9 +5,9 @@ export enum AccountTypes {
   /**
    * This account is a free account with no subscription.
    */
-  Free = 0,
+  Free = 'Free',
   /**
    * This is a subscribing account.
    */
-  Subscriber = 1,
+  Subscriber = 'Subscriber',
 }

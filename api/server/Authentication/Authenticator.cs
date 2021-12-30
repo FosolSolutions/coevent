@@ -5,7 +5,6 @@ using System.Text;
 using Coevent.Api.Configuration;
 using Coevent.Dal.Services.Interfaces;
 using Entities = Coevent.Entities;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Options;
 using Coevent.Api.Models.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -118,8 +117,7 @@ public class Authenticator : IAuthenticator
     private async Task<TokenModel> AuthenticationAsync(ClaimsIdentity identity, params Claim[] refreshClaims)
     {
         var accessToken = GenerateJwtToken(new ClaimsPrincipal(identity), _options.AccessTokenExpiresIn);
-        var refreshToken = GenerateJwtToken(GeneratePrincipal(JwtBearerDefaults.AuthenticationScheme, refreshClaims), _options.RefreshTokenExpiresIn);
-
+        var refreshToken = _options.RefreshTokenExpiresIn.Milliseconds > 0 ? GenerateJwtToken(GeneratePrincipal(JwtBearerDefaults.AuthenticationScheme, refreshClaims), _options.RefreshTokenExpiresIn) : null;
         return await Task.FromResult(new TokenModel(accessToken, refreshToken, _options.DefaultScope));
     }
 
