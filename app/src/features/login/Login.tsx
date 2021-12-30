@@ -92,6 +92,7 @@ export const Login = () => {
                   onBlur={handleBlur}
                   value={values.password}
                   placeholder="Enter your password"
+                  autoComplete="on"
                 ></FormikText>
                 <Button type="submit" disabled={isSubmitting}>
                   Login
