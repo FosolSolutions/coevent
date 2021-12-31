@@ -115,4 +115,10 @@ hash: ## Generate a hash (v={value})
 	$(info Generate a hash (v=$(v)))
 	@./scripts/gen-hash.sh $(v)
 
+app-shell: ## Open shell in the app container
+	@docker-compose -f docker-compose.yml exec app bash
+
+db-shell: ## Open shell in the app container
+	@docker-compose -f docker-compose.yml exec database bash
+
 .PHONY: hash
