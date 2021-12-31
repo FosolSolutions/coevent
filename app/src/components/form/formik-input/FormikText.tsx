@@ -23,7 +23,7 @@ export const FormikText = <T extends any>({
   const error = (errors as any)[name] && (touched as any)[name] && (errors as any)[name];
   return (
     <styled.FormikText>
-      <label htmlFor={id ?? `txt-${name}`}>{label}</label>
+      {label && <label htmlFor={id ?? `txt-${name}`}>{label}</label>}
       <div>
         <Text
           id={id ?? `txt-${name}`}

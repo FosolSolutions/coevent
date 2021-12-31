@@ -117,7 +117,7 @@ public class Authenticator : IAuthenticator
     private async Task<TokenModel> AuthenticationAsync(ClaimsIdentity identity, params Claim[] refreshClaims)
     {
         var accessToken = GenerateJwtToken(new ClaimsPrincipal(identity), _options.AccessTokenExpiresIn);
-        var refreshToken = _options.RefreshTokenExpiresIn.Milliseconds > 0 ? GenerateJwtToken(GeneratePrincipal(JwtBearerDefaults.AuthenticationScheme, refreshClaims), _options.RefreshTokenExpiresIn) : null;
+        var refreshToken = _options.RefreshTokenExpiresIn.TotalMilliseconds > 0 ? GenerateJwtToken(GeneratePrincipal(JwtBearerDefaults.AuthenticationScheme, refreshClaims), _options.RefreshTokenExpiresIn) : null;
         return await Task.FromResult(new TokenModel(accessToken, refreshToken, _options.DefaultScope));
     }
 

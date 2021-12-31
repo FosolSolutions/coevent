@@ -25,7 +25,7 @@ export const FormikCheckbox = <T extends any>({
   const error = (errors as any)[name] && (touched as any)[name] && (errors as any)[name];
   return (
     <styled.FormikCheckbox>
-      <label htmlFor={id ?? `cbx-${name}`}>{label}</label>
+      {label && <label htmlFor={id ?? `cbx-${name}`}>{label}</label>}
       <div>
         <Checkbox
           id={id ?? `cbx-${name}`}

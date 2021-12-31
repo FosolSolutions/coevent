@@ -3,10 +3,9 @@ import styled from 'styled-components';
 export const Login = styled.div`
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   align-content: center;
-  gap: 2rem;
   align-items: center;
   height: 100%;
 
@@ -14,21 +13,42 @@ export const Login = styled.div`
     display: flex;
     flex-direction: row;
     flex-flow: wrap;
-    align-items: center;
-    justify-content: center;
-    height: 20rem;
-    width: 40rem;
+    align-items: stretch;
+    gap: 1em;
     border-radius: 0.5rem;
     background: white;
     padding: 1rem;
-    gap: 0;
+    height: max-content;
+    max-width: 60ch;
 
     > * {
+      flex: 1 0 100%;
+
+      p {
+        text-align: center;
+      }
     }
   }
 
-  input {
-    min-width: 36ch;
+  form {
+    border-radius: 0.25em;
+    background-color: ${(props) => props.theme.css.formBackgroundColor};
+  }
+
+  #participant {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em;
+
+    input {
+      min-width: 44ch;
+    }
+  }
+
+  #user {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em;
   }
 `;
 

@@ -24,7 +24,7 @@ export const FormikDropdown = <T extends any>({
   const error = (errors as any)[name] && (touched as any)[name] && (errors as any)[name];
   return (
     <styled.FormikDropdown>
-      <label htmlFor={`dpn-${name}`}>{label}</label>
+      {label && <label htmlFor={`dpn-${name}`}>{label}</label>}
       <div>
         <Dropdown
           id={id ?? `dpn-${name}`}

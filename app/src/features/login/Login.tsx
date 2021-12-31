@@ -39,14 +39,13 @@ export const Login = () => {
             }}
           >
             {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-              <form onSubmit={handleSubmit}>
+              <form id="participant" onSubmit={handleSubmit}>
                 <FormikText
                   name="key"
-                  label="Participant Code:"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.key}
-                  placeholder="Enter your key"
+                  placeholder="Enter your participant key"
                 ></FormikText>
                 <Button type="submit" disabled={isSubmitting}>
                   Login
@@ -55,7 +54,9 @@ export const Login = () => {
             )}
           </Formik>
         </div>
-        <div>Or login with your user account</div>
+        <div>
+          <p>Or login with your user account</p>
+        </div>
         <div>
           <Formik
             initialValues={defaultUserValues}
@@ -75,10 +76,9 @@ export const Login = () => {
             }}
           >
             {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-              <form onSubmit={handleSubmit}>
+              <form id="user" onSubmit={handleSubmit}>
                 <FormikText
                   name="username"
-                  label="Username:"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.username}
@@ -87,7 +87,6 @@ export const Login = () => {
                 <FormikText
                   name="password"
                   type="password"
-                  label="Password:"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.password}
