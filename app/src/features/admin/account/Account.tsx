@@ -2,9 +2,9 @@ import {
   Button,
   ButtonVariant,
   castEnumToOptions,
-  FormikAutoComplete,
   FormikCheckbox,
   FormikDropdown,
+  FormikSelect,
   FormikText,
   FormikTextArea,
   Option,
@@ -49,6 +49,12 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
     await new Promise((r) => setTimeout(r, 30 * 1000));
     navigate('/admin/accounts');
   };
+
+  const options = [
+    { label: 'Admin', value: '1' },
+    { label: 'Fake 1', value: '2' },
+    { label: 'Fake 2', value: '3' },
+  ];
 
   return (
     <styled.Account>
@@ -108,17 +114,13 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
                   required
                   options={castEnumToOptions(AccountTypes)}
                 ></FormikDropdown>
-                <FormikAutoComplete
-                  name="ownerId"
-                  label="Owner:"
-                  required
-                  options={[
-                    Option.create('Admin', 1),
-                    Option.create('Fake 1', 2),
-                    Option.create('Fake 2', 3),
-                  ]}
-                  autoComplete="on"
-                ></FormikAutoComplete>
+                <FormikSelect name="ownerId" label="Owner:">
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </FormikSelect>
               </div>
               <div>
                 <Button type="submit" variant={ButtonVariant.primary} disabled={isSubmitting}>
