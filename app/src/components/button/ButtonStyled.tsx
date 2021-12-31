@@ -20,6 +20,16 @@ export const Button = styled.button<IButtonProps>`
   overflow: visible;
   text-transform: none;
   cursor: pointer;
+
+  &[disabled] {
+    background-color: grey;
+    cursor: not-allowed;
+
+    &:hover {
+      filter: brightness(75%);
+    }
+  }
+
   color: ${(props) => {
     switch (props.variant) {
       case ButtonVariant.warning:

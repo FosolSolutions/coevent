@@ -16,19 +16,18 @@ import * as styled from './styled';
 export const UserMenu = () => {
   const auth = usePadlock();
   const navigate = useNavigate();
+  const isLoginPage = window.location.pathname === '/login';
 
-  return (
-    <div>
-      {auth.authenticated ? (
-        <styled.UserMenu>
-          <div>{auth.userInfo?.displayName}</div>
-          <LogoutButton onClick={() => auth.logout()} size={20} />
-        </styled.UserMenu>
-      ) : (
-        <Button variant={ButtonVariant.warning} onClick={() => navigate('/login')}>
-          Login
-        </Button>
-      )}
-    </div>
-  );
+  return auth.authenticated ? (
+    <styled.UserMenu>
+      <div>{auth.userInfo?.displayName}</div>
+      <div>
+        <LogoutButton onClick={() => auth.logout()} size={20} />
+      </div>
+    </styled.UserMenu>
+  ) : !isLoginPage ? (
+    <Button variant={ButtonVariant.warning} onClick={() => navigate('/login')}>
+      Login
+    </Button>
+  ) : null;
 };

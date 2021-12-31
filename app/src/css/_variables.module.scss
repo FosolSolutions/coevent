@@ -15,10 +15,8 @@
   lightVariantColor: $light-variant-color;
   darkVariantColor: $dark-variant-color;
   textColor: $text-color;
-  dropdownBackgroundColor: $dropdown-background-color;
   accentColor: $accent-color;
   lightAccentColor: $light-accent-color;
-  sresIconColor: $sres-icon-color;
   dangerColor: $danger-color;
   lightDangerColor: $light-danger-color;
   iconLightColor: $icon-light-color;
@@ -27,8 +25,12 @@
   filterBackgroundColor: $filter-background-color;
   slideOutBlue: $slide-out-blue;
 
+  btnDisabledBackgroundColor: $btn-disabled-background-color;
+  inputDisabledBackgroundColor: $input-disabled-background-color;
+
   formBackgroundColor: $form-background-color;
   inputBackgroundColor: $input-background-color;
+  dropdownBackgroundColor: $dropdown-background-color;
 
   tableColor: $table-color;
   tableHeaderColor: $table-header-color;

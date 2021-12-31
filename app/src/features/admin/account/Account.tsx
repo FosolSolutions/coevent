@@ -72,15 +72,20 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
             return errors;
           }}
           onSubmit={async (values, { setSubmitting }) => {
-            let data: IAccountModel;
-            if (values.id === 0) {
-              data = await api.accounts.add(toModel(values));
-            } else {
-              data = await api.accounts.update(toModel(values));
+            try {
+              let data: IAccountModel;
+              if (values.id === 0) {
+                data = await api.accounts.add(toModel(values));
+              } else {
+                data = await api.accounts.update(toModel(values));
+              }
+              setAccount(toForm(data));
+              navigate(`/admin/accounts/${data.id}`); // TODO: Find a way to update route without refreshing page.
+            } catch (error: any) {
+              // TODO: Update form to show appropriate error information.
+            } finally {
+              setSubmitting(false);
             }
-            setAccount(toForm(data));
-            setSubmitting(false);
-            navigate(`/admin/accounts/${data.id}`);
           }}
         >
           {({ values, handleSubmit, isSubmitting, setSubmitting }) => (

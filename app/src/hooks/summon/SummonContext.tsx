@@ -1,5 +1,12 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { calcRefreshInterval, tokenExpired, tokenExpiring, usePadlock } from 'hooks';
+import axios from 'axios';
+import { Dialog } from 'components';
+import {
+  calcRefreshInterval,
+  IResponseError,
+  tokenExpired,
+  tokenExpiring,
+  usePadlock,
+} from 'hooks';
 import { isEmpty, isFunction } from 'lodash';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -30,6 +37,9 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
   const [loadingToastId, setLoadingToastId] = React.useState<React.ReactText | undefined>();
   const [isLoading, setLoading] = React.useState(false); // TODO: Handle multiple requests.
   const [baseApiUrl] = React.useState(initBaseApiUrl);
+  const [showError, setShowError] = React.useState(false);
+  const [error, setError] = React.useState<IResponseError | undefined>(undefined);
+
   const { accessToken, refreshToken } = auth?.token ?? {};
   const { token: tokenUrl } = auth?.oidc ?? {};
   const { authenticated, login, logout } = auth;
@@ -93,7 +103,6 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
         return response;
       },
       (error) => {
-        console.debug(error);
         setLoading(false);
         if (axios.isCancel(error)) {
           return Promise.resolve(error.message);
@@ -108,6 +117,13 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
         // TODO: Resolve uncaught promise error resulting from this code.
         if (error!.response!.status === 401) {
           redirectToLogin();
+        }
+
+        const data = error!.response!.data;
+        if (data?.type === 'https://tools.ietf.org/html/rfc7231#section-6.5.1') {
+          const validationError = data as IResponseError;
+          setError(validationError);
+          setShowError(true);
         }
 
         // TODO: This is not returning the error to an async/await try/catch implementation...
@@ -189,6 +205,7 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
           : children
         : null}
       <styled.Summon id="summon-overlay" className={isLoading ? 'show' : undefined}></styled.Summon>
+      <Dialog title="Error" data={error} open={showError} onClose={setShowError} />
     </SummonContext.Provider>
   );
 };

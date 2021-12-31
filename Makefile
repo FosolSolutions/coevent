@@ -91,10 +91,9 @@ clean: ## Removes all local containers, images, volumes, etc
 	@docker-compose --profile all down -v --rmi all
 
 clean-npm: ## Removes local containers, images, volumes, for app application (n=service name).
-	$(info Removes local containers, images, volumes, for app application (n=$(n)))
-	@make stop n=$(n)
-	@docker-compose --profile all rm -f -v -s $(n)
-	@docker volume rm -f ce-app-node-cache
+	$(info Removes local containers, images, volumes, for app application (n=$(if $(n),$(n),app)))
+	@make stop n=$(if $(n),$(n),app)
+	@docker-compose --profile all rm -f -v -s $(if $(n),$(n),app)
 
 .PHONY: local up down stop build restart refresh clean clean-npm refresh-npm
 
