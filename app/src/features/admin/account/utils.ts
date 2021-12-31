@@ -6,7 +6,7 @@ export const defaultAccount: IAccount = {
   id: 0,
   name: '',
   description: '',
-  accountType: '',
+  accountType: AccountTypes.Free,
   isDisabled: false,
   ownerId: '',
   calendars: [],
@@ -20,9 +20,9 @@ export const defaultAccount: IAccount = {
   claims: [],
   userClaims: [],
   rowVersion: '',
-  createdOn: '',
+  createdOn: new Date(),
   createdBy: '',
-  updatedOn: '',
+  updatedOn: new Date(),
   updatedBy: '',
 };
 

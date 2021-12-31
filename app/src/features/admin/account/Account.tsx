@@ -7,9 +7,10 @@ import {
   FormikDropdown,
   FormikText,
   FormikTextArea,
+  Option,
 } from 'components';
 import { Formik } from 'formik';
-import { AccountTypes, useApi } from 'hooks';
+import { AccountTypes, IAccountModel, useApi } from 'hooks';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -38,12 +39,27 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
       api.accounts.get(id).then((data) => {
         setAccount(toForm(data));
       }); // TODO: Handle error.
+    } else {
+      setAccount(defaultAccount);
     }
   }, [api, id]);
 
+  const handleDelete = async () => {
+    await api.accounts.remove(toModel(account));
+    await new Promise((r) => setTimeout(r, 30 * 1000));
+    navigate('/admin/accounts');
+  };
+
   return (
     <styled.Account>
-      <h1>Account</h1>
+      <div>
+        <h1>Account</h1>
+        <div>
+          <Button variant={ButtonVariant.success} onClick={() => navigate('/admin/accounts/0')}>
+            Add New
+          </Button>
+        </div>
+      </div>
       <div>
         <Formik
           enableReinitialize
@@ -53,14 +69,19 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
             if (!values.name) errors.name = 'Required';
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            api.accounts.update(toModel(values)).then((data) => {
-              setAccount(toForm(data));
-              setSubmitting(false);
-            }); // TODO: Handle error.
+          onSubmit={async (values, { setSubmitting }) => {
+            let data: IAccountModel;
+            if (values.id === 0) {
+              data = await api.accounts.add(toModel(values));
+            } else {
+              data = await api.accounts.update(toModel(values));
+            }
+            setAccount(toForm(data));
+            setSubmitting(false);
+            navigate(`/admin/accounts/${data.id}`);
           }}
         >
-          {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+          {({ values, handleSubmit, isSubmitting, setSubmitting }) => (
             <form onSubmit={handleSubmit}>
               <div>
                 <FormikText name="name" label="Name:" value={values.name} required></FormikText>
@@ -84,12 +105,27 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
                   name="ownerId"
                   label="Owner:"
                   required
-                  options={['Admin']}
+                  options={[
+                    Option.create('Admin', 1),
+                    Option.create('Fake 1', 2),
+                    Option.create('Fake 2', 3),
+                  ]}
+                  autoComplete="on"
                 ></FormikAutoComplete>
               </div>
               <div>
                 <Button type="submit" variant={ButtonVariant.primary} disabled={isSubmitting}>
                   Save
+                </Button>
+                <Button
+                  variant={ButtonVariant.danger}
+                  onClick={async () => {
+                    setSubmitting(true);
+                    await handleDelete();
+                    setSubmitting(false);
+                  }}
+                >
+                  Delete
                 </Button>
                 <Button
                   variant={ButtonVariant.secondary}

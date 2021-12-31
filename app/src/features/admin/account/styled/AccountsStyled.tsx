@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Account = styled.div`
+export const Accounts = styled.div`
   display: flex;
   gap: 1em;
   flex-direction: column;
@@ -13,11 +13,5 @@ export const Account = styled.div`
   }
 
   > div {
-  }
-
-  form {
-    padding: 0.5em;
-    border-radius: 0.25em;
-    background-color: ${(props) => props.theme.css.formBackgroundColor};
   }
 `;

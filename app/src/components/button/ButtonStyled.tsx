@@ -23,8 +23,6 @@ export const Button = styled.button<IButtonProps>`
   color: ${(props) => {
     switch (props.variant) {
       case ButtonVariant.warning:
-      case ButtonVariant.danger:
-        return '#212529';
       case ButtonVariant.link:
         return '#1a5a96';
       default:
