@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { calcRefreshInterval, tokenExpired, usePadlock } from 'hooks';
+import { calcRefreshInterval, tokenExpired, tokenExpiring, usePadlock } from 'hooks';
 import { isEmpty, isFunction } from 'lodash';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -82,6 +82,7 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
       return response;
     },
     (error) => {
+      console.debug(error);
       setLoading(false);
       if (axios.isCancel(error)) {
         return Promise.resolve(error.message);
@@ -114,7 +115,7 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
    * If unable to refresh the token, logout.
    */
   const handleRefresh = React.useCallback(async () => {
-    if (accessToken && tokenExpired(accessToken)) {
+    if (accessToken && tokenExpiring(accessToken, interval)) {
       let expired = true;
       if (tokenUrl && refreshToken && !tokenExpired(refreshToken)) {
         const response = await instance.post(
@@ -140,7 +141,7 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
         logout();
       }
     }
-  }, [accessToken, refreshToken, tokenUrl, instance, login, logout]);
+  }, [accessToken, refreshToken, tokenUrl, instance, login, logout, interval]);
 
   // Create an interval timer that will check to see if the access token needs to be refreshed.
   const refHandleRefresh = React.useRef(handleRefresh);

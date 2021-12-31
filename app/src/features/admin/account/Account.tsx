@@ -53,11 +53,13 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
   return (
     <styled.Account>
       <div>
-        <h1>Account</h1>
+        <h1>{id === 0 && 'Add '}Account</h1>
         <div>
-          <Button variant={ButtonVariant.success} onClick={() => navigate('/admin/accounts/0')}>
-            Add New
-          </Button>
+          {id !== 0 && (
+            <Button variant={ButtonVariant.success} onClick={() => navigate('/admin/accounts/0')}>
+              Add New
+            </Button>
+          )}
         </div>
       </div>
       <div>
@@ -117,17 +119,19 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
                 <Button type="submit" variant={ButtonVariant.primary} disabled={isSubmitting}>
                   Save
                 </Button>
-                <Button
-                  variant={ButtonVariant.danger}
-                  onClick={async () => {
-                    setSubmitting(true);
-                    await handleDelete();
-                    setSubmitting(false);
-                  }}
-                  disabled={isSubmitting}
-                >
-                  Delete
-                </Button>
+                {id !== 0 && (
+                  <Button
+                    variant={ButtonVariant.danger}
+                    onClick={async () => {
+                      setSubmitting(true);
+                      await handleDelete();
+                      setSubmitting(false);
+                    }}
+                    disabled={isSubmitting}
+                  >
+                    Delete
+                  </Button>
+                )}
                 <Button
                   variant={ButtonVariant.secondary}
                   onClick={() => navigate('/admin/accounts')}
