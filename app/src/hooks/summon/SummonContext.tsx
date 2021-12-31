@@ -5,6 +5,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 import { defaultEnvelope, ISummonProviderProps, ISummonState } from '.';
+import * as styled from './SummonStyled';
 
 /**
  * SummonContext, provides shared state between AJAX requests.
@@ -26,6 +27,7 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
   children,
 }) => {
   const auth = usePadlock();
+  const [isLoading, setLoading] = React.useState(false);
   const { accessToken, refreshToken } = auth?.token ?? {};
   const { token: tokenUrl } = auth?.oidc ?? {};
   const { login, logout } = auth;
@@ -64,6 +66,7 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
     if (lifecycleToasts?.loadingToast) {
       loadingToastId = lifecycleToasts.loadingToast();
     }
+    setLoading(true);
     return config;
   });
 
@@ -75,9 +78,11 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
       } else if (lifecycleToasts?.errorToast && response.status >= 300) {
         lifecycleToasts.errorToast();
       }
+      setLoading(false);
       return response;
     },
     (error) => {
+      setLoading(false);
       if (axios.isCancel(error)) {
         return Promise.resolve(error.message);
       }
@@ -164,6 +169,7 @@ export const SummonProvider: React.FC<ISummonProviderProps> = ({
             )
           : children
         : null}
+      <styled.Summon id="summon-overlay" className={isLoading ? 'show' : undefined}></styled.Summon>
     </SummonContext.Provider>
   );
 };

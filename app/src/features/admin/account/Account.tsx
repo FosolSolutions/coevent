@@ -124,12 +124,14 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
                     await handleDelete();
                     setSubmitting(false);
                   }}
+                  disabled={isSubmitting}
                 >
                   Delete
                 </Button>
                 <Button
                   variant={ButtonVariant.secondary}
                   onClick={() => navigate('/admin/accounts')}
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>
