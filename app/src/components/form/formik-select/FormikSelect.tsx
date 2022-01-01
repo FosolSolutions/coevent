@@ -1,7 +1,8 @@
 import { useField } from 'formik';
 import React from 'react';
-import Select, { StylesConfig } from 'react-select';
+import Select from 'react-select';
 
+import { customStyles } from './customStyles';
 import { IFormikSelectProps } from './interfaces/IFormikSelectProps';
 
 export const FormikSelect: React.FC<IFormikSelectProps> = ({ label, ...props }) => {
@@ -17,32 +18,6 @@ export const FormikSelect: React.FC<IFormikSelectProps> = ({ label, ...props }) 
 
   const onChange = ({ value }: any) => {
     setValue(value);
-  };
-
-  const customStyles: StylesConfig = {
-    control: (provided, state) => ({
-      ...provided,
-      background: '#f2f2f2',
-      borderColor: '#38598a',
-      width: 200,
-      boxShadow: state.isFocused ? '0 0 0 0.2rem rgb(86 114 156 / 50%)' : 'none',
-
-      '&:hover': {
-        borderColor: '#38598a',
-      },
-    }),
-    menu: (provided, state) => ({
-      ...provided,
-      width: 200,
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      background: state.isSelected ? '#848884' : state.isFocused ? '#ddd' : 'transparent',
-
-      '&:hover': {
-        background: state.isSelected ? '#848884' : '#ddd',
-      },
-    }),
   };
 
   return (

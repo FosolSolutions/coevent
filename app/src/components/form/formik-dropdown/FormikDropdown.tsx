@@ -9,7 +9,7 @@ export interface IFormikDropdownProps extends IDropdownProps {
   value?: string | number | readonly string[];
 }
 
-export const FormikDropdown = <T extends any>({
+export const FormikDropdown = <T,>({
   id,
   name,
   label,

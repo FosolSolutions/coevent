@@ -9,8 +9,8 @@ import { isInViewport } from 'utils';
  * @param {number} throttleMilliseconds - Throttle observable listener, in ms
  */
 export function useVisibility<Element extends HTMLElement>(
-  offset: number = 0,
-  throttleMilliseconds: number = 100,
+  offset = 0,
+  throttleMilliseconds = 100,
 ): [boolean, React.RefObject<Element>] {
   const [isVisible, setIsVisible] = React.useState(false);
   const ref = React.useRef<Element>(null);

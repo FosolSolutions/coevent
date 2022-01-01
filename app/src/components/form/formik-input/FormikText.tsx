@@ -9,7 +9,7 @@ export interface IFormikTextProps extends ITextProps {
   value?: string | number | readonly string[];
 }
 
-export const FormikText = <T extends any>({
+export const FormikText = <T,>({
   id,
   name,
   label,

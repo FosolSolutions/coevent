@@ -1,5 +1,6 @@
 import * as styled from './CalendarStyled';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ICalendarProps {}
 
 export const Calendar: React.FC<ICalendarProps> = () => {

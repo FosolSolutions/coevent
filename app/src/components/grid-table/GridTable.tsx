@@ -5,7 +5,7 @@ import * as styled from './styled';
 /**
  * GridTable properties.
  */
-export interface IGridTableProps<CT extends object = {}> {
+export interface IGridTableProps<CT extends object = Record<string, unknown>> {
   /**
    * An array of column definitions.
    */

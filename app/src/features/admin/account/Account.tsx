@@ -7,7 +7,6 @@ import {
   FormikSelect,
   FormikText,
   FormikTextArea,
-  Option,
 } from 'components';
 import { Formik } from 'formik';
 import { AccountTypes, IAccountModel, useApi } from 'hooks';

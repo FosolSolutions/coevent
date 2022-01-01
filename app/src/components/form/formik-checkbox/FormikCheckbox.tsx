@@ -10,7 +10,7 @@ export interface IFormikCheckboxProps extends ICheckboxProps {
   checked?: boolean;
 }
 
-export const FormikCheckbox = <T extends any>({
+export const FormikCheckbox = <T,>({
   id,
   name,
   label,

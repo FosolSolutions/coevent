@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as styled from './FooterStyled';
 
-interface IFooterProps extends React.HTMLAttributes<HTMLElement> {}
+type IFooterProps = React.HTMLAttributes<HTMLElement>;
 
 /**
  * Footer provides a footer element to place at the bottom of the page.
