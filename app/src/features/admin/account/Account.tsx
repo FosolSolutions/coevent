@@ -13,8 +13,9 @@ import { AccountTypes, IAccountModel, useApi } from 'hooks';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { defaultAccount, IAccount, toForm, toModel } from '.';
+import { IAccount } from '.';
 import * as styled from './styled';
+import { defaultAccount, toForm, toModel } from './utils';
 
 /**
  * Account component properties.
@@ -94,7 +95,7 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
           }}
         >
           {({ values, handleSubmit, isSubmitting, setSubmitting }) => (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
               <div>
                 <FormikText name="name" label="Name:" value={values.name} required></FormikText>
                 <FormikTextArea

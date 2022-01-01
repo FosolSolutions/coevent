@@ -77,6 +77,7 @@ public class UserController : ControllerBase
     [Produces(MediaTypeNames.Application.Json)]
     public IActionResult Add(UserModel model)
     {
+        if (!model.Key.HasValue) model.Key = Guid.NewGuid();
         var user = _dbService.AddAndSave(_mapper.Map<User>(model));
         return CreatedAtAction(nameof(Get), new { id = user.Id }, _mapper.Map<UserModel>(user));
     }

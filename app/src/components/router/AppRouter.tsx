@@ -9,6 +9,7 @@ import {
   Login,
   NotFound,
   Schedule,
+  User,
   Users,
 } from 'features';
 import { Claim, usePadlock } from 'hooks';
@@ -59,6 +60,10 @@ export const AppRouter = () => {
       <Route
         path="/admin/users"
         element={<PrivateRoute claims={Claim.administrator} element={<Users />} />}
+      />
+      <Route
+        path="/admin/users/:id"
+        element={<PrivateRoute claims={Claim.administrator} element={<User />} />}
       />
       <Route
         path="/admin/roles"

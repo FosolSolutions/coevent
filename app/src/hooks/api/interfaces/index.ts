@@ -5,4 +5,5 @@ export * from './ILoginModel';
 export * from './IParticipantLoginModel';
 export * from './IResponseError';
 export * from './ITokenModel';
+export * from './IUserModel';
 export * from './IValidationError';

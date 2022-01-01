@@ -26,7 +26,7 @@ public class UserModel : AuditColumnsModel
     /// <summary>
     /// get/set -
     /// </summary>
-    public Guid Key { get; set; }
+    public Guid? Key { get; set; }
 
     /// <summary>
     /// get/set -

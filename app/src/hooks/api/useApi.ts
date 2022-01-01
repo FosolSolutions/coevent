@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAccounts, useAuth, useBase, useEvents } from '.';
+import { useAccounts, useAuth, useBase, useEvents, useUsers } from '.';
 
 /**
  * Common hook to make requests to the PIMS APi.
@@ -11,6 +11,7 @@ export const useApi = () => {
   const auth = useAuth();
   const accounts = useAccounts();
   const events = useEvents();
+  const users = useUsers();
 
   return React.useMemo(
     () => ({
@@ -18,8 +19,9 @@ export const useApi = () => {
       auth,
       accounts,
       events,
+      users,
     }),
-    [base, auth, events, accounts],
+    [base, auth, events, accounts, users],
   );
 };
 
