@@ -4,11 +4,12 @@ import {
   castEnumToOptions,
   FormikCheckbox,
   FormikDropdown,
+  FormikSelect,
   FormikText,
   FormikTextArea,
 } from 'components';
 import { Formik } from 'formik';
-import { AccountTypes, useApi } from 'hooks';
+import { AccountTypes, IAccountModel, useApi } from 'hooks';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -37,12 +38,35 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
       api.accounts.get(id).then((data) => {
         setAccount(toForm(data));
       }); // TODO: Handle error.
+    } else {
+      setAccount(defaultAccount);
     }
   }, [api, id]);
 
+  const handleDelete = async () => {
+    await api.accounts.remove(toModel(account));
+    await new Promise((r) => setTimeout(r, 30 * 1000));
+    navigate('/admin/accounts');
+  };
+
+  const options = [
+    { label: 'Admin', value: '1' },
+    { label: 'Fake 1', value: '2' },
+    { label: 'Fake 2', value: '3' },
+  ];
+
   return (
     <styled.Account>
-      <h1>Account</h1>
+      <div>
+        <h1>{id === 0 && 'Add '}Account</h1>
+        <div>
+          {id !== 0 && (
+            <Button variant={ButtonVariant.success} onClick={() => navigate('/admin/accounts/0')}>
+              Add New
+            </Button>
+          )}
+        </div>
+      </div>
       <div>
         <Formik
           enableReinitialize
@@ -52,14 +76,24 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
             if (!values.name) errors.name = 'Required';
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            api.accounts.update(toModel(values)).then((data) => {
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              let data: IAccountModel;
+              if (values.id === 0) {
+                data = await api.accounts.add(toModel(values));
+              } else {
+                data = await api.accounts.update(toModel(values));
+              }
               setAccount(toForm(data));
+              navigate(`/admin/accounts/${data.id}`); // TODO: Find a way to update route without refreshing page.
+            } catch (error: any) {
+              // TODO: Update form to show appropriate error information.
+            } finally {
               setSubmitting(false);
-            }); // TODO: Handle error.
+            }
           }}
         >
-          {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+          {({ values, handleSubmit, isSubmitting, setSubmitting }) => (
             <form onSubmit={handleSubmit}>
               <div>
                 <FormikText name="name" label="Name:" value={values.name} required></FormikText>
@@ -79,14 +113,35 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
                   required
                   options={castEnumToOptions(AccountTypes)}
                 ></FormikDropdown>
+                <FormikSelect name="ownerId" label="Owner:">
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </FormikSelect>
               </div>
               <div>
                 <Button type="submit" variant={ButtonVariant.primary} disabled={isSubmitting}>
                   Save
                 </Button>
+                {id !== 0 && (
+                  <Button
+                    variant={ButtonVariant.danger}
+                    onClick={async () => {
+                      setSubmitting(true);
+                      await handleDelete();
+                      setSubmitting(false);
+                    }}
+                    disabled={isSubmitting}
+                  >
+                    Delete
+                  </Button>
+                )}
                 <Button
                   variant={ButtonVariant.secondary}
                   onClick={() => navigate('/admin/accounts')}
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>

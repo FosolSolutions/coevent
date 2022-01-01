@@ -11,7 +11,7 @@ export const useAccounts = () => {
 
   return React.useMemo(
     () => ({
-      getPage: async (page: number, quantity: number = 20): Promise<IAccountModel[]> => {
+      getPage: async (page: number, quantity = 20): Promise<IAccountModel[]> => {
         try {
           const response = await api.get(`/admin/accounts?page=${page}&qty=${quantity}`);
           return response.data as IAccountModel[];

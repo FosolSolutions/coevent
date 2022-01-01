@@ -20,20 +20,21 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * @returns Button component.
  */
 export const Button: React.FC<IButtonProps> = ({
+  type = 'button',
   variant = ButtonVariant.primary,
   tooltip,
+  className,
   children,
-  type = 'button',
   ...rest
 }) => {
   return (
     <styled.Button
       type={type}
       variant={variant}
-      {...rest}
-      className="btn"
+      className={`btn ${className}`}
       data-for="main"
       data-tip={tooltip}
+      {...rest}
     >
       {children}
     </styled.Button>

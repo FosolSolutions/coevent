@@ -3,11 +3,16 @@
     "cevent",
     "Coevent",
     "cref",
+    "datepicker",
     "Formik",
+    "headlessui",
     "HMACSHA",
     "oidc",
     "Pbkdf",
-    "Serilog"
+    "reduxjs",
+    "Serilog",
+    "szhsin",
+    "toastify"
   ],
   "npm.packageManager": "yarn",
   "eslint.packageManager": "yarn",

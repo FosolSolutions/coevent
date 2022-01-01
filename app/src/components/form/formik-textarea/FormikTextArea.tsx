@@ -9,7 +9,7 @@ export interface IFormikTextAreaProps extends ITextAreaProps {
   value?: string | number | readonly string[];
 }
 
-export const FormikTextArea = <T extends any>({
+export const FormikTextArea = <T,>({
   id,
   name,
   label,
@@ -23,7 +23,7 @@ export const FormikTextArea = <T extends any>({
   const error = (errors as any)[name] && (touched as any)[name] && (errors as any)[name];
   return (
     <styled.FormikTextArea>
-      <label htmlFor={id ?? `txa-${name}`}>{label}</label>
+      {label && <label htmlFor={id ?? `txa-${name}`}>{label}</label>}
       <div>
         <TextArea
           id={id ?? `txa-${name}`}

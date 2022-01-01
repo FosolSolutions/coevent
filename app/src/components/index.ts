@@ -1,4 +1,5 @@
 export * from './button';
+export * from './dialog';
 export * from './footer';
 export * from './form';
 export * from './grid-table';

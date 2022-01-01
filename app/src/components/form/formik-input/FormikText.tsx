@@ -9,7 +9,7 @@ export interface IFormikTextProps extends ITextProps {
   value?: string | number | readonly string[];
 }
 
-export const FormikText = <T extends any>({
+export const FormikText = <T,>({
   id,
   name,
   label,
@@ -19,11 +19,11 @@ export const FormikText = <T extends any>({
   onBlur,
   ...rest
 }: IFormikTextProps) => {
-  const { values, errors, touched, handleBlur, handleChange } = useFormikContext<T>();
+  const { values, errors, touched, handleBlur, handleChange, isSubmitting } = useFormikContext<T>();
   const error = (errors as any)[name] && (touched as any)[name] && (errors as any)[name];
   return (
     <styled.FormikText>
-      <label htmlFor={id ?? `txt-${name}`}>{label}</label>
+      {label && <label htmlFor={id ?? `txt-${name}`}>{label}</label>}
       <div>
         <Text
           id={id ?? `txt-${name}`}
@@ -32,6 +32,7 @@ export const FormikText = <T extends any>({
           onChange={onChange ?? handleChange}
           onBlur={onBlur ?? handleBlur}
           className={error ? `${className} error` : className}
+          disabled={isSubmitting}
           {...rest}
         ></Text>
         {error ? <p role="alert">{error}</p> : null}

@@ -10,7 +10,7 @@ export interface IFormikCheckboxProps extends ICheckboxProps {
   checked?: boolean;
 }
 
-export const FormikCheckbox = <T extends any>({
+export const FormikCheckbox = <T,>({
   id,
   name,
   label,
@@ -21,11 +21,11 @@ export const FormikCheckbox = <T extends any>({
   className,
   ...rest
 }: IFormikCheckboxProps) => {
-  const { values, errors, touched, handleBlur, handleChange } = useFormikContext<T>();
+  const { values, errors, touched, handleBlur, handleChange, isSubmitting } = useFormikContext<T>();
   const error = (errors as any)[name] && (touched as any)[name] && (errors as any)[name];
   return (
     <styled.FormikCheckbox>
-      <label htmlFor={id ?? `cbx-${name}`}>{label}</label>
+      {label && <label htmlFor={id ?? `cbx-${name}`}>{label}</label>}
       <div>
         <Checkbox
           id={id ?? `cbx-${name}`}
@@ -35,6 +35,7 @@ export const FormikCheckbox = <T extends any>({
           onChange={onChange ?? handleChange}
           onBlur={onBlur ?? handleBlur}
           className={error ? `${className} error` : className}
+          disabled={isSubmitting}
           {...rest}
         ></Checkbox>
         {error ? <p role="alert">{error}</p> : null}

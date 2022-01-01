@@ -31,25 +31,6 @@ AUTH_DB_NAME=$varAuthDbName" >> ./db/mssql/.env
     echo -e "\t./db/mssql/.env created"
 fi
 
-# Keycloak
-if ! test -f "./auth/keycloak/.env"; then
-echo \
-"PROXY_ADDRESS_FORWARDING=true
-KEYCLOAK_USER=$varDbUser
-KEYCLOAK_PASSWORD=$varPassword
-KEYCLOAK_IMPORT="/tmp/realm-export.json -Dkeycloak.profile.feature.scripts=enabled -Dkeycloak.profile.feature.upload_scripts=enabled"
-KEYCLOAK_LOGLEVEL=WARN
-ROOT_LOGLEVEL=WARN
-
-DB_VENDOR=mssql
-DB_ADDR=database
-DB_PORT=1433
-DB_DATABASE=$varAuthDbName
-DB_USER=$varDbUser
-DB_PASSWORD=$varPassword" >> ./auth/keycloak/.env
-    echo -e "\t./auth/keycloak/.env created"
-fi
-
 # API
 if ! test -f "./api/.env"; then
 echo \
@@ -80,15 +61,19 @@ fi
 # APP
 if ! test -f "./app/.env"; then
 echo \
-"NODE_ENV=development
+"# PORT=10004
+NODE_ENV=development
 CHOKIDAR_USEPOLLING=true
-
-# Uncommment PORT if you want to run outside of docker.
-# PORT=10004
-PUBLIC_URL=/
 WDS_SOCKET_PORT=10004
+PUBLIC_URL=/
+BROWSER=none
+
+# Container
+# API_URL=http://api-editor:80
+
+# Local
 # API_URL=http://localhost:10002
-BROWSER=none" >> ./app/.env
+" >> ./app/.env
     echo -e "\t./app/.env created"
 fi
 

@@ -16,8 +16,8 @@ body, button, input, textarea {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.footer {
-  background-color: $primary-light-color-rgb;
+#root {
+  position: relative;
 }
 
 code {

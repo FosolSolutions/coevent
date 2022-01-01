@@ -10,6 +10,15 @@ export const tokenExpired = (token?: string | null) => {
 };
 
 /**
+ * Determine if the access token will expire before the next interval.
+ * @param token A JWT token string.
+ * @returns True if the access token will expire before the next interval.
+ */
+export const tokenExpiring = (token: string | null | undefined, interval: number) => {
+  return !(+tokenExpiresOn(token) > Date.now() + interval);
+};
+
+/**
  * Decode the JWT token string.
  * @param token A JWT token string.
  * @returns A decoded token object.
@@ -48,9 +57,9 @@ export const tokenExpiresIn = (token?: string | null) => {
 /**
  * Calculate a refresh interval of 1/2 the length of the token expiry time, or 15 seconds.
  * @param token A JWT token string.
- * @returns 1/2 the length of the token expiry time, or 15 seconds.
+ * @returns 1/4 the length of the token expiry time, or 15 seconds.
  */
 export const calcRefreshInterval = (token?: string | null) => {
   const expiresIn = tokenExpiresIn(token);
-  return expiresIn > 0 ? expiresIn / 2 : 15 * 1000;
+  return expiresIn > 0 ? expiresIn / 4 : 15 * 1000;
 };

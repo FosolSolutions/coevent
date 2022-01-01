@@ -1,6 +1,7 @@
 import { ScheduleDate } from './ScheduleDate';
 import * as styled from './ScheduleStyled';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IScheduleProps {}
 
 export const Schedule: React.FC<IScheduleProps> = () => {

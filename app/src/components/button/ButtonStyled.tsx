@@ -20,11 +20,19 @@ export const Button = styled.button<IButtonProps>`
   overflow: visible;
   text-transform: none;
   cursor: pointer;
+
+  &[disabled] {
+    background-color: grey;
+    cursor: not-allowed;
+
+    &:hover {
+      filter: brightness(75%);
+    }
+  }
+
   color: ${(props) => {
     switch (props.variant) {
       case ButtonVariant.warning:
-      case ButtonVariant.danger:
-        return '#212529';
       case ButtonVariant.link:
         return '#1a5a96';
       default:

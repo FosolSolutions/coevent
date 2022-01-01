@@ -91,9 +91,9 @@ clean: ## Removes all local containers, images, volumes, etc
 	@docker-compose --profile all down -v --rmi all
 
 clean-npm: ## Removes local containers, images, volumes, for app application (n=service name).
-	$(info Removes local containers, images, volumes, for app application (n=$(n)))
-	@make stop n=$(n)
-	@docker-compose --profile all rm -f -v -s $(n)
+	$(info Removes local containers, images, volumes, for app application (n=$(if $(n),$(n),app)))
+	@make stop n=$(if $(n),$(n),app)
+	@docker-compose --profile all rm -f -v -s $(if $(n),$(n),app)
 	@docker volume rm -f ce-app-node-cache
 
 .PHONY: local up down stop build restart refresh clean clean-npm refresh-npm
@@ -115,5 +115,11 @@ db-update: ## Update the database with the latest migration.
 hash: ## Generate a hash (v={value})
 	$(info Generate a hash (v=$(v)))
 	@./scripts/gen-hash.sh $(v)
+
+app-shell: ## Open shell in the app container
+	@docker-compose -f docker-compose.yml exec app bash
+
+db-shell: ## Open shell in the app container
+	@docker-compose -f docker-compose.yml exec database bash
 
 .PHONY: hash
