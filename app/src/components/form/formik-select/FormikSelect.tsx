@@ -1,41 +1,43 @@
-import { useField } from 'formik';
+import { useFormikContext } from 'formik';
 import React from 'react';
 import Select from 'react-select';
 
 import { customStyles } from './customStyles';
+import * as styled from './FormikSelectStyled';
 import { IFormikSelectProps } from './interfaces/IFormikSelectProps';
 
-export const FormikSelect: React.FC<IFormikSelectProps> = ({ label, ...props }) => {
-  const [field, meta, { setValue, setTouched }] = useField(props);
-  const options = props.children.map((option) => ({
-    value: option.props.value,
-    label: option.props.children,
-  }));
-
-  const onBlur = (e: React.FocusEvent) => {
-    setTouched(false);
-  };
+export const FormikSelect: React.FC<IFormikSelectProps> = ({
+  label,
+  name,
+  options,
+  id,
+  ...rest
+}) => {
+  const { values, errors, touched, handleBlur, handleChange, isSubmitting } =
+    useFormikContext<IFormikSelectProps>();
+  const error = (errors as any)[name] && (touched as any)[name] && (errors as any)[name];
 
   const onChange = ({ value }: any) => {
-    setValue(value);
+    handleChange(name)(value);
   };
 
   return (
-    <React.Fragment>
-      <label htmlFor={props.id ?? `dpn-${props.name}`} className="form-label">
+    <styled.FormikSelect>
+      <label htmlFor={id ?? `sel-${name}`} className="form-label">
         {label}
       </label>
       <Select
-        defaultValue={options.find((option) => option.value === field.value)}
+        defaultValue={options.find((option) => option.value === (values as any)[name])}
         options={options}
         onChange={onChange}
-        onBlur={onBlur}
+        onBlur={handleBlur}
         styles={customStyles}
-        id={props.id ?? `dpn-${props.name}`}
+        id={id ?? `sel-${name}`}
+        isDisabled={isSubmitting}
+        className={error ? 'error' : ''}
+        classNamePrefix="rs"
       />
-      {meta.touched && meta.error ? (
-        <div className="form-text text-danger">{meta.error}</div>
-      ) : null}
-    </React.Fragment>
+      {error ? <p role="alert">{error}</p> : null}
+    </styled.FormikSelect>
   );
 };

@@ -49,12 +49,6 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
     navigate('/admin/accounts');
   };
 
-  const options = [
-    { label: 'Admin', value: '1' },
-    { label: 'Fake 1', value: '2' },
-    { label: 'Fake 2', value: '3' },
-  ];
-
   return (
     <styled.Account>
       <div>
@@ -74,6 +68,7 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
           validate={(values) => {
             const errors = {} as any;
             if (!values.name) errors.name = 'Required';
+            if (!values.ownerId) errors.ownerId = 'Required';
             return errors;
           }}
           onSubmit={async (values, { setSubmitting }) => {
@@ -113,13 +108,15 @@ export const Account: React.FC<IAccountProps> = ({ id }) => {
                   required
                   options={castEnumToOptions(AccountTypes)}
                 ></FormikDropdown>
-                <FormikSelect name="ownerId" label="Owner:">
-                  {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </FormikSelect>
+                <FormikSelect
+                  name="ownerId"
+                  label="Owner:"
+                  options={[
+                    { label: 'Admin', value: '1' },
+                    { label: 'Fake 1', value: '2' },
+                    { label: 'Fake 2', value: '3' },
+                  ]}
+                />
               </div>
               <div>
                 <Button type="submit" variant={ButtonVariant.primary} disabled={isSubmitting}>

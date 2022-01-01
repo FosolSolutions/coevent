@@ -1,4 +1,3 @@
-export * from './auto-complete';
 export * from './checkbox';
 export * from './dropdown';
 export * from './formik-checkbox';
