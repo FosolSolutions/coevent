@@ -31,11 +31,12 @@ export const defaultUser: IUser = {
  * @returns A new instance of an IUser.
  */
 export const toForm = (model: IUserModel): IUser => {
-  const { username, email, key, ...rest } = model;
+  const { username, email, key, verifiedOn, ...rest } = model;
   return {
     username: username ?? '',
     email: email ?? '',
     key: key ?? '',
+    verifiedOn: verifiedOn ?? '',
     ...rest,
   };
 };
