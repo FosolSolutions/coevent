@@ -31,10 +31,10 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     <styled.Checkbox
       type={type}
       variant={variant}
-      {...rest}
       className={`${className}`}
       data-for="main"
       data-tip={tooltip}
+      {...rest}
     >
       {children}
     </styled.Checkbox>

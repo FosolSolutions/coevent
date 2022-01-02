@@ -19,6 +19,7 @@ export const FormikCheckbox = <T,>({
   onBlur,
   checked,
   className,
+  disabled,
   ...rest
 }: IFormikCheckboxProps) => {
   const { values, errors, touched, handleBlur, handleChange, isSubmitting } = useFormikContext<T>();
@@ -35,7 +36,7 @@ export const FormikCheckbox = <T,>({
           onChange={onChange ?? handleChange}
           onBlur={onBlur ?? handleBlur}
           className={error ? `${className} error` : className}
-          disabled={isSubmitting}
+          disabled={disabled || isSubmitting}
           {...rest}
         ></Checkbox>
         {error ? <p role="alert">{error}</p> : null}

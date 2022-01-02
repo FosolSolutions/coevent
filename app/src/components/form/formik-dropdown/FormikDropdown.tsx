@@ -14,10 +14,11 @@ export const FormikDropdown = <T,>({
   name,
   label,
   value,
-  onChange,
-  onBlur,
   children,
   className,
+  disabled,
+  onChange,
+  onBlur,
   ...rest
 }: IFormikDropdownProps) => {
   const { values, errors, touched, handleBlur, handleChange, isSubmitting } = useFormikContext<T>();
@@ -33,7 +34,7 @@ export const FormikDropdown = <T,>({
           onChange={onChange ?? handleChange}
           onBlur={onBlur ?? handleBlur}
           className={error ? `${className} error` : className}
-          disabled={isSubmitting}
+          disabled={disabled || isSubmitting}
           {...rest}
         >
           {children}

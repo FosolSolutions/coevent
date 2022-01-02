@@ -5,7 +5,6 @@ import {
   FormikCheckbox,
   FormikDropdown,
   FormikText,
-  FormikTextArea,
 } from 'components';
 import { Formik } from 'formik';
 import { IUserModel, useApi, UserTypes } from 'hooks';
@@ -104,7 +103,7 @@ export const User: React.FC<IUserProps> = ({ id }) => {
                   value={values.email}
                   required
                 ></FormikText>
-                <FormikText name="key" label="Key:" value={values.key}></FormikText>
+                <FormikText name="key" label="Key:" value={values.key} disabled={true}></FormikText>
                 <FormikText
                   name="displayName"
                   label="Display Name:"

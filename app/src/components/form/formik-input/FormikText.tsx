@@ -15,6 +15,7 @@ export const FormikText = <T,>({
   label,
   value,
   className,
+  disabled,
   onChange,
   onBlur,
   ...rest
@@ -32,7 +33,7 @@ export const FormikText = <T,>({
           onChange={onChange ?? handleChange}
           onBlur={onBlur ?? handleBlur}
           className={error ? `${className} error` : className}
-          disabled={isSubmitting}
+          disabled={disabled || isSubmitting}
           {...rest}
         ></Text>
         {error ? <p role="alert">{error}</p> : null}

@@ -1,8 +1,8 @@
+import { Props } from 'react-select';
+
 import { IOption } from './IOption';
 
-export interface IFormikSelectProps {
+export interface IFormikSelectProps extends Props {
   label?: string;
-  id?: string;
-  name: string;
   options: IOption[];
 }
